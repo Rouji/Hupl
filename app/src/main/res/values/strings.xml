@@ -1,0 +1,37 @@
+<resources>
+    <string name="app_name">Hupl</string>
+
+    <string name="notification_status_uploading">Uploading File</string>
+    <string name="notification_status_complete">Upload Complete!</string>
+    <string name="notification_status_exception">Error occurred:</string>
+    <string name="notification_status_bad_response">Bad response from server:</string>
+
+    <string name="notification_button_share">Share</string>
+    <string name="notification_button_copy">Copy</string>
+    <string name="notification_button_open">Open</string>
+
+    <string name="share_chooser_title">Share Link</string>
+
+    <string name="list_add_host">Add Host</string>
+
+    <string name="settings_category_host">Host</string>
+    <string name="settings_category_auth">HTTP Auth</string>
+    <string name="settings_category_etc">etc.</string>
+
+    <string name="settings_title_title">Title</string>
+    <string name="settings_title_summary">Short, user-friendly name</string>
+    <string name="settings_url_title">Upload URL</string>
+    <string name="settings_url_summary">The URL to post files to</string>
+    <string name="settings_parameter_title">File Parameter</string>
+    <string name="settings_parameter_summary">The POST parameter, that holds the filename</string>
+    <string name="settings_authuser_title">User</string>
+    <string name="settings_authuser_summary">Leave empty for no auth</string>
+    <string name="settings_authpass_title">Password</string>
+    <string name="settings_authpass_summary"></string>
+    <string name="settings_delete_title">Delete</string>
+    <string name="settings_delete_summary">Remove this host from the list</string>
+
+
+
+
+</resources>
