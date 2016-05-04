@@ -36,13 +36,13 @@ public class AsyncUpload extends AsyncTask<Void, Integer, HttpUploader.HttpResul
     @Override
     protected HttpUploader.HttpResult doInBackground(Void... voids)
     {
-        String strTitle = m_context.getResources().getString(R.string.app_name);
+        //String strTitle = m_context.getResources().getString(R.string.app_name);
         String strUpl = m_context.getResources().getString(R.string.notification_status_uploading);
 
         m_notMgr = (NotificationManager) m_context.getSystemService(Context.NOTIFICATION_SERVICE);
         m_notBldr = new NotificationCompat.Builder(m_context);
-        m_notBldr.setContentTitle(strTitle);
-        m_notBldr.setContentText(strUpl);
+        m_notBldr.setContentTitle(strUpl);
+        //m_notBldr.setContentText(strUpl);
         m_notBldr.setColor(0xFF0095FF);
         m_notBldr.setSmallIcon(R.drawable.stat_sys_upload_anim0);
         m_notBldr.setLargeIcon(BitmapFactory.decodeResource(m_context.getResources(),R.mipmap.ic_launcher));
@@ -66,12 +66,14 @@ public class AsyncUpload extends AsyncTask<Void, Integer, HttpUploader.HttpResul
         if (!result.exception.isEmpty())
         {
             m_notBldr.setSmallIcon(R.drawable.ic_error_white_24dp);
-            m_notBldr.setContentText(strEx+" "+result.exception);
+            m_notBldr.setContentTitle(strEx);
+            m_notBldr.setContentText(result.exception);
         }
         else if (result.status != 200)
         {
             m_notBldr.setSmallIcon(R.drawable.ic_error_white_24dp);
-            m_notBldr.setContentText(strBadResp+" "+result.status);
+            m_notBldr.setContentTitle(strBadResp);
+            m_notBldr.setContentText(String.valueOf(result.status));
         }
         else
         {
@@ -81,7 +83,8 @@ public class AsyncUpload extends AsyncTask<Void, Integer, HttpUploader.HttpResul
             m_notBldr.addAction(R.drawable.ic_menu_view, strOpen, createOpenPendingIntent(result.response));
 
             m_notBldr.setSmallIcon(R.drawable.ic_done_white_24dp);
-            m_notBldr.setContentText(strCompl);
+            m_notBldr.setContentTitle(strCompl);
+            m_notBldr.setContentText(result.response);
         }
 
         m_notBldr.setProgress(0,0,false);

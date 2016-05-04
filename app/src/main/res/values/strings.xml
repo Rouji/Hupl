@@ -3,8 +3,8 @@
 
     <string name="notification_status_uploading">Uploading File</string>
     <string name="notification_status_complete">Upload Complete!</string>
-    <string name="notification_status_exception">Error occurred:</string>
-    <string name="notification_status_bad_response">Bad response from server:</string>
+    <string name="notification_status_exception">Error occurred</string>
+    <string name="notification_status_bad_response">Bad response from server</string>
 
     <string name="notification_button_share">Share</string>
     <string name="notification_button_copy">Copy</string>
