@@ -1,5 +1,6 @@
 package eu.imouto.hupl;
 
+import android.util.Base64;
 import android.util.Log;
 
 import java.io.DataInputStream;
@@ -62,6 +63,13 @@ public class HttpUploader
             connection.setRequestProperty("Connection", "Keep-Alive");
             connection.setRequestProperty("Content-Type", "multipart/form-data;boundary="+boundary);
             connection.setChunkedStreamingMode(bufferSize);
+
+            //set basic auth
+            if (!host.authUser.isEmpty())
+            {
+                String auth = "Basic " + Base64.encodeToString((host.authUser+":"+host.authPass).getBytes(), Base64.NO_WRAP);
+                connection.setRequestProperty("Authorization", auth);
+            }
 
             //write multipart header
             outputStream = new DataOutputStream( connection.getOutputStream() );
