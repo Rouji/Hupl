@@ -2,12 +2,17 @@ package eu.imouto.hupl;
 
 import android.app.NotificationManager;
 import android.app.PendingIntent;
+import android.content.BroadcastReceiver;
+import android.content.ClipData;
+import android.content.ClipboardManager;
 import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.support.v7.app.NotificationCompat;
+import android.widget.Toast;
 
 import eu.imouto.hupl.HttpUploader.FileToUpload;
 
@@ -72,10 +77,8 @@ public class AsyncUpload extends AsyncTask<Void, Integer, HttpUploader.HttpResul
         {
             //upload successful, show options to share/open the resulting link
             m_notBldr.addAction(R.drawable.ic_menu_share, strShare, createSharePendingIntent(result.response));
-            m_notBldr.addAction(android.R.drawable.ic_menu_view, strOpen, createOpenPendingIntent(result.response));
-
-            //TODO: figure out copy-to-clipboard
-            //m_notBldr.addAction(android.R.drawable.ic_menu_recent_history, strCopy, createCopyPendingIntent(result.response));
+            m_notBldr.addAction(R.drawable.ic_menu_copy, strCopy, createCopyPendingIntent(result.response));
+            m_notBldr.addAction(R.drawable.ic_menu_view, strOpen, createOpenPendingIntent(result.response));
 
             m_notBldr.setSmallIcon(R.drawable.ic_done_white_24dp);
             m_notBldr.setContentText(strCompl);
@@ -109,7 +112,33 @@ public class AsyncUpload extends AsyncTask<Void, Integer, HttpUploader.HttpResul
 
     private PendingIntent createCopyPendingIntent(String url)
     {
-        //TODO
-        return null;
+        CopyBroadcastReceiver receiver = new CopyBroadcastReceiver(url);
+        IntentFilter filter = new IntentFilter("com.example.ACTION_COPY");
+        m_context.registerReceiver(receiver, filter);
+
+        Intent in = new Intent("com.example.ACTION_COPY");
+
+        return PendingIntent.getBroadcast(m_context, (int)System.currentTimeMillis(), in, PendingIntent.FLAG_CANCEL_CURRENT);
     }
+
+    private class CopyBroadcastReceiver extends BroadcastReceiver
+    {
+        private String m_url;
+
+        public CopyBroadcastReceiver(String url)
+        {
+            m_url = url;
+        }
+
+        @Override
+        public void onReceive(Context context, Intent intent)
+        {
+            String strCopied = m_context.getResources().getString(R.string.toast_url_copied);
+            ClipboardManager clipMgr = (ClipboardManager)m_context.getSystemService(Context.CLIPBOARD_SERVICE);
+            ClipData data = ClipData.newPlainText("url", m_url);
+            clipMgr.setPrimaryClip(data);
+            Toast.makeText(m_context, strCopied, Toast.LENGTH_SHORT).show();
+        }
+    }
+
 }

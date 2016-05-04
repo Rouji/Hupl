@@ -31,7 +31,6 @@
     <string name="settings_delete_title">Delete</string>
     <string name="settings_delete_summary">Remove this host from the list</string>
 
-
-
+    <string name="toast_url_copied">URL copied!</string>
 
 </resources>
