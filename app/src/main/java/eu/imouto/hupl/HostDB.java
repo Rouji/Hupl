@@ -4,6 +4,7 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.database.sqlite.SQLiteException;
 import android.util.Log;
 
 import java.util.ArrayList;
@@ -32,13 +33,24 @@ public class HostDB
         m_db = context.openOrCreateDatabase("hupl", Context.MODE_PRIVATE, null);
 
         //check if the table exists
-        Cursor cursor = m_db.rawQuery("SELECT * FROM hosts LIMIT 1", null);
-        if (cursor == null || !cursor.moveToFirst())
+        try
         {
-            //create table and add default host(s)
-            m_db.execSQL(m_createQuery);
-            m_db.execSQL(m_addDefaultsQuery);
+            Cursor cursor = m_db.rawQuery("SELECT * FROM hosts LIMIT 1", null);
+            if (cursor == null || !cursor.moveToFirst()) {
+                createTable();
+            }
         }
+        catch (SQLiteException ex)
+        {
+            createTable();
+        }
+    }
+
+    private void createTable()
+    {
+        //create table and add default host(s)
+        m_db.execSQL(m_createQuery);
+        m_db.execSQL(m_addDefaultsQuery);
     }
 
     public Host getHostById(String id)
