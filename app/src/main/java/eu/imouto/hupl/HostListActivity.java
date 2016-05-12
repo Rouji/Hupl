@@ -64,15 +64,19 @@ public class HostListActivity extends AppCompatActivity
     private void updateListView()
     {
         ListView lv = (ListView) findViewById(R.id.hostEditList);
+        String strEdit = getResources().getString(R.string.actionbar_title_edit_hosts);
+        String strChoose = getResources().getString(R.string.actionbar_title_choose_upload_host);
 
         if (m_fileUri != null)
         {
             //we're sending stuff somewhere
+            setTitle(strChoose);
             lv.setOnItemClickListener(new SendItemClickListener());
         }
         else
         {
             //activity was opened without an intent, so we're looking to edit entries
+            setTitle(strEdit);
             lv.setOnItemClickListener(new EditItemClickListener());
         }
 

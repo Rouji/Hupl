@@ -31,6 +31,9 @@
     <string name="settings_delete_title">Delete</string>
     <string name="settings_delete_summary">Remove this host from the list</string>
 
+    <string name="actionbar_title_edit_hosts">Edit Hosts</string>
+    <string name="actionbar_title_choose_upload_host">Choose Host</string>
+
     <string name="toast_url_copied">URL copied!</string>
 
 </resources>
