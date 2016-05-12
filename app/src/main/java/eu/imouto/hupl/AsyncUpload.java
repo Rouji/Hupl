@@ -14,6 +14,8 @@ import android.os.AsyncTask;
 import android.support.v7.app.NotificationCompat;
 import android.widget.Toast;
 
+import java.util.Random;
+
 import eu.imouto.hupl.HttpUploader.FileToUpload;
 
 
@@ -22,6 +24,7 @@ public class AsyncUpload extends AsyncTask<Void, Integer, HttpUploader.HttpResul
     private Context m_context;
     private Host m_host;
     private FileToUpload m_file;
+    private int m_notId;
 
     NotificationManager m_notMgr;
     NotificationCompat.Builder m_notBldr;
@@ -31,23 +34,24 @@ public class AsyncUpload extends AsyncTask<Void, Integer, HttpUploader.HttpResul
         m_context = context;
         m_host = host;
         m_file = file;
+
+        Random rnd = new Random();
+        m_notId = rnd.nextInt();
     }
 
     @Override
     protected HttpUploader.HttpResult doInBackground(Void... voids)
     {
-        //String strTitle = m_context.getResources().getString(R.string.app_name);
         String strUpl = m_context.getResources().getString(R.string.notification_status_uploading);
 
         m_notMgr = (NotificationManager) m_context.getSystemService(Context.NOTIFICATION_SERVICE);
         m_notBldr = new NotificationCompat.Builder(m_context);
         m_notBldr.setContentTitle(strUpl);
-        //m_notBldr.setContentText(strUpl);
         m_notBldr.setColor(0xFF0095FF);
         m_notBldr.setSmallIcon(R.drawable.stat_sys_upload_anim0);
         m_notBldr.setLargeIcon(BitmapFactory.decodeResource(m_context.getResources(),R.mipmap.ic_launcher));
         m_notBldr.setProgress(0,0,true);
-        m_notMgr.notify(1, m_notBldr.build());
+        m_notMgr.notify(m_notId, m_notBldr.build());
 
         //upload file
         return HttpUploader.uploadFile(m_host, m_file);
@@ -89,7 +93,7 @@ public class AsyncUpload extends AsyncTask<Void, Integer, HttpUploader.HttpResul
 
         m_notBldr.setProgress(0,0,false);
 
-        m_notMgr.notify(1, m_notBldr.build());
+        m_notMgr.notify(m_notId, m_notBldr.build());
     }
 
     private PendingIntent createSharePendingIntent(String url)
