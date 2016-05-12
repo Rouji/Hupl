@@ -18,11 +18,11 @@ public class HostDB
     private final String m_createQuery =
             "CREATE TABLE IF NOT EXISTS hosts("+
                     "id INTEGER PRIMARY KEY AUTOINCREMENT,"+
-                    "title VARCHAR,"+
-                    "hostUrl VARCHAR,"+
-                    "fileParam VARCHAR,"+
-                    "authUser VARCHAR,"+
-                    "authPass VARCHAR);";
+                    "title VARCHAR NOT NULL DEFAULT '',"+
+                    "hostUrl VARCHAR NOT NULL DEFAULT '',"+
+                    "fileParam VARCHAR NOT NULL DEFAULT '',"+
+                    "authUser VARCHAR NOT NULL DEFAULT '',"+
+                    "authPass VARCHAR NOT NULL DEFAULT '');";
 
     private final String m_addDefaultsQuery =
             "INSERT INTO hosts(title,hostUrl,fileParam,authUser,authPass)"+
@@ -117,11 +117,15 @@ public class HostDB
         host.title = "New Host";
         host.hostUrl = "https://example.com/";
         host.fileParam = "file";
+        host.authUser = "";
+        host.authPass = "";
 
         ContentValues cv = new ContentValues();
         cv.put("title", host.title);
         cv.put("hostUrl", host.hostUrl);
         cv.put("fileParam",host.fileParam);
+        cv.put("authUser",host.authUser);
+        cv.put("authPass",host.authPass);
         long id = m_db.insert(m_tableName,null, cv);
         if (id == -1)
         {
