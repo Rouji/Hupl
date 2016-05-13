@@ -200,8 +200,6 @@ public class HostListActivity extends AppCompatActivity
             fileName = rndString(6)+"."+ext;
         }
 
-        Toast.makeText(this,fileName,Toast.LENGTH_LONG).show();
-
         HttpUploader.FileToUpload file = new HttpUploader.FileToUpload();
         file.fileName = fileName;
         file.inputStream = fileStream;
