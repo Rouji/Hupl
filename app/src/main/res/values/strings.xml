@@ -34,6 +34,6 @@
     <string name="actionbar_title_edit_hosts">Edit Hosts</string>
     <string name="actionbar_title_choose_upload_host">Choose Host</string>
 
-    <string name="toast_url_copied">URL copied!</string>
+    <string name="toast_url_copied">Link copied!</string>
 
 </resources>
