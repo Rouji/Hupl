@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Hupl</string>
+    <string name="notification_button_copy">コピー</string>
+    <string name="notification_status_complete">アップロード完了！</string>
+    <string name="notification_status_uploading">アップロード中</string>
+    <string name="settings_authpass_title">パスワード</string>
+    <string name="settings_delete_title">削除</string>
+    <string name="settings_delete_summary">このホストを削除します</string>
+    <string name="notification_button_share">共有</string>
+    <string name="share_chooser_title">リンクを共有</string>
+    <string name="toast_url_copied">リンクがコピーされました</string>
+    <string name="settings_url_title">URL</string>
+    <string name="settings_url_summary">アップロード先のURL</string>
+    <string name="settings_category_host">ホスト</string>
+    <string name="list_add_host">ホストを追加</string>
+    <string name="notification_button_open">開く</string>
+    <string name="settings_category_auth">HTTP Basic認証</string>
+    <string name="notification_status_exception">エラーが発生しました</string>
+    <string name="settings_authuser_title">ユーザー名</string>
+    <string name="settings_title_title">名前</string>
+    <string name="actionbar_title_edit_hosts">ホストを編集</string>
+    <string name="settings_parameter_summary">ファイル名を指摘するパラメータの名</string>
+    <string name="settings_parameter_title">ファイルパラメータ</string>
+    <string name="settings_authuser_summary">認証を無効するには空白にしてください</string>
+    <string name="settings_category_etc">その他</string>
+    <string name="actionbar_title_choose_upload_host">アップロード先を選択</string>
+</resources>

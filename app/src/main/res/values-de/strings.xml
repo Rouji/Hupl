@@ -10,12 +10,12 @@
     <string name="notification_status_uploading">Uploade Datei</string>
     <string name="actionbar_title_edit_hosts">Hosts Editieren</string>
     <string name="actionbar_title_choose_upload_host">Host Auswählen</string>
-    <string name="notification_status_bad_response">Fehlerhafte antwort vom Server</string>
+    <string name="notification_status_bad_response">Fehlerhafte Antwort vom Server</string>
     <string name="settings_authpass_title">Passwort</string>
     <string name="settings_authuser_summary">Leer lassen für keine Auth.</string>
     <string name="settings_authuser_title">Benutzername</string>
-    <string name="settings_category_auth">HTTP Auth.</string>
-    <string name="settings_category_etc">etc.</string>
+    <string name="settings_category_auth">HTTP Basic Auth.</string>
+    <string name="settings_category_etc">Etc.</string>
     <string name="settings_category_host">Host</string>
     <string name="settings_delete_summary">Diesen Host löschen</string>
     <string name="settings_delete_title">Löschen</string>
