@@ -19,7 +19,9 @@ import java.util.Random;
 import eu.imouto.hupl.HttpUploader.FileToUpload;
 
 
-public class AsyncUpload extends AsyncTask<Void, Integer, HttpUploader.HttpResult>
+public class AsyncUpload
+        extends AsyncTask<Void, int[], HttpUploader.HttpResult>
+        implements HttpUploader.HttpProgressReceiver
 {
     private Context m_context;
     private Host m_host;
@@ -40,6 +42,37 @@ public class AsyncUpload extends AsyncTask<Void, Integer, HttpUploader.HttpResul
     }
 
     @Override
+    public void uploadProgress(int uploaded, int fileSize)
+    {
+        publishProgress(new int[] {uploaded, fileSize});
+    }
+
+    //spits out a human-friendly string for a byte value
+    private static String humanify(int bytes)
+    {
+        if (bytes > 1024*1024*1024) return String.format("%.1f GiB",(float)bytes / (1024.0*1024.0*1024.0));
+        if (bytes > 1024*1024) return String.format("%.1f MiB",(float)bytes / (1024.0*1024.0));
+        if (bytes > 1024) return String.format("%.1f KiB",(float)bytes / 1024.0);
+        return String.format("% B", bytes);
+    }
+
+    @Override
+    protected void onProgressUpdate(int[]... progress)
+    {
+        if (progress[0][1] == -1)
+        {
+            m_notBldr.setContentText(humanify(progress[0][0]));
+            m_notBldr.setProgress(0,0,true);
+        }
+        else
+        {
+            m_notBldr.setContentText(humanify(progress[0][0]) + " / " + humanify(progress[0][1]));
+            m_notBldr.setProgress(progress[0][1], progress[0][0], false);
+        }
+        m_notMgr.notify(m_notId, m_notBldr.build());
+    }
+
+    @Override
     protected HttpUploader.HttpResult doInBackground(Void... voids)
     {
         String strUpl = m_context.getResources().getString(R.string.notification_status_uploading);
@@ -54,7 +87,7 @@ public class AsyncUpload extends AsyncTask<Void, Integer, HttpUploader.HttpResul
         m_notMgr.notify(m_notId, m_notBldr.build());
 
         //upload file
-        return HttpUploader.uploadFile(m_host, m_file);
+        return HttpUploader.uploadFile(m_host, m_file, this);
     }
 
     @Override

@@ -1,16 +1,21 @@
 package eu.imouto.hupl;
 
 import android.util.Base64;
-import android.util.Log;
 
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
+import java.io.IOException;
 import java.io.InputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
 public class HttpUploader
 {
+    public static interface HttpProgressReceiver
+    {
+        void uploadProgress(int uploaded, int fileSize);
+    }
+
     public static class HttpResult
     {
         public int status = 0;
@@ -35,12 +40,19 @@ public class HttpUploader
     private final static String eol = "\r\n";
     private final static String boundary = "--------adc3da76e82a06e9ea5e31b36aab8bda";
     private final static String hyphens = "--";
-    private final static int bufferSize = 1024*1024;
+    private final static int bufferSize = 1024*16;
 
-    static HttpResult uploadFile(Host host, FileToUpload file)
+    static HttpResult uploadFile(Host host, FileToUpload file, HttpProgressReceiver prog)
     {
         HttpResult res = new HttpResult();
         StringBuilder responseBuilder = new StringBuilder();
+        int fileSize = -1;
+        try
+        {
+            fileSize = file.inputStream.available();
+        }
+        catch (IOException e)
+        {}
 
         HttpURLConnection connection = null;
         DataOutputStream outputStream = null;
@@ -62,6 +74,7 @@ public class HttpUploader
             connection.setRequestMethod("POST");
             connection.setRequestProperty("Connection", "Keep-Alive");
             connection.setRequestProperty("Content-Type", "multipart/form-data;boundary="+boundary);
+            connection.setRequestProperty("Transfer-Encoding", "chunked");
             connection.setChunkedStreamingMode(bufferSize);
 
             //set basic auth
@@ -77,11 +90,14 @@ public class HttpUploader
             outputStream.writeBytes("Content-Disposition: form-data; name=\""+host.fileParam+"\";filename=\"" + file.fileName +"\"" + eol);
             outputStream.writeBytes(eol);
 
-            int ov = 0;
+            int written = 0;
             //write file contents
             while ((bytesRead = file.inputStream.read(buffer, 0, bufferSize)) > 0)
             {
                 outputStream.write(buffer, 0, bytesRead);
+                written += bytesRead;
+                if (prog != null)
+                    prog.uploadProgress(written, fileSize);
             }
 
             //write multipart footer

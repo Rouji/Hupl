@@ -27,7 +27,7 @@
     <string name="settings_authuser_title">User</string>
     <string name="settings_authuser_summary">Leave empty for no auth</string>
     <string name="settings_authpass_title">Password</string>
-    <string name="settings_authpass_summary"></string>
+    <string name="settings_authpass_summary" translatable="false"></string>
     <string name="settings_delete_title">Delete</string>
     <string name="settings_delete_summary">Remove this host from the list</string>
 
