@@ -25,4 +25,6 @@
     <string name="settings_authuser_summary">認証を無効するには空白にしてください</string>
     <string name="settings_category_etc">その他</string>
     <string name="actionbar_title_choose_upload_host">アップロード先を選択</string>
+    <string name="notification_status_bad_response">不正なレスポンスを受信した</string>
+    <string name="settings_title_summary">読みやすい名前</string>
 </resources>
