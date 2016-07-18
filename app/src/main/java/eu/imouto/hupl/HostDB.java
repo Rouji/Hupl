@@ -26,7 +26,12 @@ public class HostDB
 
     private final String m_addDefaultsQuery =
             "INSERT INTO hosts(title,hostUrl,fileParam,authUser,authPass)"+
-                    "VALUES ('Imouto','https://filedump.imouto.eu/','file','','');";
+            "VALUES "+
+                    "('Imouto','https://filedump.imouto.eu/','file','',''),"+
+                    "('0x0','https://0x0.st/','file','','');";
+                    //"('clbin','https://clbin.com','clbin','',''),"+
+                    //"('sprunge','http://sprunge.us/','sprunge','',''),"+
+                    //"('ix','http://ix.io','file','f:1','');";
 
     public HostDB(Context context)
     {
