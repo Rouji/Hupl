@@ -42,18 +42,21 @@ public class ImageResize
 
     public InputStream resize(Bitmap bitmap)
     {
-        float srcRat = bitmap.getWidth()/(float)bitmap.getHeight();
-        float dstRat = width/(float)height;
-        float scale = dstRat > srcRat ? height / (float)bitmap.getHeight() : width / (float)bitmap.getWidth();
+        if (bitmap.getWidth() > width || bitmap.getHeight() > height)
+        {
+            float srcRat = bitmap.getWidth()/(float)bitmap.getHeight();
+            float dstRat = width/(float)height;
+            float scale = dstRat > srcRat ? height / (float)bitmap.getHeight() : width / (float)bitmap.getWidth();
 
-        Bitmap scaledBitmap = Bitmap.createScaledBitmap(
-                bitmap,
-                Math.round(scale * bitmap.getWidth()),
-                Math.round(scale * bitmap.getHeight()),
-                true);
+            bitmap = Bitmap.createScaledBitmap(
+                    bitmap,
+                    Math.round(scale * bitmap.getWidth()),
+                    Math.round(scale * bitmap.getHeight()),
+                    true);
+        }
 
         ByteArrayOutputStream outStream = new ByteArrayOutputStream();
-        scaledBitmap.compress(Bitmap.CompressFormat.JPEG, quality, outStream);
+        bitmap.compress(Bitmap.CompressFormat.JPEG, quality, outStream);
 
         return new ByteArrayInputStream(outStream.toByteArray());
     }
