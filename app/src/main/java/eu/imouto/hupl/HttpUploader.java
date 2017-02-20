@@ -9,6 +9,8 @@ import java.io.InputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
+import eu.imouto.hupl.data.Host;
+
 public class HttpUploader
 {
     public static interface HttpProgressReceiver

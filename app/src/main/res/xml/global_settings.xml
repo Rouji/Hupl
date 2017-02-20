@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+    <CheckBoxPreference
+        android:key="ignore_cert"
+        android:title="Invalid Certs"
+        android:summary="Accept all SSL certificates, including invalid ones" />
+    <PreferenceScreen
+        android:key="image_resize"
+        android:title="Image Resize"
+        android:persistent="false">
+        <EditTextPreference
+            android:key="image_resize_width"
+            android:title="Width"
+            android:summary="Max. width"
+            android:defaultValue="1000"
+            android:inputType="number">
+        </EditTextPreference>
+        <EditTextPreference
+            android:key="image_resize_height"
+            android:title="Height"
+            android:summary="Max. height"
+            android:defaultValue="1000"
+            android:inputType="number">
+        </EditTextPreference>
+        <EditTextPreference
+            android:key="image_resize_quality"
+            android:title="JPEG Quality"
+            android:summary="JPEG Quality for resized images"
+            android:inputType="number"
+            android:defaultValue="80"/>
+    </PreferenceScreen>
+</PreferenceScreen>

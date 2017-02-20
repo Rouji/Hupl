@@ -17,6 +17,9 @@ import android.widget.Toast;
 import java.util.Random;
 
 import eu.imouto.hupl.HttpUploader.FileToUpload;
+import eu.imouto.hupl.data.HistoryDB;
+import eu.imouto.hupl.data.HistoryEntry;
+import eu.imouto.hupl.data.Host;
 
 
 public class AsyncUpload
@@ -127,6 +130,15 @@ public class AsyncUpload
         m_notBldr.setProgress(0,0,false);
 
         m_notMgr.notify(m_notId, m_notBldr.build());
+
+        HistoryEntry he = new HistoryEntry();
+        he.uploader = "hurr";
+        he.link = result.response;
+        he.mime = "a mime";
+        he.originalName = "legit.jpg";
+        he.thumbnail = null;
+        HistoryDB hdb = new HistoryDB(m_context);
+        hdb.addEntry(he);
     }
 
     private PendingIntent createSharePendingIntent(String url)

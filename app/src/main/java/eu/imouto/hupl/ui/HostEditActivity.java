@@ -1,15 +1,14 @@
-package eu.imouto.hupl;
+package eu.imouto.hupl.ui;
 
-import android.content.Context;
 import android.content.Intent;
-import android.database.Cursor;
-import android.database.sqlite.SQLiteDatabase;
 import android.preference.EditTextPreference;
 import android.preference.Preference;
 import android.preference.PreferenceActivity;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.widget.Toast;
+
+import eu.imouto.hupl.data.Host;
+import eu.imouto.hupl.data.HostDB;
+import eu.imouto.hupl.R;
 
 public class HostEditActivity extends PreferenceActivity
 {

@@ -1,4 +1,4 @@
-package eu.imouto.hupl;
+package eu.imouto.hupl.data;
 
 public class Host
 {

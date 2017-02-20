@@ -1,30 +1,23 @@
-package eu.imouto.hupl;
+package eu.imouto.hupl.ui;
 
-import android.app.NotificationManager;
-import android.content.ContentResolver;
-import android.content.Context;
 import android.content.Intent;
-import android.database.Cursor;
-import android.graphics.BitmapFactory;
 import android.net.Uri;
-import android.provider.OpenableColumns;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.support.v7.app.NotificationCompat;
 import android.view.View;
-import android.webkit.MimeTypeMap;
 import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import java.io.FileNotFoundException;
-import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Random;
+
+import eu.imouto.hupl.data.Host;
+import eu.imouto.hupl.data.HostDB;
+import eu.imouto.hupl.R;
+import eu.imouto.hupl.upload.UploadManager;
 
 public class HostListActivity extends AppCompatActivity
 {
@@ -153,90 +146,9 @@ public class HostListActivity extends AppCompatActivity
         }
     }
 
-
-    private static String rndString(int len)
-    {
-        final String charset = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz-_";
-        Random rnd = new Random();
-        StringBuilder sb = new StringBuilder(len);
-
-        for (int i = 0; i < len; ++i)
-        {
-            sb.append(charset.charAt(rnd.nextInt(charset.length())));
-        }
-
-        return sb.toString();
-    }
-
-
     private void uploadFile(Uri fileUri, Host host)
     {
-        ContentResolver contentRes = getContentResolver();
-        InputStream fileStream = null;
+        UploadManager.getInstance().startUpload(getApplicationContext(), fileUri, host.title, true);
 
-        try
-        {
-            fileStream = contentRes.openInputStream(fileUri);
-        }
-        catch (FileNotFoundException e)
-        {
-            return;
-        }
-
-        //try to get the original filename and extension
-        String fileName = fileNameFromUri(fileUri);
-
-        //if the original filename can't be found,
-        //generate a randomised file name and try to find an extension using mime type
-        if (fileName == null)
-        {
-            MimeTypeMap mimeMap = MimeTypeMap.getSingleton();
-            String ext = mimeMap.getExtensionFromMimeType(contentRes.getType(fileUri));
-
-            //assume a generic binary format, if no mime type matches
-            if (ext == null)
-                ext = "bin";
-
-            fileName = rndString(6)+"."+ext;
-        }
-
-        HttpUploader.FileToUpload file = new HttpUploader.FileToUpload();
-        file.fileName = fileName;
-        file.inputStream = fileStream;
-
-        AsyncUpload asyncUpload = new AsyncUpload(this,host,file);
-        asyncUpload.execute();
     }
-
-    private String fileNameFromUri(Uri fileUri)
-    {
-        String name = null;
-        if(fileUri.getScheme().equals("content"))
-        {
-            Cursor cursor = getContentResolver().query(fileUri, null, null, null, null);
-            try
-            {
-                if (cursor != null && cursor.moveToFirst())
-                {
-                    name = cursor.getString(cursor.getColumnIndex(OpenableColumns.DISPLAY_NAME));
-                }
-            }
-            finally
-            {
-                cursor.close();
-            }
-        }
-        else if (fileUri.getScheme().equals("file"))
-        {
-            String path = fileUri.getPath();
-            int lastSlash = path.lastIndexOf('/');
-            if (lastSlash != -1)
-            {
-                name = path.substring(lastSlash+1);
-            }
-        }
-
-        return name;
-    }
-
 }

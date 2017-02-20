@@ -1,4 +1,4 @@
-package eu.imouto.hupl;
+package eu.imouto.hupl.data;
 
 import android.content.ContentValues;
 import android.content.Context;
