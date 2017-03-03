@@ -17,6 +17,6 @@ public class FeedbackActivity extends DrawerActivity
     protected void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
-        setTitle("Feedback");
+        setTitle(getResources().getString(R.string.feedback));
     }
 }

@@ -46,7 +46,7 @@ public class HistoryActivity extends DrawerActivity
     {
         super.onCreate(savedInstanceState);
 
-        setTitle("History");
+        setTitle(getResources().getString(R.string.history));
 
         histAdapter = new HistoryAdapter(this, new ArrayList<HistoryEntry>());
 
