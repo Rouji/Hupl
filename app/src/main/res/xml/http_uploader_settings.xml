@@ -1,17 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
-    <PreferenceCategory android:title="@string/settings_category_host" >
+    <PreferenceCategory android:title="@string/httpuploader_category_host" >
         <EditTextPreference
-            android:title="@string/settings_title_title"
-            android:summary="@string/settings_title_summary"
+            android:title="@string/httpuploader_name_title"
+            android:summary="@string/httpuploader_title_summary"
             android:key="name"/>
         <EditTextPreference
-            android:title="@string/settings_url_title"
-            android:summary="@string/settings_url_summary"
+            android:title="@string/httpuploader_url_title"
+            android:summary="@string/httpuploader_url_summary"
             android:key="targetUrl"/>
         <EditTextPreference
-            android:title="@string/settings_parameter_title"
-            android:summary="@string/settings_parameter_summary"
+            android:title="@string/httpuploader_param_title"
+            android:summary="@string/httpuploader_param_summary"
             android:key="fileParam"/>
 
         <EditTextPreference
@@ -20,14 +20,14 @@
             android:key="responseRegex"/>
     </PreferenceCategory>
 
-    <PreferenceCategory android:title="@string/settings_category_auth" >
+    <PreferenceCategory android:title="@string/httpuploader_category_auth" >
         <EditTextPreference
-            android:title="@string/settings_authuser_title"
-            android:summary="@string/settings_authuser_summary"
+            android:title="@string/httuploader_user_title"
+            android:summary="@string/httpuploader_user_summary"
             android:key="authUser"/>
         <EditTextPreference
-            android:title="@string/settings_authpass_title"
-            android:summary="@string/settings_authpass_summary"
+            android:title="@string/httpuploader_pass_title"
+            android:summary="@string/httpuploader_pass_summary"
             android:key="authPass"/>
     </PreferenceCategory>
 </PreferenceScreen>

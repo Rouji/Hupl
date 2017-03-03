@@ -17,6 +17,6 @@ public class AboutActivity extends DrawerActivity
     protected void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
-        setTitle("About");
+        setTitle(getResources().getString(R.string.about));
     }
 }

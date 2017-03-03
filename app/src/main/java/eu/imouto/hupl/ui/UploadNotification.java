@@ -40,7 +40,7 @@ public class UploadNotification
             .setColor(0xFF0095FF)
             .setSmallIcon(R.drawable.ic_cloud_upload)
             .setProgress(0, 0, false)
-            .addAction(0, "Cancel", createCancelPendingIntent(uploadId)) //TODO: strings.xml
+            .addAction(0, str(R.string.notification_button_cancel), createCancelPendingIntent(uploadId))
             .setOngoing(false);
         setThumbnail(BitmapFactory.decodeResource(context.getResources(), R.mipmap.ic_launcher));
     }
@@ -86,18 +86,18 @@ public class UploadNotification
         notBldr.setSmallIcon(R.drawable.ic_cloud_done)
 
             .addAction(0,
-                       str(R.string.notification_button_share),
+                       str(R.string.share),
                        createSharePendingIntent(downloadLink))
 
             .addAction(0,
-                       str(R.string.notification_button_copy),
+                       str(R.string.copy),
                        createCopyPendingIntent(downloadLink))
 
             .addAction(0,
-                       str(R.string.notification_button_open),
+                       str(R.string.open),
                        createOpenPendingIntent(downloadLink))
 
-            .setContentTitle(str(R.string.notification_status_complete) + fileName) //TODO: update strings.xml, use some more flexible format() -ing?
+            .setContentTitle(str(R.string.notification_status_complete) + ": " + fileName)
             .setContentText(downloadLink)
             .setProgress(0, 0, false)
             .setOngoing(false);
@@ -108,7 +108,7 @@ public class UploadNotification
     {
         clearActions();
         notBldr.setSmallIcon(R.drawable.ic_error_outline)
-            .setContentTitle("Failed: " + fileName) //TODO: use strings.xml
+            .setContentTitle(str(R.string.notification_status_failed) + ": " + fileName)
             .setContentText(error);
 
 //        notBldr.addAction(0, "Retry", null); //TODO: retry action
@@ -126,8 +126,8 @@ public class UploadNotification
     {
         clearActions();
         notBldr.setSmallIcon(R.drawable.ic_error_outline)
-                .setContentTitle("Cancelled: " + fileName) //TODO: use strings.xml
-                .setContentText(null)
+                .setContentTitle(str(R.string.notification_status_cancelled))
+                .setContentText(fileName)
                 .setProgress(0, 0, false)
                 .setOngoing(false);
 
