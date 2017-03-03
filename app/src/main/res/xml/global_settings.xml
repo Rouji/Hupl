@@ -1,13 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
-    <CheckBoxPreference
+    <!-- <CheckBoxPreference
         android:key="ignore_cert"
         android:title="Invalid Certs"
-        android:summary="Accept all SSL certificates, including invalid ones" />
-    <PreferenceScreen
-        android:key="image_resize"
-        android:title="Image Resize"
-        android:persistent="false">
+        android:summary="Accept all SSL certificates, including invalid ones" /> -->
+    <PreferenceCategory
+        android:title = "Image Resize">
         <EditTextPreference
             android:key="image_resize_width"
             android:title="Width"
@@ -28,5 +26,5 @@
             android:summary="JPEG Quality for resized images"
             android:inputType="number"
             android:defaultValue="80"/>
-    </PreferenceScreen>
+    </PreferenceCategory>
 </PreferenceScreen>
