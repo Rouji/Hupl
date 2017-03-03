@@ -75,7 +75,7 @@ public class HistoryActivity extends DrawerActivity
         public HistoryAdapter(Context context, ArrayList<HistoryEntry> entries)
         {
             super(context, 0, entries);
-            df = DateFormat.getDateInstance(DateFormat.LONG);
+            df = DateFormat.getDateTimeInstance(DateFormat.LONG, DateFormat.SHORT);
         }
 
         @NonNull
