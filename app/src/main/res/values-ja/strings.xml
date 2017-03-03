@@ -2,7 +2,7 @@
 <resources>
     <string name="app_name">Hupl</string>
     <string name="notification_button_copy">コピー</string>
-    <string name="notification_status_complete">アップロード完了！</string>
+    <string name="notification_status_complete">完了</string>
     <string name="notification_status_uploading">アップロード中</string>
     <string name="settings_authpass_title">パスワード</string>
     <string name="notification_button_share">共有</string>
@@ -30,4 +30,7 @@
     <string name="delete">削除</string>
     <string name="save">保存</string>
     <string name="resize_images">画像を縮小</string>
+    <string name="notification_status_cancelled">キャンセルした</string>
+    <string name="notification_button_cancel">キャンセル</string>
+    <string name="notification_status_failed">失敗</string>
 </resources>

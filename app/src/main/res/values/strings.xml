@@ -2,7 +2,7 @@
     <string name="app_name">Hupl</string>
 
     <string name="notification_status_uploading">Uploading File</string>
-    <string name="notification_status_complete">Upload Complete!</string>
+    <string name="notification_status_complete">Complete</string>
 
     <string name="notification_button_share">Share</string>
     <string name="notification_button_copy">Copy</string>
@@ -38,6 +38,9 @@
     <string name="feedback">Feedback</string>
     <string name="delete">Delete</string>
     <string name="save">Save</string>
+    <string name="notification_status_cancelled">Cancelled</string>
+    <string name="notification_button_cancel">Cancel</string>
+    <string name="notification_status_failed">Failed</string>
 
     <!-- TODO: Remove or change this placeholder text -->
 

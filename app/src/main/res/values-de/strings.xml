@@ -5,7 +5,7 @@
     <string name="notification_button_copy">Kopieren</string>
     <string name="notification_button_open">Öffnen</string>
     <string name="notification_button_share">Teilen</string>
-    <string name="notification_status_complete">Upload Fertig!</string>
+    <string name="notification_status_complete">Fertig</string>
     <string name="notification_status_uploading">Uploade Datei</string>
     <string name="actionbar_title_edit_uploaders">Hosts Editieren</string>
     <string name="actionbar_title_choose_uploader">Host Auswählen</string>
@@ -30,4 +30,7 @@
     <string name="delete">Löschen</string>
     <string name="save">Speichern</string>
     <string name="resize_images">Bilder Verkleinern</string>
+    <string name="notification_status_cancelled">Abgebrochen</string>
+    <string name="notification_button_cancel">Abbrechen</string>
+    <string name="notification_status_failed">Fehlgeschlagen</string>
 </resources>
