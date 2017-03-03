@@ -61,8 +61,8 @@ public class ChooseUploaderActivity extends DrawerActivity
     {
         super.onResume();
 
-        String strEdit = getResources().getString(R.string.actionbar_title_edit_uploaders);
-        String strChoose = getResources().getString(R.string.actionbar_title_choose_uploader);
+        String strEdit = getResources().getString(R.string.uploaders);
+        String strChoose = getResources().getString(R.string.choose_uploader);
 
         if (fileUri != null)
         {

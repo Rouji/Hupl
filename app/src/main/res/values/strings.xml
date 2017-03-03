@@ -12,22 +12,29 @@
 
     <string name="list_add_host">Add Uploader</string>
 
-    <string name="settings_category_host">Host</string>
-    <string name="settings_category_auth">HTTP Basic Auth.</string>
+    <string name="resize_category">Image Resize</string>
+    <string name="resize_width_title">Width</string>
+    <string name="resize_width_summary">Max. Width</string>
+    <string name="resize_height_title">Height</string>
+    <string name="resize_height_summary">Max. Height</string>
+    <string name="resize_quality_title">Quality</string>
 
-    <string name="settings_title_title">Name</string>
-    <string name="settings_title_summary">Short, user-friendly name</string>
-    <string name="settings_url_title">Upload URL</string>
-    <string name="settings_url_summary">The URL to post files to</string>
-    <string name="settings_parameter_title">File Parameter</string>
-    <string name="settings_parameter_summary">The POST parameter, that holds the filename</string>
-    <string name="settings_authuser_title">User</string>
-    <string name="settings_authuser_summary">Leave empty for no auth</string>
-    <string name="settings_authpass_title">Password</string>
-    <string name="settings_authpass_summary" translatable="false"></string>
+    <string name="httpuploader_category_host">Host</string>
+    <string name="httpuploader_category_auth">HTTP Basic Auth.</string>
 
-    <string name="actionbar_title_edit_uploaders">Edit Hosts</string>
-    <string name="actionbar_title_choose_uploader">Choose Host</string>
+    <string name="httpuploader_name_title">Name</string>
+    <string name="httpuploader_title_summary">Short, user-friendly name</string>
+    <string name="httpuploader_url_title">Upload URL</string>
+    <string name="httpuploader_url_summary">The URL to post files to</string>
+    <string name="httpuploader_param_title">File Parameter</string>
+    <string name="httpuploader_param_summary">The POST parameter, that holds the filename</string>
+    <string name="httuploader_user_title">User</string>
+    <string name="httpuploader_user_summary">Leave empty for no auth</string>
+    <string name="httpuploader_pass_title">Password</string>
+    <string name="httpuploader_pass_summary" translatable="false"></string>
+
+    <string name="actionbar_title_uploaders">Edit Hosts</string>
+    <string name="choose_uploader">Choose Uploader</string>
 
     <string name="toast_url_copied">Link copied!</string>
     <string name="resize_images">Resize Images</string>
@@ -41,6 +48,7 @@
     <string name="notification_status_cancelled">Cancelled</string>
     <string name="notification_button_cancel">Cancel</string>
     <string name="notification_status_failed">Failed</string>
+    <string name="resize_quality_summary">JPEG Quality between 0-100</string>
 
     <!-- TODO: Remove or change this placeholder text -->
 

@@ -5,25 +5,25 @@
         android:title="Invalid Certs"
         android:summary="Accept all SSL certificates, including invalid ones" /> -->
     <PreferenceCategory
-        android:title = "Image Resize">
+        android:title = "@string/resize_category">
         <EditTextPreference
             android:key="image_resize_width"
-            android:title="Width"
-            android:summary="Max. width"
+            android:title="@string/resize_width_title"
+            android:summary="@string/resize_width_summary"
             android:defaultValue="1000"
             android:inputType="number">
         </EditTextPreference>
         <EditTextPreference
             android:key="image_resize_height"
-            android:title="Height"
-            android:summary="Max. height"
+            android:title="@string/resize_height_title"
+            android:summary="@string/resize_height_summary"
             android:defaultValue="1000"
             android:inputType="number">
         </EditTextPreference>
         <EditTextPreference
             android:key="image_resize_quality"
-            android:title="JPEG Quality"
-            android:summary="JPEG Quality for resized images"
+            android:title="@string/resize_quality_title"
+            android:summary="@string/resize_quality_summary"
             android:inputType="number"
             android:defaultValue="80"/>
     </PreferenceCategory>
