@@ -22,7 +22,7 @@
 
         <Button
             style="?android:attr/buttonStyleSmall"
-            android:text="Delete"
+            android:text="@string/delete"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"
@@ -31,7 +31,7 @@
 
         <Button
             style="?android:attr/buttonStyleSmall"
-            android:text="Save"
+            android:text="@string/save"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"

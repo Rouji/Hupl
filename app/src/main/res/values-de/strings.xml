@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">Hupl</string>
-    <string name="list_add_host">Neuer Host</string>
+    <string name="list_add_host">Neuer Uploader</string>
     <string name="notification_button_copy">Kopieren</string>
     <string name="notification_button_open">Öffnen</string>
     <string name="notification_button_share">Teilen</string>
@@ -27,4 +27,12 @@
     <string name="settings_url_title">Upload URL</string>
     <string name="share_chooser_title">Link Teilen</string>
     <string name="toast_url_copied">Link kopiert!</string>
+    <string name="uploaders">Uploader</string>
+    <string name="history">Verlauf</string>
+    <string name="settings">Settings</string>
+    <string name="about">About</string>
+    <string name="feedback">Feedback</string>
+    <string name="delete">Löschen</string>
+    <string name="save">Speichern</string>
+    <string name="resize_images">Bilder Verkleinern</string>
 </resources>
