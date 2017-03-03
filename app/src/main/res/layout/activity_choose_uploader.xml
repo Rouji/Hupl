@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:tools="http://schemas.android.com/tools"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              tools:context=".ui.ChooseUploaderActivity"
+              android:orientation="vertical">
+
+    <ListView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/uploaderList"
+        android:layout_weight="1"/>
+
+    <Button
+        style="?android:attr/buttonStyleSmall"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/list_add_host"
+        android:id="@+id/newUploader"
+        android:onClick="newUploaderClick"/>
+
+    <CheckBox
+        android:text="@string/resize_images"
+        android:layout_width="match_parent"
+        android:layout_gravity="center"
+        android:textAlignment="gravity"
+        android:id="@+id/enableResize"
+        android:button="@null"
+        android:drawableRight="?android:attr/listChoiceIndicatorMultiple"
+        android:focusable="false"
+        android:paddingLeft="24dp"
+        android:paddingRight="24dp"
+        android:layout_weight="1"
+        android:layout_height="128dp"
+        android:textSize="18sp"/>
+
+</LinearLayout>

@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+    <PreferenceCategory android:title="@string/settings_category_host" >
+        <EditTextPreference
+            android:title="@string/settings_title_title"
+            android:summary="@string/settings_title_summary"
+            android:key="name"/>
+        <EditTextPreference
+            android:title="@string/settings_url_title"
+            android:summary="@string/settings_url_summary"
+            android:key="targetUrl"/>
+        <EditTextPreference
+            android:title="@string/settings_parameter_title"
+            android:summary="@string/settings_parameter_summary"
+            android:key="fileParam"/>
+
+        <EditTextPreference
+            android:title="Response Regex"
+            android:summary="Filter server response"
+            android:key="responseRegex"/>
+    </PreferenceCategory>
+
+    <PreferenceCategory android:title="@string/settings_category_auth" >
+        <EditTextPreference
+            android:title="@string/settings_authuser_title"
+            android:summary="@string/settings_authuser_summary"
+            android:key="authUser"/>
+        <EditTextPreference
+            android:title="@string/settings_authpass_title"
+            android:summary="@string/settings_authpass_summary"
+            android:key="authPass"/>
+    </PreferenceCategory>
+</PreferenceScreen>

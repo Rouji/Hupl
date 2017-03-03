@@ -3,8 +3,6 @@
 
     <string name="notification_status_uploading">Uploading File</string>
     <string name="notification_status_complete">Upload Complete!</string>
-    <string name="notification_status_exception">Error occurred</string>
-    <string name="notification_status_bad_response">Bad response from server</string>
 
     <string name="notification_button_share">Share</string>
     <string name="notification_button_copy">Copy</string>
@@ -12,11 +10,10 @@
 
     <string name="share_chooser_title">Share Link</string>
 
-    <string name="list_add_host">Add Host</string>
+    <string name="list_add_host">Add Uploader</string>
 
     <string name="settings_category_host">Host</string>
     <string name="settings_category_auth">HTTP Basic Auth.</string>
-    <string name="settings_category_etc">Etc.</string>
 
     <string name="settings_title_title">Name</string>
     <string name="settings_title_summary">Short, user-friendly name</string>
@@ -28,12 +25,20 @@
     <string name="settings_authuser_summary">Leave empty for no auth</string>
     <string name="settings_authpass_title">Password</string>
     <string name="settings_authpass_summary" translatable="false"></string>
-    <string name="settings_delete_title">Delete</string>
-    <string name="settings_delete_summary">Remove this host from the list</string>
 
-    <string name="actionbar_title_edit_hosts">Edit Hosts</string>
-    <string name="actionbar_title_choose_upload_host">Choose Host</string>
+    <string name="actionbar_title_edit_uploaders">Edit Hosts</string>
+    <string name="actionbar_title_choose_uploader">Choose Host</string>
 
     <string name="toast_url_copied">Link copied!</string>
+    <string name="resize_images">Resize Images</string>
+    <string name="uploaders">Uploaders</string>
+    <string name="history">History</string>
+    <string name="settings">Settings</string>
+    <string name="about">About</string>
+    <string name="feedback">Feedback</string>
+    <string name="delete">Delete</string>
+    <string name="save">Save</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
 
 </resources>
