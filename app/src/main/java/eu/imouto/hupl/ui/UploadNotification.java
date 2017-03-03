@@ -86,15 +86,15 @@ public class UploadNotification
         notBldr.setSmallIcon(R.drawable.ic_cloud_done)
 
             .addAction(0,
-                       str(R.string.notification_button_share),
+                       str(R.string.share),
                        createSharePendingIntent(downloadLink))
 
             .addAction(0,
-                       str(R.string.notification_button_copy),
+                       str(R.string.copy),
                        createCopyPendingIntent(downloadLink))
 
             .addAction(0,
-                       str(R.string.notification_button_open),
+                       str(R.string.open),
                        createOpenPendingIntent(downloadLink))
 
             .setContentTitle(str(R.string.notification_status_complete) + ": " + fileName)

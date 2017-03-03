@@ -2,9 +2,9 @@
 <resources>
     <string name="app_name">Hupl</string>
     <string name="list_add_host">Neuer Uploader</string>
-    <string name="notification_button_copy">Kopieren</string>
-    <string name="notification_button_open">Öffnen</string>
-    <string name="notification_button_share">Teilen</string>
+    <string name="copy">Kopieren</string>
+    <string name="open">Öffnen</string>
+    <string name="share">Teilen</string>
     <string name="notification_status_complete">Fertig</string>
     <string name="notification_status_uploading">Uploade Datei</string>
     <string name="actionbar_title_uploaders">Hosts Editieren</string>
@@ -40,4 +40,5 @@
     <string name="resize_height_summary">Max. Höhe</string>
     <string name="resize_quality_summary">JPEG Qualität, zwischen 0-100</string>
     <string name="resize_quality_title">Qualität</string>
+    <string name="notification"></string>
 </resources>

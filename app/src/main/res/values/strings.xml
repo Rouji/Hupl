@@ -4,9 +4,9 @@
     <string name="notification_status_uploading">Uploading File</string>
     <string name="notification_status_complete">Complete</string>
 
-    <string name="notification_button_share">Share</string>
-    <string name="notification_button_copy">Copy</string>
-    <string name="notification_button_open">Open</string>
+    <string name="share">Share</string>
+    <string name="copy">Copy</string>
+    <string name="open">Open</string>
 
     <string name="share_chooser_title">Share Link</string>
 
@@ -49,6 +49,7 @@
     <string name="notification_button_cancel">Cancel</string>
     <string name="notification_status_failed">Failed</string>
     <string name="resize_quality_summary">JPEG Quality between 0-100</string>
+    <string name="notification">Notification</string>
 
     <!-- TODO: Remove or change this placeholder text -->
 
