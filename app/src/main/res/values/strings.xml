@@ -29,11 +29,14 @@
     <string name="settings_authpass_title">Password</string>
     <string name="settings_authpass_summary" translatable="false"></string>
     <string name="settings_delete_title">Delete</string>
-    <string name="settings_delete_summary">Remove this host from the list</string>
+    <string name="settings_delete_summary">Remove this uploaderEntry from the list</string>
 
-    <string name="actionbar_title_edit_hosts">Edit Hosts</string>
-    <string name="actionbar_title_choose_upload_host">Choose Host</string>
+    <string name="actionbar_title_edit_uploaders">Edit Hosts</string>
+    <string name="actionbar_title_choose_uploader">Choose Host</string>
 
     <string name="toast_url_copied">Link copied!</string>
+    <string name="resize_images">Resize Images</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
 
 </resources>

@@ -38,9 +38,9 @@ public class UploadNotification
         notMgr = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
         notBldr = new NotificationCompat.Builder(context)
             .setColor(0xFF0095FF)
-            .setSmallIcon(R.drawable.stat_sys_upload_anim0)
+            .setSmallIcon(R.drawable.ic_cloud_upload)
             .setProgress(0, 0, false)
-            .addAction(0, "Cancel", createCancelPendingIntent(uploadId)) //TODO: cancel action, strings.xml
+            .addAction(0, "Cancel", createCancelPendingIntent(uploadId)) //TODO: strings.xml
             .setOngoing(false);
         setThumbnail(BitmapFactory.decodeResource(context.getResources(), R.mipmap.ic_launcher));
     }
@@ -83,9 +83,8 @@ public class UploadNotification
     public void success(String downloadLink)
     {
         clearActions();
-        notBldr.setSmallIcon(R.drawable.ic_done_white_24dp)
+        notBldr.setSmallIcon(R.drawable.ic_cloud_done)
 
-                //TODO: remove old action icons
             .addAction(0,
                        str(R.string.notification_button_share),
                        createSharePendingIntent(downloadLink))
@@ -108,7 +107,7 @@ public class UploadNotification
     public void error(String error)
     {
         clearActions();
-        notBldr.setSmallIcon(R.drawable.ic_error_white_24dp)
+        notBldr.setSmallIcon(R.drawable.ic_error_outline)
             .setContentTitle("Failed: " + fileName) //TODO: use strings.xml
             .setContentText(error);
 
@@ -126,7 +125,7 @@ public class UploadNotification
     public void cancel()
     {
         clearActions();
-        notBldr.setSmallIcon(R.drawable.ic_error_white_24dp)
+        notBldr.setSmallIcon(R.drawable.ic_error_outline)
                 .setContentTitle("Cancelled: " + fileName) //TODO: use strings.xml
                 .setContentText(null)
                 .setProgress(0, 0, false)
@@ -176,7 +175,7 @@ public class UploadNotification
     {
         CopyBroadcastReceiver receiver = new CopyBroadcastReceiver(url);
         IntentFilter filter = new IntentFilter("eu.imouto.hupl.ACTION_COPY");
-        context.registerReceiver(receiver, filter);//TODO: probably should unregister these receivers at some point
+        context.registerReceiver(receiver, filter);//TODO: probably should unregister these receivers at some point?
 
         Intent in = new Intent("eu.imouto.hupl.ACTION_COPY");
 
@@ -187,7 +186,7 @@ public class UploadNotification
     {
         CancelBroadcastReceiver receiver = new CancelBroadcastReceiver(id);
         IntentFilter filter = new IntentFilter("eu.imouto.hupl.ACTION_CANCEL");
-        context.registerReceiver(receiver, filter);//TODO: probably should unregister these receivers at some point
+        context.registerReceiver(receiver, filter);//TODO: probably should unregister these receivers at some point?
 
         Intent in = new Intent("eu.imouto.hupl.ACTION_CANCEL");
 

@@ -11,23 +11,15 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="-1"
-        android:id="@+id/hostRowId"
-        android:layout_gravity="right"
-        android:visibility="gone" />
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:text="Large Text"
-        android:id="@+id/hostRowTitle" />
+        android:id="@+id/uploaderRowName" />
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceSmall"
         android:text="Small Text"
-        android:id="@+id/hostRowUrl" />
+        android:id="@+id/uploaderRowDescription" />
 
 </LinearLayout>

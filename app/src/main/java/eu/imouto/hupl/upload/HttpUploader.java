@@ -23,6 +23,7 @@ public class HttpUploader extends Uploader
     public String authUser;
     public String authPass;
     public String fileParam;
+    public String responseRegex;
 
     public HttpUploader(FileToUpload file)
     {

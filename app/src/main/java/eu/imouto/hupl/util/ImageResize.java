@@ -27,6 +27,8 @@ public class ImageResize
             float dstRat = width / (float) height;
             float scale = dstRat > srcRat ? height / (float) bitmap.getHeight() : width / (float) bitmap.getWidth();
 
+            
+
             return Bitmap.createScaledBitmap(
                     bitmap,
                     Math.round(scale * bitmap.getWidth()),

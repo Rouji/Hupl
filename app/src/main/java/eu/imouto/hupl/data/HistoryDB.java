@@ -20,6 +20,7 @@ public class HistoryDB extends SQLiteOpenHelper
     private static final String DATETIME_FORMAT = "yyyy-MM-dd HH:mm:ss";
     private static final int THUMBNAIL_QUALITY = 70;
 
+    private static final SimpleDateFormat dateFormat = new SimpleDateFormat(DATETIME_FORMAT);
 
     public HistoryDB(Context context)
     {
@@ -48,7 +49,7 @@ public class HistoryDB extends SQLiteOpenHelper
 
     public void deleteEntry(int id)
     {
-        SQLiteDatabase db = this.getWritableDatabase();
+        SQLiteDatabase db = getWritableDatabase();
         db.delete("history", "id = ?", new String[] {String.valueOf(id)});
     }
 
@@ -59,14 +60,14 @@ public class HistoryDB extends SQLiteOpenHelper
 
     public void addEntry(HistoryEntry entry)
     {
-        SQLiteDatabase db = this.getWritableDatabase();
+        SQLiteDatabase db = getWritableDatabase();
 
         db.insert("history", null, entryToCV(entry));
     }
 
     public ArrayList<HistoryEntry> getAllEntries()
     {
-        SQLiteDatabase db = this.getReadableDatabase();
+        SQLiteDatabase db = getReadableDatabase();
         Cursor c = db.rawQuery("SELECT * FROM history ORDER BY id DESC;", null);
         if (!c.moveToFirst())
             return null;
@@ -84,13 +85,11 @@ public class HistoryDB extends SQLiteOpenHelper
 
     private static HistoryEntry rowToEntry(Cursor c)
     {
-        SimpleDateFormat df = new SimpleDateFormat(DATETIME_FORMAT);
-
         HistoryEntry he = new HistoryEntry();
         try
         {
             he.id = c.getInt(0);
-            he.uploadDate = df.parse(c.getString(1));
+            he.uploadDate = dateFormat.parse(c.getString(1));
             he.uploader = c.getString(2);
             he.link = c.getString(3);
             he.originalName = c.getString(4);
@@ -109,11 +108,10 @@ public class HistoryDB extends SQLiteOpenHelper
 
     private static ContentValues entryToCV(HistoryEntry entry)
     {
-        SimpleDateFormat df = new SimpleDateFormat(DATETIME_FORMAT);
         byte[] thumb = ImageResize.compress(entry.thumbnail, THUMBNAIL_QUALITY);
 
         ContentValues cv = new ContentValues(7);
-        cv.put("upload_date", df.format(entry.uploadDate));
+        cv.put("upload_date", dateFormat.format(entry.uploadDate));
         cv.put("uploader", entry.uploader);
         cv.put("link", entry.link);
         cv.put("orig_name", entry.originalName);

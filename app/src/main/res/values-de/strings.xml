@@ -8,8 +8,8 @@
     <string name="notification_status_complete">Upload Fertig!</string>
     <string name="notification_status_exception">Es ist ein Fehler aufgetreten</string>
     <string name="notification_status_uploading">Uploade Datei</string>
-    <string name="actionbar_title_edit_hosts">Hosts Editieren</string>
-    <string name="actionbar_title_choose_upload_host">Host Auswählen</string>
+    <string name="actionbar_title_edit_uploaders">Hosts Editieren</string>
+    <string name="actionbar_title_choose_uploader">Host Auswählen</string>
     <string name="notification_status_bad_response">Fehlerhafte Antwort vom Server</string>
     <string name="settings_authpass_title">Passwort</string>
     <string name="settings_authuser_summary">Leer lassen für keine Auth.</string>

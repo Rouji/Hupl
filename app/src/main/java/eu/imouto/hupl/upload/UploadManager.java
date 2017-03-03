@@ -1,9 +1,11 @@
 package eu.imouto.hupl.upload;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
+import android.preference.PreferenceManager;
 import android.util.SparseArray;
 
 import java.io.ByteArrayInputStream;
@@ -34,7 +36,7 @@ public class UploadManager
     public void startUpload(Context context, Uri uri, String uploaderName, boolean compress)
     {
         FileToUpload file = UriResolver.uriToFile(context, uri);
-        Uploader up = UploaderFactory.getUploaderByName(uploaderName, file);
+        Uploader up = UploaderFactory.getUploaderByName(context, uploaderName, file);
         Upload u = new Upload(context, up, compress);
         currentUploads.put(file.getId(), u);
         u.start();
@@ -90,8 +92,12 @@ public class UploadManager
                 thumb = ImageResize.thumbnail(bm);
                 if (compress)
                 {
-                    bm = ImageResize.resizeToFit(bm, 500, 500);
-                    orig = ImageResize.compress(bm, 10);
+                    SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(context);
+                    int w = Integer.parseInt(sp.getString("image_resize_width", "1000"));
+                    int h = Integer.parseInt(sp.getString("image_resize_height", "1000"));
+                    int q = Integer.parseInt(sp.getString("image_resize_quality", "70"));
+                    bm = ImageResize.resizeToFit(bm, w, h);
+                    orig = ImageResize.compress(bm, q);
                 }
                 ftu.stream = new ByteArrayInputStream(orig);
             }
