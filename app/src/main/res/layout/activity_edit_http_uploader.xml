@@ -27,7 +27,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:onClick="onDeleteClick"
-            android:id="@+id/btnDeleteUploader"/>
+            />
 
         <Button
             style="?android:attr/buttonStyleSmall"
@@ -36,6 +36,6 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:onClick="onSaveClick"
-            android:id="@+id/btnSaveUploader"/>
+            />
     </LinearLayout>
 </LinearLayout>
