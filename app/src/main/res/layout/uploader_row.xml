@@ -5,8 +5,8 @@
     android:layout_height="match_parent"
     android:paddingLeft="15dp"
     android:paddingRight="15dp"
-    android:paddingBottom="8dp"
-    android:paddingTop="8dp">
+    android:paddingBottom="16dp"
+    android:paddingTop="16dp">
 
     <TextView
         android:layout_width="wrap_content"
@@ -14,12 +14,5 @@
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:text="Large Text"
         android:id="@+id/uploaderRowName" />
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceSmall"
-        android:text="Small Text"
-        android:id="@+id/uploaderRowDescription" />
 
 </LinearLayout>
