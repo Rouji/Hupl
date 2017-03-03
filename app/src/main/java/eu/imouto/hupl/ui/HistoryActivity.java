@@ -4,12 +4,10 @@ import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -78,7 +76,6 @@ public class HistoryActivity extends DrawerActivity
             df = DateFormat.getDateTimeInstance(DateFormat.LONG, DateFormat.SHORT);
         }
 
-        @NonNull
         @Override
         public View getView(int position, View convertView, ViewGroup parent)
         {

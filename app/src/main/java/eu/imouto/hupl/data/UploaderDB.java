@@ -1,6 +1,5 @@
 package eu.imouto.hupl.data;
 
-import android.content.ContentProviderClient;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
