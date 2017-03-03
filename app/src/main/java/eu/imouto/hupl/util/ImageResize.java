@@ -1,11 +1,8 @@
 package eu.imouto.hupl.util;
 
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 
-import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
-import java.io.InputStream;
 
 /**
  * Util class for resizing and compressing images
@@ -13,7 +10,7 @@ import java.io.InputStream;
  */
 public class ImageResize
 {
-    private static final int THUMBNAIL_SIZE = 128;
+    private static final int THUMBNAIL_SIZE = 256;
     private static final int DEFAULT_QUALITY = 70;
 
     public static Bitmap resizeToFit(Bitmap bitmap, int width, int height)
@@ -26,8 +23,6 @@ public class ImageResize
             float srcRat = bitmap.getWidth() / (float) bitmap.getHeight();
             float dstRat = width / (float) height;
             float scale = dstRat > srcRat ? height / (float) bitmap.getHeight() : width / (float) bitmap.getWidth();
-
-            
 
             return Bitmap.createScaledBitmap(
                     bitmap,
