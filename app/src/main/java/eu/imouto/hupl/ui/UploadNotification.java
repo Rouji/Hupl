@@ -1,5 +1,6 @@
 package eu.imouto.hupl.ui;
 
+import android.app.Notification;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.BroadcastReceiver;
@@ -28,6 +29,9 @@ public class UploadNotification
     private NotificationCompat.Builder notBldr;
 
     private String fileName;
+
+    public boolean lights = false;
+    public boolean vibrate = false;
 
     public UploadNotification(Context context, int uploadId)
     {
@@ -101,6 +105,12 @@ public class UploadNotification
             .setContentText(downloadLink)
             .setProgress(0, 0, false)
             .setOngoing(false);
+
+        if (vibrate)
+            notBldr.setVibrate(new long[]{0,200});
+        if (lights)
+            notBldr.setLights(0xff4444ff, 1000, 2000);
+
         show();
     }
 
