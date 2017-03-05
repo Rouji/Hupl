@@ -4,7 +4,7 @@ import eu.imouto.hupl.data.FileToUpload;
 
 public abstract class Uploader implements Runnable
 {
-    protected static UploadProgressReceiver progressReceiver;
+    protected UploadProgressReceiver progressReceiver;
     protected FileToUpload fileToUpload;
 
     public String name;
