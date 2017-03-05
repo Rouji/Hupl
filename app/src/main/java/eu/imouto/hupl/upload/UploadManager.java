@@ -60,6 +60,7 @@ public class UploadManager
         private Uploader up;
         private HistoryEntry hist = new HistoryEntry();
         private Context context;
+        private boolean cancelled = false;
 
         public Upload(Context context, Uploader uploader, boolean compress)
         {
@@ -123,7 +124,8 @@ public class UploadManager
         @Override
         public void onUploadProgress(int uploaded, int fileSize)
         {
-            not.progress(uploaded, fileSize);
+            if (!cancelled)
+                not.progress(uploaded, fileSize);
         }
 
         @Override
@@ -147,6 +149,7 @@ public class UploadManager
         @Override
         public void onUploadCancelled()
         {
+            cancelled = true;
             not.cancel();
             removeUpload(up.getFileToUpload().getId());
         }
