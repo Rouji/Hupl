@@ -128,6 +128,7 @@ public class ChooseUploaderActivity extends DrawerActivity
 
 
             UploadManager.getInstance().startUpload(getApplicationContext(), fileUri, name, resize);
+            uploaderDB.updateLastUsed(name);
             finish();
         }
     }

@@ -71,7 +71,7 @@ public class UploaderDB extends SQLiteOpenHelper
         return entries;
     }
 
-    public void UpdateLastUsed(String name)
+    public void updateLastUsed(String name)
     {
         SQLiteDatabase db = getWritableDatabase();
         Date now = new Date();
