@@ -1,12 +1,15 @@
 package eu.imouto.hupl.upload;
 
 import android.util.Base64;
+import android.util.Log;
 
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import eu.imouto.hupl.data.FileToUpload;
 
@@ -124,7 +127,11 @@ public class HttpUploader extends Uploader
                 }
                 else if (status == 200)
                 {
-                    progressReceiver.onUploadFinished(response);
+                    String parsed = parseResponse(response);
+                    if (parsed == null)
+                        progressReceiver.onUploadFailed("No regex match found");
+                    else
+                        progressReceiver.onUploadFinished(parsed);
                 }
                 else
                 {
@@ -137,6 +144,20 @@ public class HttpUploader extends Uploader
             if (progressReceiver != null)
                 progressReceiver.onUploadFailed("Exception: " + ex.getMessage());
         }
+    }
+
+    private String parseResponse(String resp)
+    {
+        if (responseRegex == null || responseRegex.isEmpty())
+            return resp;
+
+        Pattern pat = Pattern.compile(responseRegex);
+        Matcher matcher = pat.matcher(resp);
+        if (!matcher.find())
+            return null;
+        if (matcher.groupCount() > 0)
+            return matcher.group(1);
+        return null;
     }
 
     @Override
