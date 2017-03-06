@@ -2,7 +2,7 @@ package eu.imouto.hupl.upload;
 
 import eu.imouto.hupl.data.FileToUpload;
 
-public abstract class Uploader implements Runnable
+abstract class Uploader implements Runnable
 {
     protected UploadProgressReceiver progressReceiver;
     protected FileToUpload fileToUpload;

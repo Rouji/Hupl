@@ -1,6 +1,6 @@
 package eu.imouto.hupl.upload;
 
-public interface UploadProgressReceiver
+interface UploadProgressReceiver
 {
     void onUploadProgress(int uploaded, int fileSize);
     void onUploadFinished(String fileLink);

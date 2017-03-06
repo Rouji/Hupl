@@ -9,7 +9,7 @@ import eu.imouto.hupl.data.FileToUpload;
 import eu.imouto.hupl.data.UploaderDB;
 import eu.imouto.hupl.data.UploaderEntry;
 
-public class UploaderFactory
+class UploaderFactory
 {
     public static Uploader getUploaderByName(Context context, String name, FileToUpload file)
     {
