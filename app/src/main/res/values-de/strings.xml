@@ -41,4 +41,6 @@
     <string name="resize_quality_summary">JPEG Qualität, zwischen 0-100</string>
     <string name="resize_quality_title">Qualität</string>
     <string name="notification"></string>
+    <string name="edit">Editieren</string>
+    <string name="close">Schließen</string>
 </resources>

@@ -41,4 +41,6 @@
     <string name="resize_quality_title">JPEG品質</string>
     <string name="resize_quality_summary"></string>
     <string name="notification">通知</string>
+    <string name="close">終了</string>
+    <string name="edit">編集</string>
 </resources>

@@ -50,6 +50,9 @@
     <string name="notification_status_failed">Failed</string>
     <string name="resize_quality_summary">JPEG Quality between 0-100</string>
     <string name="notification">Notification</string>
+    <string name="close">Close</string>
+    <string name="edit">Edit</string>
+    <string name="uploader_imported">Imported %1$s</string>
 
     <!-- TODO: Remove or change this placeholder text -->
 
