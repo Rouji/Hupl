@@ -1,6 +1,7 @@
 package eu.imouto.hupl.ui;
 
 import android.app.AlertDialog;
+import android.content.ActivityNotFoundException;
 import android.content.ClipData;
 import android.content.ClipboardManager;
 import android.content.Context;
@@ -97,7 +98,7 @@ public class HistoryActivity extends DrawerActivity
 
             //strip protocol
             String link = entry.link == null ? "Null" : entry.link;
-            if (link.startsWith("http"))
+            if (link.startsWith("http") && link.length() > 12)
             {
                 if (link.charAt(4) == 's')
                     link = link.substring(8);
@@ -177,7 +178,14 @@ public class HistoryActivity extends DrawerActivity
                 case 2:
                     in = new Intent(Intent.ACTION_VIEW);
                     in.setData(Uri.parse(entry.link));
-                    context.startActivity(in);
+                    try
+                    {
+                        context.startActivity(in);
+                    }
+                    catch (ActivityNotFoundException ex)
+                    {
+                        Toast.makeText(context, "No activity found to handle this", Toast.LENGTH_SHORT).show();
+                    }
                     break;
                 case 3:
                     UploadNotification not = new UploadNotification(context, -1);
