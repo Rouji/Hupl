@@ -33,7 +33,7 @@ public class FileToUpload
 
         for (String s : IMAGE_STRINGS)
         {
-            if (fileName.contains(s))
+            if (fileName.endsWith(s))
                 return true;
         }
         return false;
