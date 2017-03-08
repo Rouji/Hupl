@@ -53,6 +53,10 @@
     <string name="close">Close</string>
     <string name="edit">Edit</string>
     <string name="uploader_imported">Imported %1$s</string>
+    <string name="about_source_title">Source</string>
+    <string name="about_source_text">Hupl is free and open source software licensed under GPLv3. The source code, the full license and further details are available on GitHub at https://github.com/Rouji/Hupl</string>
+    <string name="about_feedback_title">Feedback</string>
+    <string name="about_feedback_text">If you find a bug (not all that unlikely), or want a certain feature in future releases, please open an issue on GitHub (https://github.com/Rouji/Hupl/issues). If that\'s not possible for some reason, an email to hupl@imouto.eu will do as well.</string>
 
     <!-- TODO: Remove or change this placeholder text -->
 

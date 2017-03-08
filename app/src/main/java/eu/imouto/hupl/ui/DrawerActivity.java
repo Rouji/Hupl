@@ -30,7 +30,7 @@ public abstract class DrawerActivity extends AppCompatActivity
         m.put(R.id.nav_history, HistoryActivity.class);
         m.put(R.id.nav_settings, GlobalSettingsActivity.class);
         m.put(R.id.nav_about, AboutActivity.class);
-        m.put(R.id.nav_feedback, FeedbackActivity.class);
+        //m.put(R.id.nav_feedback, FeedbackActivity.class);
         return m;
     }
 

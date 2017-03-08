@@ -23,9 +23,9 @@
             android:id="@+id/nav_about"
             android:icon="@drawable/ic_info_outline"
             android:title="@string/about"/>
-        <item
+        <!-- <item
             android:id="@+id/nav_feedback"
             android:icon="@drawable/ic_mail_outline"
-            android:title="@string/feedback"/>
+            android:title="@string/feedback"/> -->
     </group>
 </menu>
