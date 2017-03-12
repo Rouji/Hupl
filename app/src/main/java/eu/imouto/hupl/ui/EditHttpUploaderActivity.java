@@ -159,6 +159,8 @@ public class EditHttpUploaderActivity extends PreferenceActivity
                 String txt = pref.getText();
                 if (txt != null && !txt.isEmpty())
                     entry.json.put(p, txt);
+                else if (entry.json.has(p))
+                    entry.json.remove(p);
             }
             catch (JSONException e)
             {
