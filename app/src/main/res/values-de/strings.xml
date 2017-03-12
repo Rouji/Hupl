@@ -38,9 +38,9 @@
     <string name="resize_width_title">Breite</string>
     <string name="resize_width_summary">Max. Breite</string>
     <string name="resize_height_summary">Max. Höhe</string>
-    <string name="resize_quality_summary">JPEG Qualität, zwischen 0-100</string>
     <string name="resize_quality_title">Qualität</string>
-    <string name="notification"></string>
+    <string name="notification">Notification</string>
     <string name="edit">Editieren</string>
     <string name="close">Schließen</string>
+    <string name="uploader_imported">%1$s importiert</string>
 </resources>
