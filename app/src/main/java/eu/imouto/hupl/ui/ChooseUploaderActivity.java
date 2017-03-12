@@ -15,6 +15,9 @@ import android.widget.CheckBox;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import org.json.JSONException;
+
+import java.text.DateFormat;
 import java.util.ArrayList;
 
 import eu.imouto.hupl.data.UploaderEntry;
@@ -113,7 +116,7 @@ public class ChooseUploaderActivity extends DrawerActivity
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id)
     {
-        TextView nameView = (TextView)view.findViewById(R.id.uploaderRowName);
+        TextView nameView = (TextView)view.findViewById(R.id.name);
         String name = nameView.getText().toString();
 
         if (fileUri == null)
@@ -135,6 +138,7 @@ public class ChooseUploaderActivity extends DrawerActivity
 
     private class ChooseUploaderAdapter extends ArrayAdapter<UploaderEntry>
     {
+        private final DateFormat df = DateFormat.getDateTimeInstance(DateFormat.LONG, DateFormat.SHORT);
         public ChooseUploaderAdapter(Context context, ArrayList<UploaderEntry> entries)
         {
             super(context, 0, entries);
@@ -147,7 +151,18 @@ public class ChooseUploaderActivity extends DrawerActivity
             if (convertView == null)
                 convertView = LayoutInflater.from(getContext()).inflate(R.layout.uploader_row, parent, false);
 
-            ((TextView)convertView.findViewById(R.id.uploaderRowName)).setText(entry.name);
+            ((TextView)convertView.findViewById(R.id.name)).setText(entry.name);
+            String lastUsed = String.format(getResources().getString(R.string.last_used), df.format(entry.lastUsed));
+            ((TextView)convertView.findViewById(R.id.lastUsed)).setText(lastUsed);
+
+            try
+            {
+                if (entry.json.has("type"))
+                    ((TextView)convertView.findViewById(R.id.type)).setText(entry.json.getString("type"));
+            }
+            catch (JSONException e)
+            {}
+
             return convertView;
         }
     }
