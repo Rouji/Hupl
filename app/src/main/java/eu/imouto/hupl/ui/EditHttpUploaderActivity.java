@@ -85,6 +85,8 @@ public class EditHttpUploaderActivity extends PreferenceActivity
 
         EditTextPreference textPref = (EditTextPreference)findPreference("name");
         textPref.setText(entry.name);
+        textPref.setSummary(textPref.getText());
+        textPref.setOnPreferenceChangeListener(this);
         for (String p : jsonPrefs)
         {
             textPref = (EditTextPreference)findPreference(p);
@@ -100,7 +102,6 @@ public class EditHttpUploaderActivity extends PreferenceActivity
             }
             else
             {
-                textPref.setOnPreferenceChangeListener(this);
                 try
                 {
                     if (entry.json.has(p))
@@ -111,12 +112,16 @@ public class EditHttpUploaderActivity extends PreferenceActivity
                     e.printStackTrace();
                 }
             }
+            textPref.setSummary(textPref.getText());
+            textPref.setOnPreferenceChangeListener(this);
         }
     }
 
     @Override
     public boolean onPreferenceChange(Preference preference, Object newValue)
     {
+        if (preference instanceof EditTextPreference)
+            preference.setSummary((CharSequence)newValue);
         return true;
     }
 

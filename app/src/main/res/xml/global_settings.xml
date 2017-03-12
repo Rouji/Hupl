@@ -9,21 +9,21 @@
         <EditTextPreference
             android:key="image_resize_width"
             android:title="@string/resize_width_title"
-            android:summary="@string/resize_width_summary"
+            android:dialogMessage="@string/resize_width_summary"
             android:defaultValue="1000"
             android:inputType="number">
         </EditTextPreference>
         <EditTextPreference
             android:key="image_resize_height"
             android:title="@string/resize_height_title"
-            android:summary="@string/resize_height_summary"
+            android:dialogMessage="@string/resize_height_summary"
             android:defaultValue="1000"
             android:inputType="number">
         </EditTextPreference>
         <EditTextPreference
             android:key="image_resize_quality"
             android:title="@string/resize_quality_title"
-            android:summary="@string/resize_quality_summary"
+            android:dialogMessage="@string/resize_quality_summary"
             android:inputType="number"
             android:defaultValue="80"/>
     </PreferenceCategory>
