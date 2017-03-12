@@ -9,14 +9,12 @@
         <EditTextPreference
             android:key="image_resize_width"
             android:title="@string/resize_width_title"
-            android:dialogMessage="@string/resize_width_summary"
             android:defaultValue="1000"
             android:inputType="number">
         </EditTextPreference>
         <EditTextPreference
             android:key="image_resize_height"
             android:title="@string/resize_height_title"
-            android:dialogMessage="@string/resize_height_summary"
             android:defaultValue="1000"
             android:inputType="number">
         </EditTextPreference>

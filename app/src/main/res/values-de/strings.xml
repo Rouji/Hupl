@@ -43,4 +43,11 @@
     <string name="edit">Editieren</string>
     <string name="close">Schließen</string>
     <string name="uploader_imported">%1$s importiert</string>
+    <string name="last_used">zuletzt benutzt %1$s</string>
+    <string name="no_activity">Keine Activity zum teilen des Links gefunden</string>
+    <string name="please_enter_name">Bitte einen Namen eingeben</string>
+    <string name="uploader_exists">Uploader %1$s existiert bereits</string>
+    <string name="saved">Gespeichert</string>
+    <string name="resize_quality_summary" translatable="false">kleines File 0 ↔ 100 hohe Qualität</string>
+    <string name="httpuploader_pass_summary">Vorsicht: Passwörter werden in Klartext gespeichert</string>
 </resources>

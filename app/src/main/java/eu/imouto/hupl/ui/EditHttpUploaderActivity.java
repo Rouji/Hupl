@@ -143,13 +143,13 @@ public class EditHttpUploaderActivity extends PreferenceActivity
 
         if (entry.name.isEmpty())
         {
-            Toast.makeText(this, "Please enter a name", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, getResources().getString(R.string.please_enter_name), Toast.LENGTH_SHORT).show();
             return;
         }
 
         if (isNew && db.getUploaderByName(entry.name) != null)
         {
-            Toast.makeText(this, "Uploader with name " + entry.name + " already exists", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, String.format(getResources().getString(R.string.uploader_exists), entry.name), Toast.LENGTH_SHORT).show();
             return;
         }
 
@@ -174,7 +174,7 @@ public class EditHttpUploaderActivity extends PreferenceActivity
         }
 
         db.saveUploader(entry, oldName);
-        Toast.makeText(this, "Saved", Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, getResources().getString(R.string.saved), Toast.LENGTH_SHORT).show();
         finish();
     }
 }

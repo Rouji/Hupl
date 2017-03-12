@@ -34,13 +34,20 @@
     <string name="notification_button_cancel">キャンセル</string>
     <string name="notification_status_failed">失敗</string>
     <string name="resize_category">画像を縮小</string>
-    <string name="resize_height_title">高さ</string>
+    <string name="resize_height_title">最大高さ</string>
     <string name="resize_width_summary">画像の最大幅</string>
     <string name="resize_height_summary">画像の最大高さ</string>
-    <string name="resize_width_title">幅</string>
+    <string name="resize_width_title">最大幅</string>
     <string name="resize_quality_title">JPEG品質</string>
     <string name="notification">通知</string>
     <string name="close">終了</string>
     <string name="edit">編集</string>
     <string name="uploader_imported">%1$sをインポートした</string>
+    <string name="last_used">%1$sに使用</string>
+    <string name="no_activity">このリンクをシェア出来ません</string>
+    <string name="please_enter_name">名前を入力してください</string>
+    <string name="uploader_exists">「%1$s」は既に存在します</string>
+    <string name="saved">保存しました</string>
+    <string name="resize_quality_summary">\"最小ファイル　0 ↔ 100　高品質\"</string>
+    <string name="httpuploader_pass_summary">注意：パスワードは平文で保存されます</string>
 </resources>

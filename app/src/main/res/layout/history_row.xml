@@ -35,6 +35,8 @@
             android:textAppearance="@style/TextAppearance.AppCompat.Large"
             android:text="short.url/abc.jpeg"
             android:id="@+id/historyRowLink"
+            android:ellipsize="end"
+            android:singleLine="true"
             android:layout_weight="1"/>
 
         <TextView

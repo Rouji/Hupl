@@ -79,12 +79,11 @@ public class HistoryActivity extends DrawerActivity
 
     private class HistoryAdapter extends ArrayAdapter<HistoryEntry>
     {
-        DateFormat df;
+        private final DateFormat df = DateFormat.getDateTimeInstance(DateFormat.LONG, DateFormat.SHORT);
 
         public HistoryAdapter(Context context, ArrayList<HistoryEntry> entries)
         {
             super(context, 0, entries);
-            df = DateFormat.getDateTimeInstance(DateFormat.LONG, DateFormat.SHORT);
         }
 
         @Override
@@ -184,7 +183,7 @@ public class HistoryActivity extends DrawerActivity
                     }
                     catch (ActivityNotFoundException ex)
                     {
-                        Toast.makeText(context, "No activity found to handle this", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(context, getResources().getString(R.string.no_activity), Toast.LENGTH_SHORT).show();
                     }
                     break;
                 case 3:
