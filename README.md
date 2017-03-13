@@ -4,16 +4,19 @@ Short for Http UPLoad (imaginative, I know)
 Simple Android app, that lets you upload files to servers through the share menu. 
 Lets you configure whatever, and how many servers you want, and of course feel free to just use any preconfigured one(s).
 
-For hosting your own server, please have a look at https://github.com/Rj48/single_php_filehost (or roll your own, it's not exactly rocketsurgery)
+Should work simple filehosts, that take files via POST. At the very least, it works with ones based on these:
+* https://github.com/Rj48/single_php_filehost
+* https://github.com/lachs0r/0x0
+* https://github.com/ptpb/pb
 
-# Building
-This repo contains an Android Studio (v2) project. You should be able to open it with that and just run/compile from there.
+Support for more complicated hosts, FTP, etc. might follow in future versions.
 
 # Uploaders
-Uploader configs are stored as JSON, with the parameters being specific to the uploader type. Though Hupl (currently) only supports one type, which is a basic HTTP POST upload.
-Uploaders can be imported from links on the web; the app has a content filter for any http(s) url, that ends in .json or .hupl (the latter being just a renamed json file)
+Uploader configs are stored, and can be imported, as JSON.
+Importing works by either pasting an URL in the appropriate menu, or clicking a web link that points to a .json or .hupl file.
 
 ## Http Uploader Json Example
+HTTP is currently the only supported uploader type. Here's an example of what a config for that might look like:
 ```
 {
   name: "example uploader",                     //(optional)human-readable name; pulled from the filename, if not given here 
@@ -25,6 +28,13 @@ Uploaders can be imported from links on the web; the app has a content filter fo
   authPass: "secret"                            //(optional)http basic auth password
 }
 ```
+
+## Default Uploaders
+A few preconfigured uploaders get baked into the .apk and imported at first launch of the app. The files for this are in app/src/main/assets/uploaders, which is a git submodule pointing to https://github.com/Rouji/Hupl-Uploaders
+
+# Building
+This repo contains an Android Studio (v2) project. You should be able to open it with that and just run/compile from there. 
+Note: if you want any preconfigured uploaders, you have to clone the repo recursively.
 
 # Known Issues
 Closing the app (e.g. by swiping the main activity off the recent apps screen) sometimes kills any in-progress uploads or cancels notifications, due to them running in the same process. The Android lifecycle stuff is kind of annoying.
