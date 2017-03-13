@@ -45,8 +45,8 @@
     <string name="feedback">Feedback</string>
     <string name="delete">Delete</string>
     <string name="save">Save</string>
-    <string name="notification_status_cancelled">Cancelled</string>
-    <string name="notification_button_cancel">Cancel</string>
+    <string name="cancelled">Cancelled</string>
+    <string name="cancel">Cancel</string>
     <string name="notification_status_failed">Failed</string>
     <string name="resize_quality_summary">small file 0 ↔ 100 high quality</string>
     <string name="notification">Notification</string>
@@ -62,6 +62,11 @@
     <string name="please_enter_name">Please enter a name</string>
     <string name="uploader_exists">Uploader %1$s aleady exists</string>
     <string name="saved">Saved</string>
+    <string name="uploader_import">Import</string>
+    <string name="import_from_url">Import from URL</string>
+    <string name="enter_config_url">Enter config URL:</string>
+    <string name="new_http_uploader">New HTTP Uploader</string>
+    <string name="new_uploader">New Uploader</string>
 
     <!-- TODO: Remove or change this placeholder text -->
 

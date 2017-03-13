@@ -1,6 +1,5 @@
 package eu.imouto.hupl.ui;
 
-import android.app.Notification;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.BroadcastReceiver;
@@ -44,7 +43,7 @@ public class UploadNotification
             .setColor(0xFF0095FF)
             .setSmallIcon(R.drawable.ic_cloud_upload)
             .setProgress(0, 0, false)
-            .addAction(0, str(R.string.notification_button_cancel), createCancelPendingIntent(uploadId))
+            .addAction(0, str(R.string.cancel), createCancelPendingIntent(uploadId))
             .setOngoing(false);
         setThumbnail(BitmapFactory.decodeResource(context.getResources(), R.mipmap.ic_launcher));
     }
@@ -136,7 +135,7 @@ public class UploadNotification
     {
         clearActions();
         notBldr.setSmallIcon(R.drawable.ic_error_outline)
-                .setContentTitle(str(R.string.notification_status_cancelled))
+                .setContentTitle(str(R.string.cancelled))
                 .setContentText(fileName)
                 .setProgress(0, 0, false)
                 .setOngoing(false);

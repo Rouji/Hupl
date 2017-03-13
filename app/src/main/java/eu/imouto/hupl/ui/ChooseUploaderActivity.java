@@ -1,6 +1,9 @@
 package eu.imouto.hupl.ui;
 
+import android.app.AlertDialog;
+import android.app.Dialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.net.Uri;
@@ -17,9 +20,11 @@ import android.widget.TextView;
 
 import org.json.JSONException;
 
+import java.io.IOException;
 import java.text.DateFormat;
 import java.util.ArrayList;
 
+import eu.imouto.hupl.data.UploaderImporter;
 import eu.imouto.hupl.data.UploaderEntry;
 import eu.imouto.hupl.data.UploaderDB;
 import eu.imouto.hupl.R;
@@ -45,6 +50,21 @@ public class ChooseUploaderActivity extends DrawerActivity
     protected void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
+
+        SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(this);
+        boolean firstRun = sp.getBoolean("isFirstRun", true);
+        if (firstRun)
+        {
+            sp.edit().putBoolean("isFirstRun", false).commit();
+            try
+            {
+                new UploaderImporter(this).importFromAssets();
+            }
+            catch (IOException e)
+            {
+                e.printStackTrace();
+            }
+        }
 
         upAdapter = new ChooseUploaderAdapter(this, new ArrayList<UploaderEntry>());
 
@@ -101,15 +121,45 @@ public class ChooseUploaderActivity extends DrawerActivity
 
     public void newUploaderClick(View v)
     {
-        startEditActivity(null);
+        CharSequence buttons[] = new CharSequence[]
+        {
+                getResources().getString(R.string.new_http_uploader),
+                getResources().getString(R.string.import_from_url)
+        };
+
+        Dialog.OnClickListener clickListener = new Dialog.OnClickListener()
+        {
+            @Override
+            public void onClick(DialogInterface dialog, int which)
+            {
+                if (which == 0)
+                {
+                    startEditActivity(null);
+                }
+                else
+                {
+                    startImportActivity();
+                }
+            }
+        };
+
+        new AlertDialog.Builder(this)
+                .setTitle(getResources().getString(R.string.new_uploader))
+                .setItems(buttons, clickListener)
+                .create().show();
     }
 
     private void startEditActivity(String uploaderName)
     {
         Intent in = new Intent(getApplicationContext(), EditHttpUploaderActivity.class);
-        in.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         if (uploaderName != null)
             in.putExtra("UPLOADER_NAME", uploaderName);
+        startActivity(in);
+    }
+
+    private void startImportActivity()
+    {
+        Intent in = new Intent(this, ImportActivity.class);
         startActivity(in);
     }
 

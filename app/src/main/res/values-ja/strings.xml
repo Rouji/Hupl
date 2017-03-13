@@ -30,8 +30,8 @@
     <string name="delete">削除</string>
     <string name="save">保存</string>
     <string name="resize_images">画像を縮小</string>
-    <string name="notification_status_cancelled">キャンセルした</string>
-    <string name="notification_button_cancel">キャンセル</string>
+    <string name="cancelled">キャンセルした</string>
+    <string name="cancel">キャンセル</string>
     <string name="notification_status_failed">失敗</string>
     <string name="resize_category">画像を縮小</string>
     <string name="resize_height_title">最大高さ</string>
@@ -50,4 +50,9 @@
     <string name="saved">保存しました</string>
     <string name="resize_quality_summary">\"最小ファイル　0 ↔ 100　高品質\"</string>
     <string name="httpuploader_pass_summary">注意：パスワードは平文で保存されます</string>
+    <string name="uploader_import">インポート</string>
+    <string name="import_from_url">URLからインポート</string>
+    <string name="enter_config_url">URLを入力してください</string>
+    <string name="new_http_uploader">新しいHTTPアップローダを作成</string>
+    <string name="new_uploader">アップローダを追加</string>
 </resources>
