@@ -9,7 +9,11 @@ Should work with most simple filehosts, that take files via POST. At the very le
 * https://github.com/lachs0r/0x0
 * https://github.com/ptpb/pb
 
-Support for more complicated http-based uploads, (S)FTP, etc. might follow in future versions.
+Support for more complicated http-based uploads, (S)FTP, etc. might follow in future versions. 
+
+Other features:
+* Keeps a history of files you upload and resulting links
+* Can optionally resize/compress image files before uploading
 
 # Uploaders
 Uploader configs are stored, and can be imported, as JSON.
