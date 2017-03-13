@@ -48,7 +48,7 @@
     <string name="please_enter_name">Bitte einen Namen eingeben</string>
     <string name="uploader_exists">Uploader %1$s existiert bereits</string>
     <string name="saved">Gespeichert</string>
-    <string name="resize_quality_summary" translatable="false">kleines File 0 ↔ 100 hohe Qualität</string>
+    <string name="resize_quality_summary">kleines File 0 ↔ 100 hohe Qualität</string>
     <string name="httpuploader_pass_summary">Vorsicht: Passwörter werden in Klartext gespeichert</string>
     <string name="uploader_import">Importieren</string>
     <string name="import_from_url">Von URL Importieren</string>
