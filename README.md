@@ -4,12 +4,12 @@ Short for Http UPLoad (imaginative, I know)
 Simple Android app, that lets you upload files to servers through the share menu. 
 Lets you configure whatever, and how many servers you want, and of course feel free to just use any preconfigured one(s).
 
-Should work simple filehosts, that take files via POST. At the very least, it works with ones based on these:
+Should work with most simple filehosts, that take files via POST. At the very least, it works with ones based on these:
 * https://github.com/Rj48/single_php_filehost
 * https://github.com/lachs0r/0x0
 * https://github.com/ptpb/pb
 
-Support for more complicated hosts, FTP, etc. might follow in future versions.
+Support for more complicated http-based uploads, (S)FTP, etc. might follow in future versions.
 
 # Uploaders
 Uploader configs are stored, and can be imported, as JSON.
