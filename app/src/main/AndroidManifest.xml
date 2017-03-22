@@ -50,6 +50,11 @@
             </intent-filter>
         </activity>
 
+        <service
+            android:name=".upload.UploadService"
+            android:enabled="true"
+            android:exported="false">
+        </service>
     </application>
 
 </manifest>

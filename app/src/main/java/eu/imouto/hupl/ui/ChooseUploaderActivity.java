@@ -28,7 +28,7 @@ import eu.imouto.hupl.data.UploaderImporter;
 import eu.imouto.hupl.data.UploaderEntry;
 import eu.imouto.hupl.data.UploaderDB;
 import eu.imouto.hupl.R;
-import eu.imouto.hupl.upload.UploadManager;
+import eu.imouto.hupl.upload.UploadService;
 
 public class ChooseUploaderActivity extends DrawerActivity
     implements AdapterView.OnItemClickListener
@@ -180,7 +180,13 @@ public class ChooseUploaderActivity extends DrawerActivity
             sp.edit().putBoolean("enableResize", resize).apply();
 
 
-            UploadManager.getInstance().startUpload(getApplicationContext(), fileUri, name, resize);
+            Intent in = new Intent(this, UploadService.class);
+            in.setAction("eu.imouto.hupl.ACTION_QUEUE_UPLOAD");
+            in.putExtra("uri", fileUri);
+            in.putExtra("uploader", name);
+            in.putExtra("compress", resize);
+            startService(in);
+
             uploaderDB.updateLastUsed(name);
             finish();
         }

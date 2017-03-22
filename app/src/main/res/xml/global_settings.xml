@@ -25,4 +25,19 @@
             android:inputType="number"
             android:defaultValue="80"/>
     </PreferenceCategory>
+    <PreferenceCategory
+        android:title="Notifications">
+        <SwitchPreference
+            android:key="notification_vibrate"
+            android:title="@string/notification_vibration_title"/>
+        <SwitchPreference
+            android:key="notification_light"
+            android:title="@string/notification_light_title"/>
+        <EditTextPreference
+            android:key="notification_updates_per_sec"
+            android:title="@string/notification_updates_title"
+            android:dialogMessage="@string/notification_updates_summary"
+            android:defaultValue="5"
+            android:inputType="number"/>
+    </PreferenceCategory>
 </PreferenceScreen>

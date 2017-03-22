@@ -48,11 +48,15 @@
     <string name="please_enter_name">名前を入力してください</string>
     <string name="uploader_exists">「%1$s」は既に存在します</string>
     <string name="saved">保存しました</string>
-    <string name="resize_quality_summary">\"最小ファイル　0 ↔ 100　高品質\"</string>
+    <string name="resize_quality_summary">最小ファイル　0 ↔ 100　高品質</string>
     <string name="httpuploader_pass_summary">注意：パスワードは平文で保存されます</string>
     <string name="uploader_import">インポート</string>
     <string name="import_from_url">URLからインポート</string>
     <string name="enter_config_url">URLを入力してください</string>
     <string name="new_http_uploader">新しいHTTPアップローダを作成</string>
     <string name="new_uploader">アップローダを追加</string>
+    <string name="notification_light_title">ライト</string>
+    <string name="notification_vibration_title">バイブレート</string>
+    <string name="notification_updates_title">毎秒アップデート数</string>
+    <string name="notification_updates_summary">通知がラグったら下げてみてください。</string>
 </resources>

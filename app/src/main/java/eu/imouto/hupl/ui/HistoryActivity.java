@@ -187,7 +187,7 @@ public class HistoryActivity extends DrawerActivity
                     }
                     break;
                 case 3:
-                    UploadNotification not = new UploadNotification(context, -1);
+                    UploadNotification not = new UploadNotification(context);
                     not.setFileName(entry.originalName);
                     not.setThumbnail(entry.thumbnail);
                     not.success(entry.link);

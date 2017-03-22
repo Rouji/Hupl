@@ -55,4 +55,8 @@
     <string name="enter_config_url">Bitte Config URL eingeben:</string>
     <string name="new_http_uploader">Neuer HTTP Uploader</string>
     <string name="new_uploader">Neuer Uploader</string>
+    <string name="notification_light_title">Licht</string>
+    <string name="notification_vibration_title">Vibration</string>
+    <string name="notification_updates_title">Max. Updates/Sekunde</string>
+    <string name="notification_updates_summary">Kleiner stellen, falls die Notifications ruckeln.</string>
 </resources>

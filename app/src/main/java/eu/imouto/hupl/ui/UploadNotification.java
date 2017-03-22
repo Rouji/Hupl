@@ -1,5 +1,6 @@
 package eu.imouto.hupl.ui;
 
+import android.app.Notification;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.BroadcastReceiver;
@@ -17,35 +18,57 @@ import android.widget.Toast;
 import java.util.Random;
 
 import eu.imouto.hupl.R;
-import eu.imouto.hupl.upload.UploadManager;
+import eu.imouto.hupl.upload.UploadService;
 import eu.imouto.hupl.util.Humanify;
 
 public class UploadNotification
 {
+    private final static Random rnd = new Random();
     private Context context;
     private int notId = -1;
     private NotificationManager notMgr;
     private NotificationCompat.Builder notBldr;
+    private int queueSize = 0;
 
     private String fileName;
 
     public boolean lights = false;
     public boolean vibrate = false;
 
-    public UploadNotification(Context context, int uploadId)
+    public UploadNotification(Context context)
     {
         this.context = context;
-        Random rnd = new Random();
-        notId = rnd.nextInt();
+
+        newId();
 
         notMgr = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
         notBldr = new NotificationCompat.Builder(context)
             .setColor(0xFF0095FF)
             .setSmallIcon(R.drawable.ic_cloud_upload)
             .setProgress(0, 0, false)
-            .addAction(0, str(R.string.cancel), createCancelPendingIntent(uploadId))
+            .addAction(0, str(R.string.cancel), createCancelPendingIntent())
             .setOngoing(false);
         setThumbnail(BitmapFactory.decodeResource(context.getResources(), R.mipmap.ic_launcher));
+    }
+
+    public void newId()
+    {
+        notId = rnd.nextInt();
+    }
+
+    public int getId()
+    {
+        return notId;
+    }
+
+    public void setQueueSize(int size)
+    {
+        queueSize = size;
+    }
+
+    public Notification getNotification()
+    {
+        return notBldr.build();
     }
 
     public void setFileName(String name)
@@ -76,7 +99,10 @@ public class UploadNotification
             //setProgress doesn't take longs :(
             int prog = (int) (((float) uploaded / fileSize) * 1000.0f);
 
-            notBldr.setContentText(Humanify.byteCount(uploaded) + "/" + Humanify.byteCount(fileSize))
+            String progText = Humanify.byteCount(uploaded) + "/" + Humanify.byteCount(fileSize);
+            if (queueSize > 0)
+                progText += " (+1)";
+            notBldr.setContentText(progText)
                 .setProgress(1000, prog, false);
         }
 
@@ -191,17 +217,12 @@ public class UploadNotification
         return PendingIntent.getBroadcast(context, (int) System.currentTimeMillis(), in, PendingIntent.FLAG_CANCEL_CURRENT);
     }
 
-    private PendingIntent createCancelPendingIntent(int id)
+    private PendingIntent createCancelPendingIntent()
     {
-        CancelBroadcastReceiver receiver = new CancelBroadcastReceiver(id);
-        IntentFilter filter = new IntentFilter("eu.imouto.hupl.ACTION_CANCEL");
-        context.registerReceiver(receiver, filter);//TODO: probably should unregister these receivers at some point?
-
-        Intent in = new Intent("eu.imouto.hupl.ACTION_CANCEL");
-
-        return PendingIntent.getBroadcast(context, (int) System.currentTimeMillis(), in, PendingIntent.FLAG_CANCEL_CURRENT);
+        Intent in = new Intent(context, UploadService.class);
+        in.setAction("eu.imouto.hupl.ACTION_CANCEL");
+        return PendingIntent.getService(context, (int) System.currentTimeMillis(), in, 0);
     }
-
     private class CopyBroadcastReceiver extends BroadcastReceiver
     {
         private String url;
@@ -222,22 +243,6 @@ public class UploadNotification
 
             //hide notification tray
             context.sendBroadcast(new Intent(Intent.ACTION_CLOSE_SYSTEM_DIALOGS));
-        }
-    }
-
-    private class CancelBroadcastReceiver extends BroadcastReceiver
-    {
-        private int id;
-
-        public CancelBroadcastReceiver(int id)
-        {
-            this.id = id;
-        }
-
-        @Override
-        public void onReceive(Context context, Intent intent)
-        {
-            UploadManager.getInstance().cancelUpload(id);
         }
     }
 }

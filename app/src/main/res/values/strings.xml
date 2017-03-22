@@ -67,6 +67,11 @@
     <string name="enter_config_url">Enter config URL:</string>
     <string name="new_http_uploader">New HTTP Uploader</string>
     <string name="new_uploader">New Uploader</string>
+    <string name="uploads_queued">\"Queued %1$d File(s)\"</string>
+    <string name="notification_light_title">Light</string>
+    <string name="notification_vibration_title">Vibrate</string>
+    <string name="notification_updates_title">Max. Updates/Second</string>
+    <string name="notification_updates_summary">Lower this, if the notifications appear laggy.</string>
 
     <!-- TODO: Remove or change this placeholder text -->
 
