@@ -33,7 +33,6 @@ public class UploadService extends Service implements UploadProgressReceiver
     private HistoryEntry historyEntry;
     private Queue<QueueEntry> uploadQueue = new LinkedList<>();
     private Thread uploaderThread;
-    private Thread mainThread;
     private HistoryDB histDb = new HistoryDB(this);
     private boolean uploading = false;
     private long lastUpdate = 0;
@@ -61,26 +60,6 @@ public class UploadService extends Service implements UploadProgressReceiver
         super.onCreate();
 
         pref = PreferenceManager.getDefaultSharedPreferences(this);
-        mainThread = new Thread(new Runnable()
-        {
-            @Override
-            public void run()
-            {
-                while (true)
-                {
-                    try
-                    {
-                        Thread.sleep(500);
-                    }
-                    catch (InterruptedException e)
-                    {
-                        e.printStackTrace();
-                    }
-                    startUpload();
-                }
-            }
-        });
-        //mainThread.start();
     }
 
     @Override
