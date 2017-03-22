@@ -22,7 +22,7 @@ import eu.imouto.hupl.util.UriResolver;
 public class UploadManager
 {
     private static UploadManager instance = new UploadManager();
-    private SparseArray<Upload> currentUploads = new SparseArray<>(5);
+    private SparseArray<UploadInProgress> currentUploads = new SparseArray<>(5);
 
     public static UploadManager getInstance()
     {
@@ -37,14 +37,14 @@ public class UploadManager
     {
         FileToUpload file = UriResolver.uriToFile(context, uri);
         Uploader up = UploaderFactory.getUploaderByName(context, uploaderName, file);
-        Upload u = new Upload(context, up, compress);
+        UploadInProgress u = new UploadInProgress(context, up, compress);
         currentUploads.put(file.getId(), u);
         u.start();
     }
 
     public void cancelUpload(int fileId)
     {
-        Upload up = currentUploads.get(fileId);
+        UploadInProgress up = currentUploads.get(fileId);
         if (up != null)
             up.cancel();
     }
@@ -54,15 +54,17 @@ public class UploadManager
         currentUploads.delete(fileId);
     }
 
-    private class Upload implements UploadProgressReceiver
+    private class UploadInProgress implements UploadProgressReceiver
     {
+        private final static int UPDATES_PER_SEC = 3;
+        private long lastMillis = 0;
         private UploadNotification not;
         private Uploader up;
         private HistoryEntry hist = new HistoryEntry();
         private Context context;
         private boolean cancelled = false;
 
-        public Upload(Context context, Uploader uploader, boolean compress)
+        public UploadInProgress(Context context, Uploader uploader, boolean compress)
         {
             this.context = context;
 
@@ -124,8 +126,14 @@ public class UploadManager
         @Override
         public void onUploadProgress(int uploaded, int fileSize)
         {
-            if (!cancelled)
+            if (cancelled)
+                return;
+            long now = System.currentTimeMillis();
+            if ((now - lastMillis) > 1000/UPDATES_PER_SEC)
+            {
                 not.progress(uploaded, fileSize);
+                lastMillis = now;
+            }
         }
 
         @Override
