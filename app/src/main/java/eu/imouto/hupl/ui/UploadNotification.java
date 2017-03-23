@@ -28,7 +28,6 @@ public class UploadNotification
     private int notId = -1;
     private NotificationManager notMgr;
     private NotificationCompat.Builder notBldr;
-    private int queueSize = 0;
 
     private String fileName;
 
@@ -59,11 +58,6 @@ public class UploadNotification
     public int getId()
     {
         return notId;
-    }
-
-    public void setQueueSize(int size)
-    {
-        queueSize = size;
     }
 
     public Notification getNotification()
@@ -100,8 +94,6 @@ public class UploadNotification
             int prog = (int) (((float) uploaded / fileSize) * 1000.0f);
 
             String progText = Humanify.byteCount(uploaded) + "/" + Humanify.byteCount(fileSize);
-            if (queueSize > 0)
-                progText += " (+1)";
             notBldr.setContentText(progText)
                 .setProgress(1000, prog, false);
         }

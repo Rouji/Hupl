@@ -76,8 +76,6 @@ public class UploadService extends Service implements UploadProgressReceiver
             e.file = UriResolver.uriToFile(this, uri);
 
             uploadQueue.add(e);
-            if (uploading)
-                notification.setQueueSize(uploadQueue.size());
             startUpload();
         }
         else if(act.equals("eu.imouto.hupl.ACTION_CANCEL"))
