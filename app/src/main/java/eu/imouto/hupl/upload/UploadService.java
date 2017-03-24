@@ -79,6 +79,8 @@ public class UploadService extends Service implements UploadProgressReceiver
             e.compress = intent.getBooleanExtra("compress", false);
             Uri uri = intent.getParcelableExtra("uri");
             e.file = UriResolver.uriToFile(this, uri);
+            if (e.file == null)
+                return START_STICKY; //TODO: display an error or something
 
             uploadQueue.add(e);
             startUpload();
