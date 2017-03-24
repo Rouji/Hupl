@@ -10,7 +10,7 @@ import java.io.ByteArrayOutputStream;
  */
 public class ImageResize
 {
-    private static final int THUMBNAIL_SIZE = 256;
+    private static final int THUMBNAIL_SIZE = 512;
     private static final int DEFAULT_QUALITY = 70;
 
     public static Bitmap resizeToFit(Bitmap bitmap, int width, int height)
