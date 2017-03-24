@@ -28,6 +28,7 @@ public class UploadNotification
     private int notId = -1;
     private NotificationManager notMgr;
     private NotificationCompat.Builder notBldr;
+    private NotificationCompat.BigPictureStyle bigPicStyle;
 
     private String fileName;
 
@@ -46,8 +47,8 @@ public class UploadNotification
             .setSmallIcon(R.drawable.ic_cloud_upload)
             .setProgress(0, 0, false)
             .addAction(0, str(R.string.cancel), createCancelPendingIntent())
-            .setOngoing(false);
-        setThumbnail(BitmapFactory.decodeResource(context.getResources(), R.mipmap.ic_launcher));
+            .setOngoing(false)
+            .setLargeIcon(BitmapFactory.decodeResource(context.getResources(), R.mipmap.ic_launcher));
     }
 
     public void newId()
@@ -72,7 +73,12 @@ public class UploadNotification
 
     public void setThumbnail(Bitmap bitmap)
     {
-        notBldr.setLargeIcon(bitmap);
+        if (bitmap == null)
+            return;
+
+        bigPicStyle = new NotificationCompat.BigPictureStyle();
+        bigPicStyle.bigPicture(bitmap);
+        notBldr.setStyle(bigPicStyle);
     }
 
     public void progress(long uploaded, long fileSize)
@@ -86,16 +92,16 @@ public class UploadNotification
 
         if (fileSize == -1)
         {
-            notBldr.setContentText(Humanify.byteCount(uploaded))
-                .setProgress(0, 0, true);
+            notBldr.setProgress(0, 0, true);
+            setContentText(Humanify.byteCount(uploaded));
         } else
         {
             //setProgress doesn't take longs :(
             int prog = (int) (((float) uploaded / fileSize) * 1000.0f);
 
             String progText = Humanify.byteCount(uploaded) + "/" + Humanify.byteCount(fileSize);
-            notBldr.setContentText(progText)
-                .setProgress(1000, prog, false);
+            notBldr.setProgress(1000, prog, false);
+            setContentText(progText);
         }
 
         show();
@@ -119,9 +125,9 @@ public class UploadNotification
                        createOpenPendingIntent(downloadLink))
 
             .setContentTitle(str(R.string.notification_status_complete) + ": " + fileName)
-            .setContentText(downloadLink)
             .setProgress(0, 0, false)
             .setOngoing(false);
+        setContentText(downloadLink);
 
         if (vibrate)
             notBldr.setVibrate(new long[]{0,200});
@@ -135,8 +141,8 @@ public class UploadNotification
     {
         clearActions();
         notBldr.setSmallIcon(R.drawable.ic_error_outline)
-            .setContentTitle(str(R.string.notification_status_failed) + ": " + fileName)
-            .setContentText(error);
+            .setContentTitle(str(R.string.notification_status_failed) + ": " + fileName);
+        setContentText(error);
 
 //        notBldr.addAction(0, "Retry", null); //TODO: retry action
 
@@ -154,9 +160,9 @@ public class UploadNotification
         clearActions();
         notBldr.setSmallIcon(R.drawable.ic_error_outline)
                 .setContentTitle(str(R.string.cancelled))
-                .setContentText(fileName)
                 .setProgress(0, 0, false)
                 .setOngoing(false);
+        setContentText(fileName);
 
 //        notBldr.addAction(0, "Retry", null); //TODO retry action
         show();
@@ -181,6 +187,14 @@ public class UploadNotification
     {
         return context.getString(id);
     }
+
+    private void setContentText(String str)
+    {
+        notBldr.setContentText(str);
+        if (bigPicStyle != null)
+            bigPicStyle.setSummaryText(str);
+    }
+
 
     //intents for the notification's buttons
 
