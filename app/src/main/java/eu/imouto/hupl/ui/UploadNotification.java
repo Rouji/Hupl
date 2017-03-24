@@ -144,8 +144,6 @@ public class UploadNotification
             .setContentTitle(str(R.string.notification_status_failed) + ": " + fileName);
         setContentText(error);
 
-//        notBldr.addAction(0, "Retry", null); //TODO: retry action
-
         //apply expandable layout for (potentially) long error messages
         NotificationCompat.BigTextStyle bigTextStyle = new NotificationCompat.BigTextStyle();
         bigTextStyle.bigText(error);
@@ -163,8 +161,6 @@ public class UploadNotification
                 .setProgress(0, 0, false)
                 .setOngoing(false);
         setContentText(fileName);
-
-//        notBldr.addAction(0, "Retry", null); //TODO retry action
         show();
     }
 
