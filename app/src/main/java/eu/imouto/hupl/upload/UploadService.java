@@ -91,9 +91,8 @@ public class UploadService extends Service implements UploadProgressReceiver
         }
         else if(act.equals("eu.imouto.hupl.ACTION_CANCEL_ALL"))
         {
-            if (uploader != null)
-                uploader.cancel();
             uploadQueue.clear();
+            updateQueueNotification();
         }
 
         return START_STICKY;
