@@ -33,6 +33,10 @@
         <SwitchPreference
             android:key="notification_light"
             android:title="@string/notification_light_title"/>
+        <SwitchPreference
+            android:key="notification_dismiss_on_cancel"
+            android:defaultValue="true"
+            android:title="@string/notification_dismiss_on_cancel_title"/>
         <EditTextPreference
             android:key="notification_updates_per_sec"
             android:title="@string/notification_updates_title"

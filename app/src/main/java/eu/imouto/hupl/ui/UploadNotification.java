@@ -167,6 +167,11 @@ public class UploadNotification
         notMgr.notify(notId, notBldr.build());
     }
 
+    public void close()
+    {
+        notMgr.cancel(notId);
+    }
+
     private void clearActions()
     {
         notBldr.mActions.clear();
@@ -215,6 +220,7 @@ public class UploadNotification
         in.setAction("eu.imouto.hupl.ACTION_CANCEL");
         return PendingIntent.getService(context, (int) System.currentTimeMillis(), in, 0);
     }
+
     private class CopyBroadcastReceiver extends BroadcastReceiver
     {
         private String url;

@@ -19,6 +19,7 @@ import eu.imouto.hupl.R;
 import eu.imouto.hupl.data.FileToUpload;
 import eu.imouto.hupl.data.HistoryDB;
 import eu.imouto.hupl.data.HistoryEntry;
+import eu.imouto.hupl.ui.QueueNotification;
 import eu.imouto.hupl.ui.UploadNotification;
 import eu.imouto.hupl.util.ImageResize;
 import eu.imouto.hupl.util.StreamUtil;
@@ -26,6 +27,7 @@ import eu.imouto.hupl.util.UriResolver;
 
 public class UploadService extends Service implements UploadProgressReceiver
 {
+    private QueueNotification queueNotification;
     private SharedPreferences pref;
     private int updatesPerSec;
     private UploadNotification notification;
@@ -35,6 +37,7 @@ public class UploadService extends Service implements UploadProgressReceiver
     private Thread uploaderThread;
     private HistoryDB histDb = new HistoryDB(this);
     private boolean uploading = false;
+    private boolean dismissOnCancel = true;
     private long lastUpdate = 0;
 
     private class QueueEntry
@@ -66,6 +69,8 @@ public class UploadService extends Service implements UploadProgressReceiver
     public int onStartCommand(Intent intent, int flags, int startId)
     {
         updatesPerSec = Integer.parseInt(pref.getString("notification_updates_per_sec", "5"));
+        dismissOnCancel = pref.getBoolean("notification_dismiss_on_cancel", dismissOnCancel);
+
         String act = intent.getAction();
         if (act.equals("eu.imouto.hupl.ACTION_QUEUE_UPLOAD"))
         {
@@ -77,11 +82,18 @@ public class UploadService extends Service implements UploadProgressReceiver
 
             uploadQueue.add(e);
             startUpload();
+            updateQueueNotification();
         }
         else if(act.equals("eu.imouto.hupl.ACTION_CANCEL"))
         {
             if (uploader != null)
                 uploader.cancel();
+        }
+        else if(act.equals("eu.imouto.hupl.ACTION_CANCEL_ALL"))
+        {
+            if (uploader != null)
+                uploader.cancel();
+            uploadQueue.clear();
         }
 
         return START_STICKY;
@@ -148,6 +160,27 @@ public class UploadService extends Service implements UploadProgressReceiver
         uploading = true;
     }
 
+    private void updateQueueNotification()
+    {
+        if (uploadQueue.isEmpty() && queueNotification != null)
+        {
+            queueNotification.close();
+            queueNotification = null;
+        }
+        if (uploadQueue.isEmpty())
+            return;
+
+        if (queueNotification == null)
+            queueNotification = new QueueNotification(this);
+
+        Queue<String> files = new LinkedList<>();
+        for (QueueEntry e : uploadQueue)
+        {
+            files.add(e.file.fileName);
+        }
+        queueNotification.setQueue(files);
+    }
+
     @Override
     public void onUploadProgress(int uploaded, int fileSize)
     {
@@ -169,6 +202,7 @@ public class UploadService extends Service implements UploadProgressReceiver
         uploading = false;
         stopFG();
         startUpload();
+        updateQueueNotification();
     }
 
     @Override
@@ -176,17 +210,24 @@ public class UploadService extends Service implements UploadProgressReceiver
     {
         notification.error(error);
         uploading = false;
-        uploadQueue.clear();
         stopFG();
+        startUpload();
+        updateQueueNotification();
     }
 
     @Override
     public void onUploadCancelled()
     {
-        notification.cancel();
         uploading = false;
-        uploadQueue.clear();
         stopFG();
+
+        if (dismissOnCancel)
+            notification.close();
+        else
+            notification.cancel();
+
+        startUpload();
+        updateQueueNotification();
     }
 
     private void stopFG()

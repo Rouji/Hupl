@@ -59,4 +59,7 @@
     <string name="notification_vibration_title">Vibration</string>
     <string name="notification_updates_title">Max. Updates/Sekunde</string>
     <string name="notification_updates_summary">Kleiner stellen, falls die Notifications ruckeln.</string>
+    <string name="cancel_all">Alle Abbrechen</string>
+    <string name="uploads_queued">%1$d Files in Warteschlange</string>
+    <string name="notification_dismiss_on_cancel_title">Abgebrochene Notification schließen</string>
 </resources>
