@@ -1,13 +1,11 @@
 package eu.imouto.hupl.upload;
 
 import android.util.Base64;
-import android.util.Log;
 
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
 import java.net.HttpURLConnection;
-import java.net.SocketException;
 import java.net.URL;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;

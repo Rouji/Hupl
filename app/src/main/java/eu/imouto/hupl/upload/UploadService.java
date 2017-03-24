@@ -8,14 +8,12 @@ import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.IBinder;
 import android.preference.PreferenceManager;
-import android.widget.Toast;
 
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.util.LinkedList;
 import java.util.Queue;
 
-import eu.imouto.hupl.R;
 import eu.imouto.hupl.data.FileToUpload;
 import eu.imouto.hupl.data.HistoryDB;
 import eu.imouto.hupl.data.HistoryEntry;

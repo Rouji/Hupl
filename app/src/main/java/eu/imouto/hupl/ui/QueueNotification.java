@@ -3,24 +3,17 @@ package eu.imouto.hupl.ui;
 import android.app.Notification;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
-import android.content.BroadcastReceiver;
-import android.content.ClipData;
-import android.content.ClipboardManager;
 import android.content.Context;
 import android.content.Intent;
-import android.content.IntentFilter;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.net.Uri;
 import android.support.v4.app.NotificationCompat;
-import android.widget.Toast;
 
 import java.util.Queue;
 import java.util.Random;
 
 import eu.imouto.hupl.R;
 import eu.imouto.hupl.upload.UploadService;
-import eu.imouto.hupl.util.Humanify;
 
 public class QueueNotification
 {

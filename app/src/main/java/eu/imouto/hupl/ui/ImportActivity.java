@@ -8,26 +8,19 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.util.Log;
 import android.widget.EditText;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import org.json.JSONException;
-import org.json.JSONObject;
 
 import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.util.regex.Pattern;
 
 import eu.imouto.hupl.R;
 import eu.imouto.hupl.data.UploaderDB;
 import eu.imouto.hupl.data.UploaderEntry;
 import eu.imouto.hupl.data.UploaderImporter;
 import eu.imouto.hupl.util.SimpleDownload;
-import eu.imouto.hupl.util.StreamUtil;
 
 public class ImportActivity extends Activity
 {
