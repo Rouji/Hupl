@@ -23,6 +23,7 @@ import org.json.JSONException;
 import java.io.IOException;
 import java.text.DateFormat;
 import java.util.ArrayList;
+import java.util.List;
 
 import eu.imouto.hupl.data.UploaderImporter;
 import eu.imouto.hupl.data.UploaderEntry;
@@ -34,7 +35,7 @@ public class ChooseUploaderActivity extends DrawerActivity
     implements AdapterView.OnItemClickListener
 {
     private UploaderDB uploaderDB;
-    private Uri fileUri;
+    private List<Uri> fileUriList = new ArrayList<>();
 
     private ListView listView;
     private ChooseUploaderAdapter upAdapter;
@@ -77,13 +78,20 @@ public class ChooseUploaderActivity extends DrawerActivity
         uploaderDB = new UploaderDB(getApplicationContext());
 
         //get the file's uri, if one was provided
-        fileUri = null;
         Intent recvIn = getIntent();
-        if (recvIn != null &&
-                recvIn.getAction() != null &&
-                recvIn.getAction().equalsIgnoreCase(Intent.ACTION_SEND))
+        if (recvIn == null || recvIn.getAction() == null)
+            return;
+
+        fileUriList.clear();
+        if (recvIn.getAction().equals(Intent.ACTION_SEND))
         {
-            fileUri = recvIn.getParcelableExtra(Intent.EXTRA_STREAM);
+            fileUriList.add((Uri)recvIn.getParcelableExtra(Intent.EXTRA_STREAM));
+        }
+        else if (recvIn.getAction().equals(Intent.ACTION_SEND_MULTIPLE))
+        {
+            ArrayList<Uri> l = recvIn.getParcelableArrayListExtra(Intent.EXTRA_STREAM);
+            if (l!=null)
+            fileUriList = l;
         }
     }
 
@@ -95,7 +103,7 @@ public class ChooseUploaderActivity extends DrawerActivity
         String strEdit = getResources().getString(R.string.uploaders);
         String strChoose = getResources().getString(R.string.choose_uploader);
 
-        if (fileUri != null)
+        if (!fileUriList.isEmpty())
         {
             //we're sending stuff somewhere
             setTitle(strChoose);
@@ -169,7 +177,7 @@ public class ChooseUploaderActivity extends DrawerActivity
         TextView nameView = (TextView)view.findViewById(R.id.name);
         String name = nameView.getText().toString();
 
-        if (fileUri == null)
+        if (fileUriList == null)
         {
             startEditActivity(name);
         }
@@ -180,12 +188,15 @@ public class ChooseUploaderActivity extends DrawerActivity
             sp.edit().putBoolean("enableResize", resize).apply();
 
 
-            Intent in = new Intent(this, UploadService.class);
-            in.setAction("eu.imouto.hupl.ACTION_QUEUE_UPLOAD");
-            in.putExtra("uri", fileUri);
-            in.putExtra("uploader", name);
-            in.putExtra("compress", resize);
-            startService(in);
+            for (Uri fileUri : fileUriList)
+            {
+                Intent in = new Intent(this, UploadService.class);
+                in.setAction("eu.imouto.hupl.ACTION_QUEUE_UPLOAD");
+                in.putExtra("uri", fileUri);
+                in.putExtra("uploader", name);
+                in.putExtra("compress", resize);
+                startService(in);
+            }
 
             uploaderDB.updateLastUsed(name);
             finish();
