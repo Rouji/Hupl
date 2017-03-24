@@ -7,6 +7,7 @@ import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
 import java.net.HttpURLConnection;
+import java.net.SocketException;
 import java.net.URL;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -21,6 +22,7 @@ public class HttpUploader extends Uploader
     private final static int BUFFER_SIZE = 1024*8;
 
     private boolean run = true;
+    private HttpURLConnection connection;
 
     public String targetUrl;
     public String authUser;
@@ -45,7 +47,6 @@ public class HttpUploader extends Uploader
         catch (IOException e)
         {}
 
-        HttpURLConnection connection;
         DataOutputStream outputStream;
         DataInputStream inputStream;
 
@@ -82,25 +83,31 @@ public class HttpUploader extends Uploader
             outputStream.writeBytes("Content-Disposition: form-data; name=\""+fileParam+"\";filename=\"" + file.fileName +"\"" + EOL);
             outputStream.writeBytes(EOL);
 
-            //write file contents
-            int written = 0;
-            while (run && (bytesRead = file.stream.read(buffer, 0, BUFFER_SIZE)) > 0)
+            try
             {
-                outputStream.write(buffer, 0, bytesRead);
-                written += bytesRead;
-                if (progressReceiver != null)
-                    progressReceiver.onUploadProgress(written, fileSize);
-            }
+                //write file contents
+                int written = 0;
+                while (run && (bytesRead = file.stream.read(buffer, 0, BUFFER_SIZE)) > 0)
+                {
+                    outputStream.write(buffer, 0, bytesRead);
+                    written += bytesRead;
+                    if (progressReceiver != null)
+                        progressReceiver.onUploadProgress(written, fileSize);
+                }
 
-            if (run)
-            {
                 //write multipart footer
                 outputStream.writeBytes(EOL);
                 outputStream.writeBytes(HYPHENS + BOUNDARY + HYPHENS + EOL);
+
+                outputStream.flush();
+                outputStream.close();
+            }
+            catch (SocketException ex)
+            {
+                if (run)
+                    throw ex;
             }
 
-            outputStream.flush();
-            outputStream.close();
 
             int status = -1;
             String response = "";
@@ -144,6 +151,11 @@ public class HttpUploader extends Uploader
             if (progressReceiver != null)
                 progressReceiver.onUploadFailed("Exception: " + ex.getMessage());
         }
+        finally
+        {
+            connection.disconnect();
+            connection = null;
+        }
     }
 
     private String parseResponse(String resp)
@@ -164,5 +176,15 @@ public class HttpUploader extends Uploader
     public void cancel()
     {
         run = false;
+
+        new Thread(new Runnable()
+        {
+            @Override
+            public void run()
+            {
+                if (connection != null)
+                    connection.disconnect();
+            }
+        }).start();
     }
 }
