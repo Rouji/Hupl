@@ -51,6 +51,7 @@ public class HistoryDB extends SQLiteOpenHelper
     {
         SQLiteDatabase db = getWritableDatabase();
         db.delete("history", "id = ?", new String[] {String.valueOf(id)});
+        db.close();
     }
 
     public void deleteEntry(HistoryEntry entry)
@@ -63,6 +64,7 @@ public class HistoryDB extends SQLiteOpenHelper
         SQLiteDatabase db = getWritableDatabase();
 
         db.insert("history", null, entryToCV(entry));
+        db.close();
     }
 
     public ArrayList<HistoryEntry> getAllEntries()
@@ -80,6 +82,7 @@ public class HistoryDB extends SQLiteOpenHelper
                 entries.add(he);
         } while(c.moveToNext());
 
+        db.close();
         return entries;
     }
 

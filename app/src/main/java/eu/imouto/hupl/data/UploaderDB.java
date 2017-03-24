@@ -50,6 +50,7 @@ public class UploaderDB extends SQLiteOpenHelper
         Cursor c = db.rawQuery("SELECT * FROM uploaders WHERE name = ?", new String[]{name});
         if (!c.moveToFirst())
             return null;
+        db.close();
         return rowToEntry(c);
     }
 
@@ -68,6 +69,7 @@ public class UploaderDB extends SQLiteOpenHelper
                 entries.add(ue);
         } while(c.moveToNext());
 
+        db.close();
         return entries;
     }
 
@@ -79,12 +81,14 @@ public class UploaderDB extends SQLiteOpenHelper
         ContentValues cv = new ContentValues();
         cv.put("last_used", dateFormat.format(now));
         db.update("uploaders", cv, "name = ?", new String[] {name});
+        db.close();
     }
 
     public void deleteUploader(String name)
     {
         SQLiteDatabase db = getWritableDatabase();
         db.delete("uploaders", "name = ?", new String[]{name});
+        db.close();
     }
 
     public void saveUploader(UploaderEntry uploader)
@@ -104,6 +108,7 @@ public class UploaderDB extends SQLiteOpenHelper
             db.replace("uploaders", null, cv);
         else
             db.update("uploaders", cv, "name = ?", new String[]{oldName});
+        db.close();
     }
 
     private static UploaderEntry rowToEntry(Cursor c)
