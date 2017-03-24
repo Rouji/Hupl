@@ -55,6 +55,9 @@ public class HttpUploader extends Uploader
 
         try
         {
+            int status = -1;
+            String response = "";
+
             URL url = new URL(targetUrl);
             connection = (HttpURLConnection) url.openConnection();
 
@@ -101,28 +104,24 @@ public class HttpUploader extends Uploader
 
                 outputStream.flush();
                 outputStream.close();
+
+                if (run)
+                {
+                    //read response body
+                    inputStream = new DataInputStream(connection.getInputStream());
+                    while ((bytesRead = inputStream.read(buffer, 0, BUFFER_SIZE)) > 0)
+                    {
+                        responseBuilder.append(new String(buffer, 0, bytesRead));
+                    }
+
+                    status = connection.getResponseCode();
+                    response = responseBuilder.toString();
+                }
             }
-            catch (SocketException ex)
+            catch (IOException ex)
             {
                 if (run)
                     throw ex;
-            }
-
-
-            int status = -1;
-            String response = "";
-
-            if (run)
-            {
-                //read response body
-                inputStream = new DataInputStream(connection.getInputStream());
-                while ((bytesRead = inputStream.read(buffer, 0, BUFFER_SIZE)) > 0)
-                {
-                    responseBuilder.append(new String(buffer, 0, bytesRead));
-                }
-
-                status = connection.getResponseCode();
-                response = responseBuilder.toString();
             }
 
 
