@@ -199,6 +199,7 @@ public class ChooseUploaderActivity extends DrawerActivity
             }
 
             uploaderDB.updateLastUsed(name);
+            fileUriList.clear();
             finish();
         }
     }
