@@ -19,6 +19,7 @@ import eu.imouto.hupl.data.HistoryDB;
 import eu.imouto.hupl.data.HistoryEntry;
 import eu.imouto.hupl.ui.QueueNotification;
 import eu.imouto.hupl.ui.UploadNotification;
+import eu.imouto.hupl.util.FilenameUtil;
 import eu.imouto.hupl.util.ImageResize;
 import eu.imouto.hupl.util.StreamUtil;
 import eu.imouto.hupl.util.UriResolver;
@@ -140,6 +141,7 @@ public class UploadService extends Service implements UploadProgressReceiver
                 int q = Integer.parseInt(pref.getString("image_resize_quality", "70"));
                 bm = ImageResize.resizeToFit(bm, w, h);
                 orig = ImageResize.compress(bm, q);
+                e.file.fileName = FilenameUtil.replaceExtension(e.file.fileName, "jpg");
             }
             e.file.stream = new ByteArrayInputStream(orig);
         }
