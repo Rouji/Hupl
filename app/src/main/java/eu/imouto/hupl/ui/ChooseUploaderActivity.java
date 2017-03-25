@@ -177,7 +177,7 @@ public class ChooseUploaderActivity extends DrawerActivity
         TextView nameView = (TextView)view.findViewById(R.id.name);
         String name = nameView.getText().toString();
 
-        if (fileUriList == null)
+        if (fileUriList.isEmpty())
         {
             startEditActivity(name);
         }
