@@ -57,7 +57,7 @@
     <string name="about_source_text" translatable="false">Hupl is free and open source software licensed under GPLv3. The source code, the full license and further details are available on GitHub at https://github.com/Rouji/Hupl</string>
     <string name="about_feedback_title" translatable="false">Feedback</string>
     <string name="about_feedback_text" translatable="false">If you find a bug (not all that unlikely), or want a certain feature in future releases, please open an issue on GitHub (https://github.com/Rouji/Hupl/issues). If that\'s not possible for some reason, an email to hupl@imouto.eu will do as well.</string>
-    <string name="last_used">last used %1$s</string>
+    <string name="last_used">Last used %1$s</string>
     <string name="no_activity">No activity found to handle this link</string>
     <string name="please_enter_name">Please enter a name</string>
     <string name="uploader_exists">Uploader %1$s aleady exists</string>
@@ -75,6 +75,7 @@
     <string name="cancel_all">Cancel All</string>
     <string name="notification_dismiss_on_cancel_title">Dismiss notification on cancel</string>
     <string name="notification_dismiss_on_cancel_summary" translatable="false">Dismiss upload notification after cancel was pressed</string>
+    <string name="httpuploader_regex_title">Response Regex</string>
 
     <!-- TODO: Remove or change this placeholder text -->
 

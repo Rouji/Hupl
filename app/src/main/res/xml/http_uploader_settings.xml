@@ -15,8 +15,7 @@
             android:key="fileParam"/>
 
         <EditTextPreference
-            android:title="Response Regex"
-            android:dialogMessage="Filter server response"
+            android:title="@string/httpuploader_regex_title"
             android:key="responseRegex"/>
     </PreferenceCategory>
 
