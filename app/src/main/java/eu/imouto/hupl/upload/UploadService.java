@@ -69,6 +69,9 @@ public class UploadService extends Service implements UploadProgressReceiver
         updatesPerSec = Integer.parseInt(pref.getString("notification_updates_per_sec", "5"));
         dismissOnCancel = pref.getBoolean("notification_dismiss_on_cancel", dismissOnCancel);
 
+        if (intent == null)
+            return START_STICKY;
+
         String act = intent.getAction();
         if (act.equals("eu.imouto.hupl.ACTION_QUEUE_UPLOAD"))
         {
