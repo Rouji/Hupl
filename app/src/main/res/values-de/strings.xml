@@ -34,11 +34,11 @@
     <string name="cancel">Abbrechen</string>
     <string name="notification_status_failed">Fehlgeschlagen</string>
     <string name="resize_category">Bilder Verkleinern</string>
-    <string name="resize_height_title">Höhe</string>
-    <string name="resize_width_title">Breite</string>
+    <string name="resize_height_title">Max. Höhe</string>
+    <string name="resize_width_title">Max. Breite</string>
     <string name="resize_width_summary">Max. Breite</string>
     <string name="resize_height_summary">Max. Höhe</string>
-    <string name="resize_quality_title">Qualität</string>
+    <string name="resize_quality_title">JPEG Qualität</string>
     <string name="notification">Notification</string>
     <string name="edit">Editieren</string>
     <string name="close">Schließen</string>

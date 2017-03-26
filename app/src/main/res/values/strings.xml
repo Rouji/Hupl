@@ -13,11 +13,11 @@
     <string name="list_add_host">Add Uploader</string>
 
     <string name="resize_category">Image Resize</string>
-    <string name="resize_width_title">Width</string>
+    <string name="resize_width_title">Max. Width</string>
     <string name="resize_width_summary">Max. Width</string>
-    <string name="resize_height_title">Height</string>
+    <string name="resize_height_title">Max. Height</string>
     <string name="resize_height_summary">Max. Height</string>
-    <string name="resize_quality_title">Quality</string>
+    <string name="resize_quality_title">JPEG Quality</string>
 
     <string name="httpuploader_category_host">Host</string>
     <string name="httpuploader_category_auth">HTTP Basic Auth.</string>
