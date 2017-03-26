@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+    <!-- <CheckBoxPreference
+        android:key="ignore_cert"
+        android:title="Invalid Certs"
+        android:summary="Accept all SSL certificates, including invalid ones" /> -->
+    <PreferenceCategory
+        android:title = "@string/resize_category">
+        <EditTextPreference
+            android:key="image_resize_width"
+            android:title="@string/resize_width_title"
+            android:defaultValue="1000"
+            android:inputType="number">
+        </EditTextPreference>
+        <EditTextPreference
+            android:key="image_resize_height"
+            android:title="@string/resize_height_title"
+            android:defaultValue="1000"
+            android:inputType="number">
+        </EditTextPreference>
+        <EditTextPreference
+            android:key="image_resize_quality"
+            android:title="@string/resize_quality_title"
+            android:dialogMessage="@string/resize_quality_summary"
+            android:inputType="number"
+            android:defaultValue="80"/>
+    </PreferenceCategory>
+    <PreferenceCategory
+        android:title="Notifications">
+        <SwitchPreference
+            android:key="notification_vibrate"
+            android:title="@string/notification_vibration_title"/>
+        <SwitchPreference
+            android:key="notification_light"
+            android:title="@string/notification_light_title"/>
+        <SwitchPreference
+            android:key="notification_dismiss_on_cancel"
+            android:defaultValue="true"
+            android:title="@string/notification_dismiss_on_cancel_title"/>
+        <EditTextPreference
+            android:key="notification_updates_per_sec"
+            android:title="@string/notification_updates_title"
+            android:dialogMessage="@string/notification_updates_summary"
+            android:defaultValue="5"
+            android:inputType="number"/>
+    </PreferenceCategory>
+</PreferenceScreen>

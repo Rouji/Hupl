@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="eu.imouto.hupl">
+          package="eu.imouto.hupl">
 
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
-    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.INTERNET"/>
 
     <application
         android:allowBackup="true"
@@ -11,20 +11,51 @@
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".HostListActivity">
+        <activity android:name=".ui.ChooseUploaderActivity">
             <intent-filter>
-                <action android:name="android.intent.action.SEND" />
-                <category android:name="android.intent.category.DEFAULT" />
-                <data android:mimeType="*/*" />
+                <action android:name="android.intent.action.SEND"/>
+                <action android:name="android.intent.action.SEND_MULTIPLE"/>
+
+                <category android:name="android.intent.category.DEFAULT"/>
+
+                <data android:mimeType="*/*"/>
             </intent-filter>
             <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
+                <action android:name="android.intent.action.MAIN"/>
 
-                <category android:name="android.intent.category.LAUNCHER" />
-
+                <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
-        <activity android:name=".HostEditActivity" />
+        <activity
+            android:name=".ui.EditHttpUploaderActivity"
+            android:theme="@style/PreferenceStyle"/>
+        <activity
+            android:name=".ui.GlobalSettingsActivity"
+            android:theme="@style/PreferenceStyle"/>
+        <activity android:name=".ui.HistoryActivity"/>
+        <activity android:name=".ui.AboutActivity"/>
+        <activity android:name=".ui.FeedbackActivity"/>
+        <activity android:name=".ui.ImportActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW"/>
+
+                <category android:name="android.intent.category.DEFAULT"/>
+                <category android:name="android.intent.category.BROWSABLE"/>
+
+                <data android:host="*"/>
+                <data android:pathPattern=".*\\.hupl"/>
+                <data android:pathPattern=".*\\.json"/>
+                <data android:scheme="http"/>
+                <data android:scheme="https"/>
+                <!-- <data android:scheme="file"/> -->
+            </intent-filter>
+        </activity>
+
+        <service
+            android:name=".upload.UploadService"
+            android:enabled="true"
+            android:exported="false">
+        </service>
     </application>
 
 </manifest>

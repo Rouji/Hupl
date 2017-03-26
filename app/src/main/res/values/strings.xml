@@ -2,38 +2,82 @@
     <string name="app_name">Hupl</string>
 
     <string name="notification_status_uploading">Uploading File</string>
-    <string name="notification_status_complete">Upload Complete!</string>
-    <string name="notification_status_exception">Error occurred</string>
-    <string name="notification_status_bad_response">Bad response from server</string>
+    <string name="notification_status_complete">Complete</string>
 
-    <string name="notification_button_share">Share</string>
-    <string name="notification_button_copy">Copy</string>
-    <string name="notification_button_open">Open</string>
+    <string name="share">Share</string>
+    <string name="copy">Copy</string>
+    <string name="open">Open</string>
 
     <string name="share_chooser_title">Share Link</string>
 
-    <string name="list_add_host">Add Host</string>
+    <string name="list_add_host">Add Uploader</string>
 
-    <string name="settings_category_host">Host</string>
-    <string name="settings_category_auth">HTTP Basic Auth.</string>
-    <string name="settings_category_etc">Etc.</string>
+    <string name="resize_category">Image Resize</string>
+    <string name="resize_width_title">Max. Width</string>
+    <string name="resize_width_summary">Max. Width</string>
+    <string name="resize_height_title">Max. Height</string>
+    <string name="resize_height_summary">Max. Height</string>
+    <string name="resize_quality_title">JPEG Quality</string>
 
-    <string name="settings_title_title">Name</string>
-    <string name="settings_title_summary">Short, user-friendly name</string>
-    <string name="settings_url_title">Upload URL</string>
-    <string name="settings_url_summary">The URL to post files to</string>
-    <string name="settings_parameter_title">File Parameter</string>
-    <string name="settings_parameter_summary">The POST parameter, that holds the filename</string>
-    <string name="settings_authuser_title">User</string>
-    <string name="settings_authuser_summary">Leave empty for no auth</string>
-    <string name="settings_authpass_title">Password</string>
-    <string name="settings_authpass_summary" translatable="false"></string>
-    <string name="settings_delete_title">Delete</string>
-    <string name="settings_delete_summary">Remove this host from the list</string>
+    <string name="httpuploader_category_host">Host</string>
+    <string name="httpuploader_category_auth">HTTP Basic Auth.</string>
 
-    <string name="actionbar_title_edit_hosts">Edit Hosts</string>
-    <string name="actionbar_title_choose_upload_host">Choose Host</string>
+    <string name="httpuploader_name_title">Name</string>
+    <string name="httpuploader_title_summary">Short, user-friendly name</string>
+    <string name="httpuploader_url_title">Upload URL</string>
+    <string name="httpuploader_url_summary">The URL to post files to</string>
+    <string name="httpuploader_param_title">File Parameter</string>
+    <string name="httpuploader_param_summary">The POST parameter, that holds the filename</string>
+    <string name="httuploader_user_title">User</string>
+    <string name="httpuploader_user_summary">Leave empty for no auth</string>
+    <string name="httpuploader_pass_title">Password</string>
+    <string name="httpuploader_pass_summary">Note: Passwords are stored in plaintext</string>
+
+    <string name="actionbar_title_uploaders">Edit Hosts</string>
+    <string name="choose_uploader">Choose Uploader</string>
 
     <string name="toast_url_copied">Link copied!</string>
+    <string name="resize_images">Resize Images</string>
+    <string name="uploaders">Uploaders</string>
+    <string name="history">History</string>
+    <string name="settings">Settings</string>
+    <string name="about">About</string>
+    <string name="feedback">Feedback</string>
+    <string name="delete">Delete</string>
+    <string name="save">Save</string>
+    <string name="cancelled">Cancelled</string>
+    <string name="cancel">Cancel</string>
+    <string name="notification_status_failed">Failed</string>
+    <string name="resize_quality_summary">small file 0 ↔ 100 high quality</string>
+    <string name="notification">Notification</string>
+    <string name="close">Close</string>
+    <string name="edit">Edit</string>
+    <string name="uploader_imported">Imported %1$s</string>
+    <string name="about_source_title" translatable="false">Source</string>
+    <string name="about_source_text" translatable="false">Hupl is free and open source software licensed under GPLv3. The source code, the full license and further details are available on GitHub at https://github.com/Rouji/Hupl</string>
+    <string name="about_feedback_title" translatable="false">Feedback</string>
+    <string name="about_feedback_text" translatable="false">If you find a bug (not all that unlikely), or want a certain feature in future releases, please open an issue on GitHub (https://github.com/Rouji/Hupl/issues). If that\'s not possible for some reason, an email to hupl@imouto.eu will do as well.</string>
+    <string name="last_used">Last used %1$s</string>
+    <string name="no_activity">No activity found to handle this link</string>
+    <string name="please_enter_name">Please enter a name</string>
+    <string name="uploader_exists">Uploader %1$s aleady exists</string>
+    <string name="saved">Saved</string>
+    <string name="uploader_import">Import</string>
+    <string name="import_from_url">Import from URL</string>
+    <string name="enter_config_url">Enter config URL:</string>
+    <string name="new_http_uploader">New HTTP Uploader</string>
+    <string name="new_uploader">New Uploader</string>
+    <string name="uploads_queued">%1$d File(s) Queued</string>
+    <string name="notification_light_title">Light</string>
+    <string name="notification_vibration_title">Vibrate</string>
+    <string name="notification_updates_title">Max. Updates/Second</string>
+    <string name="notification_updates_summary">Lower this, if the notifications appear laggy.</string>
+    <string name="cancel_all">Cancel All</string>
+    <string name="notification_dismiss_on_cancel_title">Dismiss notification on cancel</string>
+    <string name="notification_dismiss_on_cancel_summary" translatable="false">Dismiss upload notification after cancel was pressed</string>
+    <string name="httpuploader_regex_title">Response Regex</string>
+    <string name="need_permission_storage">I need storage permissions</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
 
 </resources>

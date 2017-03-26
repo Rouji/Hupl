@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+    <PreferenceCategory android:title="@string/httpuploader_category_host" >
+        <EditTextPreference
+            android:title="@string/httpuploader_name_title"
+            android:dialogMessage="@string/httpuploader_title_summary"
+            android:key="name"/>
+        <EditTextPreference
+            android:title="@string/httpuploader_url_title"
+            android:dialogMessage="@string/httpuploader_url_summary"
+            android:key="targetUrl"/>
+        <EditTextPreference
+            android:title="@string/httpuploader_param_title"
+            android:dialogMessage="@string/httpuploader_param_summary"
+            android:key="fileParam"/>
+
+        <EditTextPreference
+            android:title="@string/httpuploader_regex_title"
+            android:key="responseRegex"/>
+    </PreferenceCategory>
+
+    <PreferenceCategory android:title="@string/httpuploader_category_auth" >
+        <EditTextPreference
+            android:title="@string/httuploader_user_title"
+            android:dialogMessage="@string/httpuploader_user_summary"
+            android:key="authUser"/>
+        <EditTextPreference
+            android:title="@string/httpuploader_pass_title"
+            android:dialogMessage="@string/httpuploader_pass_summary"
+            android:key="authPass"/>
+    </PreferenceCategory>
+</PreferenceScreen>
