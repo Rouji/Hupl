@@ -10,6 +10,7 @@ import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.provider.Settings;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.view.LayoutInflater;
@@ -20,7 +21,6 @@ import android.widget.ArrayAdapter;
 import android.widget.CheckBox;
 import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import org.json.JSONException;
 
@@ -46,6 +46,8 @@ public class ChooseUploaderActivity extends DrawerActivity
     private ListView listView;
     private ChooseUploaderAdapter upAdapter;
     private CheckBox enableResize;
+    private TextView errorText;
+    private boolean checkPerm = true;
 
     @Override
     int onInflateContent()
@@ -80,6 +82,7 @@ public class ChooseUploaderActivity extends DrawerActivity
         listView.setOnItemClickListener(this);
 
         enableResize = (CheckBox)findViewById(R.id.enableResize);
+        errorText = (TextView)findViewById(R.id.errorText);
 
         uploaderDB = new UploaderDB(getApplicationContext());
 
@@ -101,15 +104,7 @@ public class ChooseUploaderActivity extends DrawerActivity
         }
         else
         {
-            return;
-        }
-
-        //request permission(s)
-        if (ContextCompat.checkSelfPermission(this, android.Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED)
-        {
-            ActivityCompat.requestPermissions(this,
-                                              new String[]{android.Manifest.permission.READ_EXTERNAL_STORAGE},
-                                              READ_EXTERNAL_STORAGE_REQUEST);
+            checkPerm = false;
         }
     }
 
@@ -122,11 +117,14 @@ public class ChooseUploaderActivity extends DrawerActivity
                 grant[0] == PackageManager.PERMISSION_GRANTED)
             {
                 //got permission
+                errorText.setVisibility(View.GONE);
+                listView.setEnabled(true);
             }
             else
             {
-                Toast.makeText(this, getResources().getString(R.string.need_permission_storage), Toast.LENGTH_SHORT).show();
-                fileUriList.clear();
+                errorText.setVisibility(View.VISIBLE);
+                listView.setEnabled(false);
+                checkPerm = false;
             }
         }
     }
@@ -138,6 +136,23 @@ public class ChooseUploaderActivity extends DrawerActivity
 
         String strEdit = getResources().getString(R.string.uploaders);
         String strChoose = getResources().getString(R.string.choose_uploader);
+
+        //request permission(s)
+        if (checkPerm)
+        {
+            if (ContextCompat.checkSelfPermission(this, android.Manifest.permission.READ_EXTERNAL_STORAGE)
+                    != PackageManager.PERMISSION_GRANTED)
+            {
+                ActivityCompat.requestPermissions(this,
+                                                  new String[]{android.Manifest.permission.READ_EXTERNAL_STORAGE},
+                                                  READ_EXTERNAL_STORAGE_REQUEST);
+            }
+            else
+            {
+                errorText.setVisibility(View.GONE);
+                listView.setEnabled(true);
+            }
+        }
 
         if (!fileUriList.isEmpty())
         {
@@ -238,6 +253,16 @@ public class ChooseUploaderActivity extends DrawerActivity
             fileUriList.clear();
             finish();
         }
+    }
+
+    public void permissionErrorClick(View view)
+    {
+        //open this app's settings
+        Intent in = new Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS,
+                               Uri.fromParts("package", getPackageName(), null));
+        in.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        checkPerm = true;
+        startActivity(in);
     }
 
     private class ChooseUploaderAdapter extends ArrayAdapter<UploaderEntry>
