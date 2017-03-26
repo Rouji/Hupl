@@ -28,7 +28,6 @@ import java.io.IOException;
 import java.text.DateFormat;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.regex.Pattern;
 
 import eu.imouto.hupl.data.UploaderImporter;
 import eu.imouto.hupl.data.UploaderEntry;
@@ -243,7 +242,7 @@ public class ChooseUploaderActivity extends DrawerActivity
 
     private class ChooseUploaderAdapter extends ArrayAdapter<UploaderEntry>
     {
-        private final DateFormat df = DateFormat.getDateTimeInstance(DateFormat.LONG, DateFormat.SHORT);
+        private final DateFormat df = DateFormat.getDateTimeInstance(DateFormat.SHORT, DateFormat.SHORT);
         public ChooseUploaderAdapter(Context context, ArrayList<UploaderEntry> entries)
         {
             super(context, 0, entries);
