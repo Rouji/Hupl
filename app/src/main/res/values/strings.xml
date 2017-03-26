@@ -76,6 +76,7 @@
     <string name="notification_dismiss_on_cancel_title">Dismiss notification on cancel</string>
     <string name="notification_dismiss_on_cancel_summary" translatable="false">Dismiss upload notification after cancel was pressed</string>
     <string name="httpuploader_regex_title">Response Regex</string>
+    <string name="need_permission_storage">I need storage permissions</string>
 
     <!-- TODO: Remove or change this placeholder text -->
 

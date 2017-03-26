@@ -63,4 +63,5 @@
     <string name="uploads_queued">%1$d件のファイルがキュー中</string>
     <string name="notification_dismiss_on_cancel_title">キャンセルした通知を非表情</string>
     <string name="httpuploader_regex_title">応答正規表現</string>
+    <string name="need_permission_storage">ストレージの権限が必要です</string>
 </resources>

@@ -63,4 +63,5 @@
     <string name="uploads_queued">%1$d File(s) in Warteschlange</string>
     <string name="notification_dismiss_on_cancel_title">Abgebrochene Notification schließen</string>
     <string name="httpuploader_regex_title">Antwort Regex</string>
+    <string name="need_permission_storage">Brauche Speicher Berechtigungen</string>
 </resources>

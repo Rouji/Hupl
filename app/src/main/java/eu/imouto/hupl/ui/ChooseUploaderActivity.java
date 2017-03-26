@@ -6,9 +6,12 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,6 +20,7 @@ import android.widget.ArrayAdapter;
 import android.widget.CheckBox;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import org.json.JSONException;
 
@@ -24,6 +28,7 @@ import java.io.IOException;
 import java.text.DateFormat;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.regex.Pattern;
 
 import eu.imouto.hupl.data.UploaderImporter;
 import eu.imouto.hupl.data.UploaderEntry;
@@ -36,6 +41,8 @@ public class ChooseUploaderActivity extends DrawerActivity
 {
     private UploaderDB uploaderDB;
     private List<Uri> fileUriList = new ArrayList<>();
+
+    private static final int READ_EXTERNAL_STORAGE_REQUEST = 1;
 
     private ListView listView;
     private ChooseUploaderAdapter upAdapter;
@@ -92,6 +99,36 @@ public class ChooseUploaderActivity extends DrawerActivity
             ArrayList<Uri> l = recvIn.getParcelableArrayListExtra(Intent.EXTRA_STREAM);
             if (l!=null)
             fileUriList = l;
+        }
+        else
+        {
+            return;
+        }
+
+        //request permission(s)
+        if (ContextCompat.checkSelfPermission(this, android.Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED)
+        {
+            ActivityCompat.requestPermissions(this,
+                                              new String[]{android.Manifest.permission.READ_EXTERNAL_STORAGE},
+                                              READ_EXTERNAL_STORAGE_REQUEST);
+        }
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, String perm[], int[] grant)
+    {
+        if (requestCode == READ_EXTERNAL_STORAGE_REQUEST)
+        {
+            if (grant.length > 0 &&
+                grant[0] == PackageManager.PERMISSION_GRANTED)
+            {
+                //got permission
+            }
+            else
+            {
+                Toast.makeText(this, getResources().getString(R.string.need_permission_storage), Toast.LENGTH_SHORT).show();
+                fileUriList.clear();
+            }
         }
     }
 
