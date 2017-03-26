@@ -15,7 +15,7 @@ Other features:
 * Keeps a history of files you upload and resulting links
 * Can optionally resize/compress image files before uploading
 
-Binaries are available as releases on Github: https://github.com/Rouji/Hupl/releases 
+Binaries are available as releases on Github: https://github.com/Rouji/Hupl/releases  
 and on the Play Store: https://play.google.com/store/apps/details?id=eu.imouto.hupl 
 
 # Uploaders
