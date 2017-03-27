@@ -20,7 +20,7 @@
     <string name="httpuploader_param_summary">ファイル名を指摘するパラメータの名</string>
     <string name="httpuploader_param_title">ファイルパラメータ</string>
     <string name="httpuploader_user_summary">認証を無効するには空白にしてください</string>
-    <string name="choose_uploader">アップローダを選択</string>
+    <string name="choose_uploader">アップロード先選択</string>
     <string name="httpuploader_title_summary">読みやすい名前</string>
     <string name="uploaders">アップローダ</string>
     <string name="history">履歴</string>
@@ -63,5 +63,5 @@
     <string name="uploads_queued">%1$d件のファイルがキュー中</string>
     <string name="notification_dismiss_on_cancel_title">キャンセルした通知を非表情</string>
     <string name="httpuploader_regex_title">応答正規表現</string>
-    <string name="need_permission_storage">ストレージの権限が必要です</string>
+    <string name="need_permission_storage">ファイルをアップロードするにはストレージの権限が必要です。このメッセージをクリックしてアプリの設定を変化してください。</string>
 </resources>
