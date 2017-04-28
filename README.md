@@ -44,4 +44,5 @@ This repo contains an Android Studio (v2) project. You should be able to open it
 Note: if you want any preconfigured uploaders, you have to clone the repo recursively.
 
 # Known Issues
-Closing the app (e.g. by swiping the main activity off the recent apps screen) sometimes kills any in-progress uploads or cancels notifications, due to them running in the same process. The Android lifecycle stuff is kind of annoying.
+Closing the app (e.g. by swiping the main activity off the recent apps screen) sometimes clears notifications of finished uploads. (Though it shouldn't ever cancel ongoing uploads.) This is "working as intended", and I'm not aware of any workaround for this on Android.  
+If this ever happens to you, the uploads will still be listed in the history.
