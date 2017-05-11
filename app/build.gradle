@@ -8,8 +8,8 @@ android {
         applicationId "eu.imouto.hupl"
         minSdkVersion 15
         targetSdkVersion 23
-        versionCode 11
-        versionName "2.0.6"
+        versionCode 12
+        versionName "2.0.7"
         vectorDrawables.useSupportLibrary = true
     }
     buildTypes {
