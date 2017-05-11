@@ -61,7 +61,8 @@
     <string name="notification_updates_summary">通知がラグったら下げてみてください。</string>
     <string name="cancel_all">全てキャンセル</string>
     <string name="uploads_queued">%1$d件のファイルがキュー中</string>
-    <string name="notification_dismiss_on_cancel_title">キャンセルした通知を非表情</string>
+    <string name="notification_dismiss_on_cancel_title">キャンセルした通知を非表示</string>
     <string name="httpuploader_regex_title">応答正規表現</string>
     <string name="need_permission_storage">ファイルをアップロードするにはストレージの権限が必要です。このメッセージをクリックしてアプリの設定を変化してください。</string>
+    <string name="notifications">通知</string>
 </resources>

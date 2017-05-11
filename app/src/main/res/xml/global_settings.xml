@@ -26,7 +26,7 @@
             android:defaultValue="80"/>
     </PreferenceCategory>
     <PreferenceCategory
-        android:title="Notifications">
+        android:title="@string/notifications">
         <SwitchPreference
             android:key="notification_vibrate"
             android:title="@string/notification_vibration_title"/>
