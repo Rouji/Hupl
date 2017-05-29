@@ -18,6 +18,7 @@ import android.widget.Toast;
 import java.util.Random;
 
 import eu.imouto.hupl.R;
+import eu.imouto.hupl.service.UtilService;
 import eu.imouto.hupl.upload.UploadService;
 import eu.imouto.hupl.util.Humanify;
 
@@ -215,13 +216,9 @@ public class UploadNotification
 
     private PendingIntent createCopyPendingIntent(String url)
     {
-        CopyBroadcastReceiver receiver = new CopyBroadcastReceiver(url);
-        IntentFilter filter = new IntentFilter("eu.imouto.hupl.ACTION_COPY");
-        context.registerReceiver(receiver, filter);//TODO: probably should unregister these receivers at some point?
-
-        Intent in = new Intent("eu.imouto.hupl.ACTION_COPY");
-
-        return PendingIntent.getBroadcast(context, (int) System.currentTimeMillis(), in, PendingIntent.FLAG_CANCEL_CURRENT);
+        Intent in = UtilService.copyToClipboardIntent(context, url);
+        in.setType(url); //ugly hack so pending intents don't overwrite each other
+        return PendingIntent.getService(context, 0, in, 0);
     }
 
     private PendingIntent createCancelPendingIntent()
@@ -229,28 +226,5 @@ public class UploadNotification
         Intent in = new Intent(context, UploadService.class);
         in.setAction("eu.imouto.hupl.ACTION_CANCEL");
         return PendingIntent.getService(context, (int) System.currentTimeMillis(), in, 0);
-    }
-
-    private class CopyBroadcastReceiver extends BroadcastReceiver
-    {
-        private String url;
-
-        public CopyBroadcastReceiver(String url)
-        {
-            this.url = url;
-        }
-
-        @Override
-        public void onReceive(Context context, Intent intent)
-        {
-            String strCopied = context.getResources().getString(R.string.toast_url_copied);
-            ClipboardManager clipMgr = (ClipboardManager) context.getSystemService(Context.CLIPBOARD_SERVICE);
-            ClipData data = ClipData.newPlainText("url", url);
-            clipMgr.setPrimaryClip(data);
-            Toast.makeText(context, strCopied, Toast.LENGTH_SHORT).show();
-
-            //hide notification tray
-            context.sendBroadcast(new Intent(Intent.ACTION_CLOSE_SYSTEM_DIALOGS));
-        }
     }
 }
