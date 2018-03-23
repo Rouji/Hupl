@@ -1,0 +1,6 @@
+{
+    "name": "0x0.st",
+    "type": "http",
+    "targetUrl": "https://0x0.st/",
+    "fileParam": "file"
+}

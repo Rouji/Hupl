@@ -1,0 +1,6 @@
+{
+    "name": "x0.at",
+    "type": "http",
+    "targetUrl": "https://x0.at/",
+    "fileParam": "file"
+}
