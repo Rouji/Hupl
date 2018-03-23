@@ -37,11 +37,10 @@ HTTP is currently the only supported uploader type. Here's an example of what a 
 ```
 
 ## Default Uploaders
-A few preconfigured uploaders get baked into the .apk and imported at first launch of the app. The files for this are in app/src/main/assets/uploaders, which is a git submodule pointing to https://github.com/Rouji/Hupl-Uploaders
+A few preconfigured uploaders get baked into the .apk and imported at first launch of the app. The files for this are in app/src/main/assets/uploaders.
 
 # Building
 This repo contains an Android Studio (v2) project. You should be able to open it with that and just run/compile from there. 
-Note: if you want any preconfigured uploaders, you have to clone the repo recursively.
 
 # Known Issues
 Closing the app (e.g. by swiping the main activity off the recent apps screen) sometimes clears notifications of finished uploads. (Though it shouldn't ever cancel ongoing uploads.) This is "working as intended", and I'm not aware of any workaround for this on Android.  
