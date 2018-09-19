@@ -210,9 +210,9 @@ public class UploadService extends Service implements UploadProgressReceiver
     }
 
     @Override
-    public void onUploadFailed(String error)
+    public void onUploadFailed(String title, String message)
     {
-        notification.error(error);
+        notification.error(title, message);
         uploading = false;
         stopFG();
         startUpload();

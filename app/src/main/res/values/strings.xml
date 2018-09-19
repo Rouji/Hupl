@@ -78,6 +78,9 @@
     <string name="httpuploader_regex_title">Response Regex</string>
     <string name="need_permission_storage">Storage permissions are needed to upload files. Please click this message and grant them.</string>
     <string name="notifications">Notifications</string>
+    <string name="httuploader_category_etc">Etc.</string>
+    <string name="httpuploader_disablechunkedtransfer_title">Disable Chunked Transfer</string>
+    <string name="httpuploader_disablechunkedtransfer_summary">Only check this, if you\'re getting status code 411 from the server or have other troubles uploading.</string>
 
     <!-- TODO: Remove or change this placeholder text -->
 

@@ -153,16 +153,16 @@ public class UploadNotification
         show();
     }
 
-    public void error(String error)
+    public void error(String title, String message)
     {
         clearActions();
         notBldr.setSmallIcon(R.drawable.ic_error_outline)
             .setContentTitle(str(R.string.notification_status_failed) + ": " + fileName);
-        setContentText(error);
+        setContentText(title);
 
         //apply expandable layout for (potentially) long error messages
         NotificationCompat.BigTextStyle bigTextStyle = new NotificationCompat.BigTextStyle();
-        bigTextStyle.bigText(error);
+        bigTextStyle.bigText(message);
         notBldr.setStyle(bigTextStyle)
             .setOngoing(false);
 

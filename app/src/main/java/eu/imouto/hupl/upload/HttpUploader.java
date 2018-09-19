@@ -1,10 +1,14 @@
 package eu.imouto.hupl.upload;
 
 import android.util.Base64;
+import android.util.Log;
 
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.regex.Matcher;
@@ -27,6 +31,7 @@ public class HttpUploader extends Uploader
     public String authPass;
     public String fileParam;
     public String responseRegex;
+    public boolean disableChunkedTransfer;
 
     public HttpUploader(FileToUpload file)
     {
@@ -38,6 +43,19 @@ public class HttpUploader extends Uploader
     {
         StringBuilder responseBuilder = new StringBuilder();
         int fileSize = -1;
+        DataOutputStream outputStream;
+        DataInputStream inputStream;
+        int bytesRead = -1;
+        byte[] buffer = new byte[BUFFER_SIZE];
+        InputStream fileStream = file.stream;
+
+        String multipartHeader = HYPHENS
+                + BOUNDARY
+                + EOL
+                + "Content-Disposition: form-data; name=\"" + fileParam + "\";" +
+                "filename=\"" + file.fileName + "\"" + EOL + EOL;
+        String multipartFooter = EOL + EOL + HYPHENS + BOUNDARY + HYPHENS + EOL;
+
         try
         {
             fileSize = file.stream.available();
@@ -45,14 +63,21 @@ public class HttpUploader extends Uploader
         catch (IOException e)
         {}
 
-        DataOutputStream outputStream;
-        DataInputStream inputStream;
-
-        int bytesRead;
-        byte[] buffer = new byte[BUFFER_SIZE];
-
         try
         {
+            if (fileSize == -1 && disableChunkedTransfer)
+            {
+                fileSize = 0;
+                ByteArrayOutputStream byteArr = new ByteArrayOutputStream();
+                while ((bytesRead = file.stream.read(buffer, 0, BUFFER_SIZE)) > 0)
+                {
+                    byteArr.write(buffer, 0, bytesRead);
+                    fileSize += bytesRead;
+                }
+                fileStream = new ByteArrayInputStream(byteArr.toByteArray());
+            }
+
+
             int status = -1;
             String response = "";
 
@@ -67,8 +92,16 @@ public class HttpUploader extends Uploader
             connection.setRequestMethod("POST");
             connection.setRequestProperty("Connection", "Keep-Alive");
             connection.setRequestProperty("Content-Type", "multipart/form-data;boundary="+ BOUNDARY);
-            connection.setRequestProperty("Transfer-Encoding", "chunked");
-            connection.setChunkedStreamingMode(BUFFER_SIZE);
+            if (disableChunkedTransfer)
+            {
+                connection.setUseCaches(false);
+                connection.setFixedLengthStreamingMode(fileSize + multipartHeader.length() + multipartFooter.length());
+            }
+            else
+            {
+                connection.setRequestProperty("Transfer-Encoding", "chunked");
+                connection.setChunkedStreamingMode(BUFFER_SIZE);
+            }
 
             //set basic auth
             if (authUser != null && !authUser.isEmpty() &&
@@ -80,82 +113,63 @@ public class HttpUploader extends Uploader
 
             //write multipart header
             outputStream = new DataOutputStream( connection.getOutputStream() );
-            outputStream.writeBytes(HYPHENS + BOUNDARY + EOL);
-            outputStream.writeBytes("Content-Disposition: form-data; name=\""+fileParam+"\";filename=\"" + file.fileName +"\"" + EOL);
-            outputStream.writeBytes(EOL);
+            outputStream.writeBytes(multipartHeader);
 
-            try
+            //write file contents
+            int written = 0;
+            while (run && (bytesRead = fileStream.read(buffer, 0, BUFFER_SIZE)) > 0)
             {
-                //write file contents
-                int written = 0;
-                while (run && (bytesRead = file.stream.read(buffer, 0, BUFFER_SIZE)) > 0)
-                {
-                    outputStream.write(buffer, 0, bytesRead);
-                    written += bytesRead;
-                    if (progressReceiver != null)
-                        progressReceiver.onUploadProgress(written, fileSize);
-                }
-
-                //write multipart footer
-                outputStream.writeBytes(EOL);
-                outputStream.writeBytes(HYPHENS + BOUNDARY + HYPHENS + EOL);
-
-                outputStream.flush();
-                outputStream.close();
-
-                if (run)
-                {
-                    status = connection.getResponseCode();
-                    if (status != 200)
-                    {
-                        throw new Exception("Server returned status code "+status);
-                    }
-
-                    //read response body
-                    inputStream = new DataInputStream(connection.getInputStream());
-                    while ((bytesRead = inputStream.read(buffer, 0, BUFFER_SIZE)) > 0)
-                    {
-                        responseBuilder.append(new String(buffer, 0, bytesRead));
-                    }
-
-                    response = responseBuilder.toString();
-                }
-            }
-            catch (IOException ex)
-            {
-                if (run)
-                    throw ex;
+                outputStream.write(buffer, 0, bytesRead);
+                written += bytesRead;
+                Log.d("uploader", "prog:"+written);
+                if (progressReceiver != null)
+                    progressReceiver.onUploadProgress(written, fileSize);
             }
 
+            //write multipart footer
+            outputStream.writeBytes(multipartFooter);
 
+            outputStream.flush();
+            outputStream.close();
+
+            status = connection.getResponseCode();
+            if (status != 200)
+                throw new UploadException("Server Error", "Received status code HTTP " + status);
+
+            //read response body
+            inputStream = new DataInputStream(connection.getInputStream());
+            while ((bytesRead = inputStream.read(buffer, 0, BUFFER_SIZE)) > 0)
+            {
+                responseBuilder.append(new String(buffer, 0, bytesRead));
+            }
+
+            response = responseBuilder.toString();
+
+
+            String parsed = parseResponse(response);
+            if (parsed == null)
+                throw new UploadException("Response Parsing Error", "The following response did not match against the configured regex:\n" + response);
+
+            progressReceiver.onUploadFinished(parsed);
+        }
+        catch (UploadException ex)
+        {
             if (progressReceiver != null)
-            {
-                if (!run)
-                {
-                    progressReceiver.onUploadCancelled();
-                }
-                else if (status == 200)
-                {
-                    String parsed = parseResponse(response);
-                    if (parsed == null)
-                        progressReceiver.onUploadFailed("No regex match found");
-                    else
-                        progressReceiver.onUploadFinished(parsed);
-                }
-                else
-                {
-                    progressReceiver.onUploadFailed("HTTP status " + status);
-                }
-            }
+                progressReceiver.onUploadFailed(ex.getTitle(), ex.getMessage());
         }
         catch (Exception ex)
         {
-            if (progressReceiver != null)
-                progressReceiver.onUploadFailed("Exception: " + ex.getMessage());
+            if (!run)
+            {
+                progressReceiver.onUploadCancelled();
+            }
+            else if (progressReceiver != null)
+                progressReceiver.onUploadFailed("Unexpected Exception", ex.getMessage());
         }
         finally
         {
-            connection.disconnect();
+            if (connection != null)
+                connection.disconnect();
             connection = null;
         }
     }

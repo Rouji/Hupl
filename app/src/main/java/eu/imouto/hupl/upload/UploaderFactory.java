@@ -28,9 +28,22 @@ class UploaderFactory
             up.responseRegex = getStr(entry.json, "responseRegex");
             up.authUser = getStr(entry.json, "authUser");
             up.authPass = getStr(entry.json, "authPass");
+            up.disableChunkedTransfer = getBool(entry.json, "disableChunkedTransfer", false);
             return up;
         }
         return null;
+    }
+
+    private static boolean getBool(JSONObject obj, String name, boolean defaultVal)
+    {
+        boolean b = defaultVal;
+        try
+        {
+            b = obj.getBoolean(name);
+        }
+        catch (JSONException ex)
+        {}
+        return b;
     }
 
     private static String getStr(JSONObject obj, String name)
@@ -40,7 +53,7 @@ class UploaderFactory
         {
             str = obj.getString(name);
         }
-        catch (JSONException e)
+        catch (JSONException ex)
         {}
         return str;
     }

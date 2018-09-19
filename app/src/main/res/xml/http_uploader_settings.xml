@@ -29,4 +29,10 @@
             android:dialogMessage="@string/httpuploader_pass_summary"
             android:key="authPass"/>
     </PreferenceCategory>
+    <PreferenceCategory android:title="@string/httuploader_category_etc">
+        <CheckBoxPreference
+            android:title="@string/httpuploader_disablechunkedtransfer_title"
+            android:summary="@string/httpuploader_disablechunkedtransfer_summary"
+            android:key="disableChunkedTransfer"/>
+    </PreferenceCategory>
 </PreferenceScreen>
