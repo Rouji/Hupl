@@ -105,6 +105,12 @@ public class HttpUploader extends Uploader
 
                 if (run)
                 {
+                    status = connection.getResponseCode();
+                    if (status != 200)
+                    {
+                        throw new Exception("Server returned status code "+status);
+                    }
+
                     //read response body
                     inputStream = new DataInputStream(connection.getInputStream());
                     while ((bytesRead = inputStream.read(buffer, 0, BUFFER_SIZE)) > 0)
@@ -112,7 +118,6 @@ public class HttpUploader extends Uploader
                         responseBuilder.append(new String(buffer, 0, bytesRead));
                     }
 
-                    status = connection.getResponseCode();
                     response = responseBuilder.toString();
                 }
             }

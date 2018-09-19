@@ -1,6 +1,7 @@
 package eu.imouto.hupl.ui;
 
 import android.app.Notification;
+import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.BroadcastReceiver;
@@ -12,6 +13,7 @@ import android.content.IntentFilter;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
+import android.os.Build;
 import android.support.v4.app.NotificationCompat;
 import android.widget.Toast;
 
@@ -40,10 +42,23 @@ public class UploadNotification
     {
         this.context = context;
 
+        // set up a notification channel for Android O and newer
+        String channelId = "";
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O)
+        {
+            channelId = "upload_service";
+            NotificationChannel chan = new NotificationChannel(channelId,
+                                                               "Upload Service",
+                                                               NotificationManager.IMPORTANCE_DEFAULT);
+            chan.setLightColor(0xFF0095FF);
+            chan.setLockscreenVisibility(Notification.VISIBILITY_PUBLIC);
+            ((NotificationManager)context.getSystemService(Context.NOTIFICATION_SERVICE)).createNotificationChannel(chan);
+        }
+
         newId();
 
         notMgr = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
-        notBldr = new NotificationCompat.Builder(context)
+        notBldr = new NotificationCompat.Builder(context, channelId)
             .setColor(0xFF0095FF)
             .setSmallIcon(R.drawable.ic_cloud_upload)
             .setProgress(0, 0, false)
