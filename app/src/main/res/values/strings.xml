@@ -12,6 +12,10 @@
 
     <string name="list_add_host">Add Uploader</string>
 
+    <string name="general_category">General</string>
+    <string name="history_size">History Size</string>
+    <string name="history_size_summary">Max. number of entries to keep in the upload history</string>
+
     <string name="resize_category">Image Resize</string>
     <string name="resize_width_title">Max. Width</string>
     <string name="resize_width_summary">Max. Width</string>
@@ -56,7 +60,7 @@
     <string name="about_source_title" translatable="false">Source</string>
     <string name="about_source_text" translatable="false">Hupl is free and open source software licensed under GPLv3. The source code, the full license and further details are available on GitHub at https://github.com/Rouji/Hupl</string>
     <string name="about_feedback_title" translatable="false">Feedback</string>
-    <string name="about_feedback_text" translatable="false">If you find a bug (not all that unlikely), or want a certain feature in future releases, please open an issue on GitHub (https://github.com/Rouji/Hupl/issues). If that\'s not possible for some reason, an email to hupl@imouto.eu will do as well.</string>
+    <string name="about_feedback_text" translatable="false">If you find a bug (not all that unlikely), or want a certain feature in future releases, please open an issue on GitHub (https://github.com/Rouji/Hupl/issues). If that\'s not possible for some reason, an email to a@r0.at will do as well.</string>
     <string name="last_used">Last used %1$s</string>
     <string name="no_activity">No activity found to handle this link</string>
     <string name="please_enter_name">Please enter a name</string>

@@ -86,6 +86,14 @@ public class HistoryDB extends SQLiteOpenHelper
         return entries;
     }
 
+    public void prune(int limit)
+    {
+        SQLiteDatabase db = getWritableDatabase();
+        db.execSQL("DELETE FROM history WHERE id NOT IN (SELECT id FROM history order by id DESC LIMIT "+limit+");");
+        db.close();
+    }
+
+
     private static HistoryEntry rowToEntry(Cursor c)
     {
         HistoryEntry he = new HistoryEntry();

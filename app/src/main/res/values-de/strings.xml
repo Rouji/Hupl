@@ -68,4 +68,7 @@
     <string name="httuploader_category_etc">Etc.</string>
     <string name="httpuploader_disablechunkedtransfer_title">Disable Chunked Transfer</string>
     <string name="httpuploader_disablechunkedtransfer_summary">Only check this, if you\'re getting status code 411 from the server or have other troubles uploading.</string>
+    <string name="general_category">Allgemein</string>
+    <string name="history_size">Verlauf Größe</string>
+    <string name="history_size_summary">Maximale Anzahl an Einträgen im Upload-Verlauf</string>
 </resources>

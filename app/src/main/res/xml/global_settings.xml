@@ -5,6 +5,16 @@
         android:title="Invalid Certs"
         android:summary="Accept all SSL certificates, including invalid ones" /> -->
     <PreferenceCategory
+        android:title = "@string/general_category">
+        <EditTextPreference
+            android:key="history_size"
+            android:title="@string/history_size"
+            android:dialogMessage="@string/history_size_summary"
+            android:defaultValue="1000"
+            android:inputType="number">
+        </EditTextPreference>
+    </PreferenceCategory>
+    <PreferenceCategory
         android:title = "@string/resize_category">
         <EditTextPreference
             android:key="image_resize_width"
