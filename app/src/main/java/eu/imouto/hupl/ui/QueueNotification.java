@@ -7,7 +7,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.support.v4.app.NotificationCompat;
+import androidx.core.app.NotificationCompat;
 
 import java.util.Queue;
 import java.util.Random;
@@ -96,6 +96,6 @@ public class QueueNotification
     {
         Intent in = new Intent(context, UploadService.class);
         in.setAction("eu.imouto.hupl.ACTION_CANCEL_ALL");
-        return PendingIntent.getService(context, (int) System.currentTimeMillis(), in, 0);
+        return PendingIntent.getService(context, (int) System.currentTimeMillis(), in, PendingIntent.FLAG_IMMUTABLE);
     }
 }

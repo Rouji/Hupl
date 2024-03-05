@@ -1,21 +1,17 @@
 package eu.imouto.hupl.ui;
 
+import android.annotation.SuppressLint;
 import android.app.Notification;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
-import android.content.BroadcastReceiver;
-import android.content.ClipData;
-import android.content.ClipboardManager;
 import android.content.Context;
 import android.content.Intent;
-import android.content.IntentFilter;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Build;
-import android.support.v4.app.NotificationCompat;
-import android.widget.Toast;
+import androidx.core.app.NotificationCompat;
 
 import java.util.Random;
 
@@ -218,7 +214,7 @@ public class UploadNotification
         in.putExtra(Intent.EXTRA_TEXT, url);
         in = Intent.createChooser(in, str(R.string.share_chooser_title));
 
-        return PendingIntent.getActivity(context, (int) System.currentTimeMillis(), in, 0);
+        return PendingIntent.getActivity(context, (int) System.currentTimeMillis(), in, PendingIntent.FLAG_IMMUTABLE);
     }
 
     private PendingIntent createOpenPendingIntent(String url)
@@ -226,20 +222,20 @@ public class UploadNotification
         Intent in = new Intent(Intent.ACTION_VIEW);
         in.setData(Uri.parse(url));
 
-        return PendingIntent.getActivity(context, (int) System.currentTimeMillis(), in, 0);
+        return PendingIntent.getActivity(context, (int) System.currentTimeMillis(), in, PendingIntent.FLAG_IMMUTABLE);
     }
 
     private PendingIntent createCopyPendingIntent(String url)
     {
         Intent in = UtilService.copyToClipboardIntent(context, url);
         in.setType(url); //ugly hack so pending intents don't overwrite each other
-        return PendingIntent.getService(context, 0, in, 0);
+        return PendingIntent.getService(context, 0, in, PendingIntent.FLAG_IMMUTABLE);
     }
 
     private PendingIntent createCancelPendingIntent()
     {
         Intent in = new Intent(context, UploadService.class);
         in.setAction("eu.imouto.hupl.ACTION_CANCEL");
-        return PendingIntent.getService(context, (int) System.currentTimeMillis(), in, 0);
+        return PendingIntent.getService(context, (int) System.currentTimeMillis(), in, PendingIntent.FLAG_IMMUTABLE);
     }
 }

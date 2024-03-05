@@ -1,15 +1,14 @@
 package eu.imouto.hupl.ui;
 
+import android.app.Activity;
 import android.os.Bundle;
 
 import eu.imouto.hupl.R;
 
 public class FeedbackActivity extends DrawerActivity
 {
-
     @Override
-    int onInflateContent()
-    {
+    int onInflateContent() {
         return R.layout.activity_feedback;
     }
 

@@ -22,7 +22,7 @@ import eu.imouto.hupl.data.UploaderEntry;
 import eu.imouto.hupl.data.UploaderImporter;
 import eu.imouto.hupl.util.SimpleDownload;
 
-public class ImportActivity extends Activity
+public class ImportActivity extends DrawerActivity
 {
     private Uri uri;
     private File downloadedFile = null;
@@ -30,10 +30,14 @@ public class ImportActivity extends Activity
     private TextView status;
 
     @Override
+    int onInflateContent() {
+        return R.layout.activity_import;
+    }
+
+    @Override
     protected void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_import);
 
         Intent in = getIntent();
         if (in == null)

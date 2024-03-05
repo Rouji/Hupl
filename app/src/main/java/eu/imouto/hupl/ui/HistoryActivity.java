@@ -1,5 +1,6 @@
 package eu.imouto.hupl.ui;
 
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.ActivityNotFoundException;
 import android.content.ClipData;
@@ -37,8 +38,7 @@ public class HistoryActivity extends DrawerActivity
     private Bitmap defaultThumb;
 
     @Override
-    int onInflateContent()
-    {
+    int onInflateContent() {
         return R.layout.activity_history;
     }
 

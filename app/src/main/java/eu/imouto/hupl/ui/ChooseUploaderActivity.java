@@ -1,5 +1,7 @@
 package eu.imouto.hupl.ui;
 
+import android.Manifest;
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.Context;
@@ -8,11 +10,10 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.provider.Settings;
-import android.support.v4.app.ActivityCompat;
-import android.support.v4.content.ContextCompat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -22,11 +23,19 @@ import android.widget.CheckBox;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
+import androidx.annotation.RequiresApi;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
+
 import org.json.JSONException;
 
 import java.io.IOException;
 import java.text.DateFormat;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import eu.imouto.hupl.data.UploaderImporter;
@@ -47,11 +56,11 @@ public class ChooseUploaderActivity extends DrawerActivity
     private ChooseUploaderAdapter upAdapter;
     private CheckBox enableResize;
     private TextView errorText;
-    private boolean checkPerm = true;
+
+    private String[] neededPermissions = null;
 
     @Override
-    int onInflateContent()
-    {
+    int onInflateContent() {
         return R.layout.activity_choose_uploader;
     }
 
@@ -59,6 +68,19 @@ public class ChooseUploaderActivity extends DrawerActivity
     protected void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
+
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+            neededPermissions = new String[]{
+                    Manifest.permission.READ_MEDIA_IMAGES,
+                    Manifest.permission.READ_MEDIA_VIDEO
+            };
+        }
+        else {
+            neededPermissions = new String[]{
+                    Manifest.permission.READ_EXTERNAL_STORAGE
+            };
+        }
 
         SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(this);
         boolean firstRun = sp.getBoolean("isFirstRun", true);
@@ -100,33 +122,32 @@ public class ChooseUploaderActivity extends DrawerActivity
         {
             ArrayList<Uri> l = recvIn.getParcelableArrayListExtra(Intent.EXTRA_STREAM);
             if (l!=null)
-            fileUriList = l;
-        }
-        else
-        {
-            checkPerm = false;
+                fileUriList = l;
         }
     }
 
     @Override
-    public void onRequestPermissionsResult(int requestCode, String perm[], int[] grant)
-    {
-        if (requestCode == READ_EXTERNAL_STORAGE_REQUEST)
-        {
-            if (grant.length > 0 &&
-                grant[0] == PackageManager.PERMISSION_GRANTED)
-            {
+    public void onRequestPermissionsResult(int requestCode, String perm[], int[] grant) {
+        super.onRequestPermissionsResult(requestCode, perm, grant);
+        if (requestCode == READ_EXTERNAL_STORAGE_REQUEST) {
+            if (grant.length > 0 && Arrays.stream(grant).allMatch(g -> g == PackageManager.PERMISSION_GRANTED)) {
                 //got permission
                 errorText.setVisibility(View.GONE);
                 listView.setEnabled(true);
-            }
-            else
-            {
+            } else {
                 errorText.setVisibility(View.VISIBLE);
                 listView.setEnabled(false);
-                checkPerm = false;
             }
         }
+    }
+
+    private boolean havePermissions() {
+        for(String perm : neededPermissions) {
+            if (ContextCompat.checkSelfPermission(this, perm) != PackageManager.PERMISSION_GRANTED) {
+                return false;
+            }
+        }
+        return true;
     }
 
     @Override
@@ -138,20 +159,15 @@ public class ChooseUploaderActivity extends DrawerActivity
         String strChoose = getResources().getString(R.string.choose_uploader);
 
         //request permission(s)
-        if (checkPerm)
+        if (!havePermissions())
         {
-            if (ContextCompat.checkSelfPermission(this, android.Manifest.permission.READ_EXTERNAL_STORAGE)
-                    != PackageManager.PERMISSION_GRANTED)
-            {
-                ActivityCompat.requestPermissions(this,
-                                                  new String[]{android.Manifest.permission.READ_EXTERNAL_STORAGE},
-                                                  READ_EXTERNAL_STORAGE_REQUEST);
-            }
-            else
-            {
-                errorText.setVisibility(View.GONE);
-                listView.setEnabled(true);
-            }
+            errorText.setVisibility(View.VISIBLE);
+            listView.setEnabled(false);
+        }
+        else
+        {
+            errorText.setVisibility(View.GONE);
+            listView.setEnabled(true);
         }
 
         if (!fileUriList.isEmpty())
@@ -257,12 +273,28 @@ public class ChooseUploaderActivity extends DrawerActivity
 
     public void permissionErrorClick(View view)
     {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+            ActivityCompat.requestPermissions(this,
+                    new String[]{
+                            Manifest.permission.READ_MEDIA_IMAGES,
+                            Manifest.permission.READ_MEDIA_VIDEO
+                    },
+                    READ_EXTERNAL_STORAGE_REQUEST);
+        }
+        else {
+            ActivityCompat.requestPermissions(this,
+                    new String[]{
+                            Manifest.permission.READ_EXTERNAL_STORAGE
+                    },
+                    READ_EXTERNAL_STORAGE_REQUEST);
+        }
+
         //open this app's settings
-        Intent in = new Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS,
-                               Uri.fromParts("package", getPackageName(), null));
-        in.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-        checkPerm = true;
-        startActivity(in);
+        //Intent in = new Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS,
+        //                       Uri.fromParts("package", getPackageName(), null));
+        //in.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        //checkPerm = true;
+        //startActivity(in);
     }
 
     private class ChooseUploaderAdapter extends ArrayAdapter<UploaderEntry>

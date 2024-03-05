@@ -1,13 +1,18 @@
 package eu.imouto.hupl.upload;
 
+import static android.content.pm.ServiceInfo.FOREGROUND_SERVICE_TYPE_DATA_SYNC;
+
 import android.app.Service;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
+import android.os.Build;
 import android.os.IBinder;
 import android.preference.PreferenceManager;
+
+import androidx.core.app.ServiceCompat;
 
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
@@ -158,7 +163,11 @@ public class UploadService extends Service implements UploadProgressReceiver
         historyEntry.uploader = uploader.name;
         historyEntry.thumbnail = thumb;
 
-        startForeground(notification.getId(), notification.getNotification());
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+            startForeground(notification.getId(), notification.getNotification(), FOREGROUND_SERVICE_TYPE_DATA_SYNC);
+        }else{
+            startForeground(notification.getId(), notification.getNotification());
+        }
         uploaderThread = new Thread(uploader);
         uploaderThread.start();
         uploading = true;
