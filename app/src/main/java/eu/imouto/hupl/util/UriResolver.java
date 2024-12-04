@@ -7,6 +7,7 @@ import android.net.Uri;
 import android.provider.OpenableColumns;
 import android.webkit.MimeTypeMap;
 
+import java.io.ByteArrayInputStream;
 import java.io.FileNotFoundException;
 import java.io.InputStream;
 
@@ -16,46 +17,49 @@ public class UriResolver
 {
     private static final int RANDOM_FILENAME_LENGTH = 4;
 
-    public static FileToUpload uriToFile(Context context, Uri uri)
+    public static FileToUpload uriToFile(Context context, Uri uri, String text)
     {
-        ContentResolver res = context.getContentResolver();
-        InputStream inStream;
-
-        try
-        {
-            inStream = res.openInputStream(uri);
-        }
-        catch (FileNotFoundException ex)
-        {
-            return null;
-        }
-
-
-        //try to get the original filename and extension
-        String fileName = fileNameFromUri(context, uri);
-
-        //get the mime type
-        String mime = res.getType(uri);
-
-        //if the original filename can't be found,
-        //generate a randomised file name and try to find an extension using mime type
-        if (fileName == null)
-        {
-            MimeTypeMap mimeMap = MimeTypeMap.getSingleton();
-            String ext = mimeMap.getExtensionFromMimeType(mime);
-
-            //assume a generic binary format, if no mime type matches
-            if (ext == null)
-                ext = "bin";
-
-            fileName = RandomString.next(RANDOM_FILENAME_LENGTH)+"."+ext;
-        }
-
         FileToUpload file = new FileToUpload();
-        file.fileName = fileName;
-        file.stream = inStream;
-        file.mime = mime;
-        file.origUri = uri;
+
+        if (uri != null) {
+            ContentResolver res = context.getContentResolver();
+            InputStream inStream;
+
+            try {
+                inStream = res.openInputStream(uri);
+            } catch (FileNotFoundException ex) {
+                return null;
+            }
+
+
+            //try to get the original filename and extension
+            String fileName = fileNameFromUri(context, uri);
+
+            //get the mime type
+            String mime = res.getType(uri);
+
+            //if the original filename can't be found,
+            //generate a randomised file name and try to find an extension using mime type
+            if (fileName == null) {
+                MimeTypeMap mimeMap = MimeTypeMap.getSingleton();
+                String ext = mimeMap.getExtensionFromMimeType(mime);
+
+                //assume a generic binary format, if no mime type matches
+                if (ext == null)
+                    ext = "bin";
+
+                fileName = RandomString.next(RANDOM_FILENAME_LENGTH) + "." + ext;
+            }
+
+            file.fileName = fileName;
+            file.stream = inStream;
+            file.mime = mime;
+            file.origUri = uri;
+        } else {
+            file.fileName = "text.txt";
+            file.stream = new ByteArrayInputStream(text.getBytes());
+            file.mime = "text/plain";
+        }
 
         return file;
     }
