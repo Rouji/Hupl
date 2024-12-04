@@ -48,7 +48,7 @@ public class ChooseUploaderActivity extends DrawerActivity
     implements AdapterView.OnItemClickListener
 {
     private UploaderDB uploaderDB;
-    private List<Uri> fileUriList = new ArrayList<>();
+    private List<FileUriOrText> fileList = new ArrayList<>();
 
     private static final int READ_EXTERNAL_STORAGE_REQUEST = 1;
 
@@ -113,16 +113,24 @@ public class ChooseUploaderActivity extends DrawerActivity
         if (recvIn == null || recvIn.getAction() == null)
             return;
 
-        fileUriList.clear();
+        fileList.clear();
         if (recvIn.getAction().equals(Intent.ACTION_SEND))
         {
-            fileUriList.add((Uri)recvIn.getParcelableExtra(Intent.EXTRA_STREAM));
+            fileList.add(
+                    new FileUriOrText(
+                        recvIn.getParcelableExtra(Intent.EXTRA_STREAM),
+                        recvIn.getStringExtra(Intent.EXTRA_TEXT)
+                    )
+            );
         }
         else if (recvIn.getAction().equals(Intent.ACTION_SEND_MULTIPLE))
         {
             ArrayList<Uri> l = recvIn.getParcelableArrayListExtra(Intent.EXTRA_STREAM);
-            if (l!=null)
-                fileUriList = l;
+            if (l!=null) {
+                for (Uri uri : l) {
+                    fileList.add(new FileUriOrText(uri, null));
+                }
+            }
         }
     }
 
@@ -177,7 +185,7 @@ public class ChooseUploaderActivity extends DrawerActivity
             listView.setEnabled(true);
         }
 
-        if (!fileUriList.isEmpty())
+        if (!fileList.isEmpty())
         {
             //we're sending stuff somewhere
             setTitle(strChoose);
@@ -251,7 +259,7 @@ public class ChooseUploaderActivity extends DrawerActivity
         TextView nameView = (TextView)view.findViewById(R.id.name);
         String name = nameView.getText().toString();
 
-        if (fileUriList.isEmpty())
+        if (fileList.isEmpty())
         {
             startEditActivity(name);
         }
@@ -262,18 +270,19 @@ public class ChooseUploaderActivity extends DrawerActivity
             sp.edit().putBoolean("enableResize", resize).apply();
 
 
-            for (Uri fileUri : fileUriList)
+            for (FileUriOrText fileUri : fileList)
             {
                 Intent in = new Intent(this, UploadService.class);
                 in.setAction("eu.imouto.hupl.ACTION_QUEUE_UPLOAD");
-                in.putExtra("uri", fileUri);
+                in.putExtra("uri", fileUri.uri);
+                in.putExtra("text", fileUri.text);
                 in.putExtra("uploader", name);
                 in.putExtra("compress", resize);
                 startService(in);
             }
 
             uploaderDB.updateLastUsed(name);
-            fileUriList.clear();
+            fileList.clear();
             finish();
         }
     }
@@ -332,6 +341,16 @@ public class ChooseUploaderActivity extends DrawerActivity
             {}
 
             return convertView;
+        }
+    }
+
+    private static class FileUriOrText {
+        public final Uri uri;
+        public final String text;
+
+        public FileUriOrText(Uri uri, String text) {
+            this.uri = uri;
+            this.text = text;
         }
     }
 }
