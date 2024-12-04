@@ -123,7 +123,11 @@ public class HttpUploader extends Uploader
             }
 
             for (Map.Entry<String, String> entry: headers.entrySet()) {
-                connection.setRequestProperty(entry.getKey(), entry.getValue());
+                String value = entry.getValue()
+                                .replace("$NAME", file.fileName);
+
+                System.out.println("val " + entry.getKey() + " " + value);
+                connection.setRequestProperty(entry.getKey(), value);
             }
 
             //write multipart header
