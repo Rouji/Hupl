@@ -13,6 +13,10 @@
             android:title="@string/httpuploader_param_title"
             android:dialogMessage="@string/httpuploader_param_summary"
             android:key="fileParam"/>
+        <EditTextPreference
+            android:title="@string/httpuploader_headers_title"
+            android:dialogMessage="@string/httpuploader_headers_summary"
+            android:key="headers"/>
 
         <EditTextPreference
             android:title="@string/httpuploader_regex_title"

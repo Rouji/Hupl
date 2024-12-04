@@ -30,6 +30,7 @@ public class HttpUploader extends Uploader
     public String targetUrl;
     public String authUser;
     public String authPass;
+    public Map<String, String> headers;
     public String fileParam;
     public String responseRegex;
     public boolean disableChunkedTransfer;
@@ -119,6 +120,10 @@ public class HttpUploader extends Uploader
             {
                 String auth = "Basic " + Base64.encodeToString((authUser+":"+authPass).getBytes(), Base64.NO_WRAP);
                 connection.setRequestProperty("Authorization", auth);
+            }
+
+            for (Map.Entry<String, String> entry: headers.entrySet()) {
+                connection.setRequestProperty(entry.getKey(), entry.getValue());
             }
 
             //write multipart header
