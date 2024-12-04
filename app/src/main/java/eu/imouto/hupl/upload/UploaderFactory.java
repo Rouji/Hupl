@@ -5,6 +5,11 @@ import android.content.Context;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.regex.Pattern;
+
 import eu.imouto.hupl.data.FileToUpload;
 import eu.imouto.hupl.data.UploaderDB;
 import eu.imouto.hupl.data.UploaderEntry;
@@ -29,6 +34,7 @@ class UploaderFactory
             up.authUser = getStr(entry.json, "authUser");
             up.authPass = getStr(entry.json, "authPass");
             up.disableChunkedTransfer = getBool(entry.json, "disableChunkedTransfer", false);
+            up.headers = getHeaders(entry.json, "headers");
             return up;
         }
         return null;
@@ -56,5 +62,29 @@ class UploaderFactory
         catch (JSONException ex)
         {}
         return str;
+    }
+
+    private static Map<String, String> getHeaders(JSONObject obj, String name)
+    {
+        Map<String, String> headers = new HashMap<>();
+        String headersString = getStr(obj, "headers");
+        if (headersString == null || headersString.isBlank()) {
+            return headers;
+        }
+
+
+        String[] lines = headersString.split(Pattern.quote("\n"));
+        for (String line : lines) {
+            String[] lineSplit = line.split(Pattern.quote(":"));
+            if (lineSplit.length != 2) {
+                continue;
+            }
+
+            String key = lineSplit[0].trim();
+            String value = lineSplit[1].trim();
+            headers.put(key, value);
+        }
+
+        return headers;
     }
 }
