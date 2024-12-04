@@ -36,6 +36,8 @@
     <string name="httpuploader_user_summary">Leave empty for no auth</string>
     <string name="httpuploader_pass_title">Password</string>
     <string name="httpuploader_pass_summary">Note: Passwords are stored in plaintext</string>
+    <string name="httpuploader_headers_title">Headers</string>
+    <string name="httpuploader_headers_summary">Each header in its own line, format KEY: VALUE</string>
 
     <string name="actionbar_title_uploaders">Edit Hosts</string>
     <string name="choose_uploader">Choose Uploader</string>

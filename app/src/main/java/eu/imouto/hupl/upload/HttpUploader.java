@@ -11,6 +11,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -29,6 +30,7 @@ public class HttpUploader extends Uploader
     public String targetUrl;
     public String authUser;
     public String authPass;
+    public Map<String, String> headers;
     public String fileParam;
     public String responseRegex;
     public boolean disableChunkedTransfer;
@@ -109,6 +111,10 @@ public class HttpUploader extends Uploader
             {
                 String auth = "Basic " + Base64.encodeToString((authUser+":"+authPass).getBytes(), Base64.NO_WRAP);
                 connection.setRequestProperty("Authorization", auth);
+            }
+
+            for (Map.Entry<String, String> entry: headers.entrySet()) {
+                connection.setRequestProperty(entry.getKey(), entry.getValue());
             }
 
             //write multipart header

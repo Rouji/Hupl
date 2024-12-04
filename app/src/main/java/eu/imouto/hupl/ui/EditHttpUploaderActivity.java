@@ -8,6 +8,7 @@ import android.preference.PreferenceActivity;
 import android.os.Bundle;
 import android.preference.PreferenceCategory;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.Toast;
 
 import org.json.JSONException;
@@ -34,7 +35,8 @@ public class EditHttpUploaderActivity extends PreferenceActivity
         "responseRegex",
         "authUser",
         "authPass",
-        "disableChunkedTransfer"
+        "disableChunkedTransfer",
+        "headers"
     };
     private final static Map<String, String> jsonDefaults = initDefaults();
     private static Map<String, String> initDefaults()
@@ -123,7 +125,11 @@ public class EditHttpUploaderActivity extends PreferenceActivity
             if (pref instanceof EditTextPreference)
                 pref.setSummary(((EditTextPreference)pref).getText());
             pref.setOnPreferenceChangeListener(this);
+
         }
+
+        EditTextPreference headers = (EditTextPreference) findPreference("headers");
+        headers.getEditText().setSingleLine(false);
     }
 
     @Override
