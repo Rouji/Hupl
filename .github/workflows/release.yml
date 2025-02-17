@@ -1,0 +1,61 @@
+name: create release
+on:
+  push:
+    tags:
+      - 'v*'
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: set up jdk 20
+        uses: actions/setup-java@v4
+        with:
+          distribution: 'temurin'
+          java-version: '20'
+          cache: gradle
+
+      - name: get version from tag
+        run: |
+          TAG_NAME=${GITHUB_REF#refs/tags/}
+          VERSION_NAME=${TAG_NAME#v}
+          IFS='.' read -r MAJOR MINOR PATCH <<< "${VERSION_NAME}"
+          VERSION_CODE=$((MAJOR * 100000 + MINOR * 100 + PATCH))
+          echo "VERSION_NAME=$VERSION_NAME" >> $GITHUB_ENV
+          echo "VERSION_CODE=$VERSION_CODE" >> $GITHUB_ENV
+
+      - name: make gradlew executable
+        run: chmod +x gradlew
+
+      - name: run gradle
+        env:
+          KEYSTORE_BASE64: ${{ secrets.KEYSTORE_BASE64 }}
+          KEYSTORE_PATH: "${{ github.workspace }}/keystore.jks"
+          KEYSTORE_PASSWORD: ${{ secrets.KEYSTORE_PASSWORD }}
+          KEY_ALIAS: ${{ secrets.KEY_ALIAS }}
+          KEY_PASSWORD: ${{ secrets.KEY_PASSWORD }}
+        run: |
+          echo -n "$KEYSTORE_BASE64" | base64 -d > $KEYSTORE_PATH
+          ./gradlew assembleRelease
+
+      - name: rename apk
+        env:
+          GITHUB_SHA: ${{ github.sha }}
+        run: mv ./app/build/outputs/apk/release/app-release.apk ./app/build/outputs/apk/release/hupl_${VERSION_NAME}.apk
+
+      - name: release apk
+        uses: actions/upload-artifact@v4
+        with:
+          name: app-release
+          path: app/build/outputs/apk/release/*.apk
+
+      - name: create release
+        run: |
+          gh release create "$VERSION_NAME" app/build/outputs/apk/release/*.apk --title "$VERSION_NAME" --generate-notes
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
