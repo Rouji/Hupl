@@ -1,0 +1,43 @@
+name: build debug apk
+on:
+  workflow_dispatch:
+  pull_request:
+    branches:
+      - master
+      - dev
+  push:
+    branches:
+      - master
+      - dev
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: set up jdk 20
+        uses: actions/setup-java@v4
+        with:
+          distribution: 'temurin'
+          java-version: '20'
+          cache: gradle
+
+      - name: make gradlew executable
+        run: chmod +x gradlew
+
+      - name: run gradle
+        run: ./gradlew assembleDebug
+
+      - name: rename apk
+        env:
+          GITHUB_SHA: ${{ github.sha }}
+        run: mv app/build/outputs/apk/debug/app-debug.apk app/build/outputs/apk/debug/hupl_debug_${GITHUB_SHA::6}.apk
+
+
+      - name: dbg apk
+        uses: actions/upload-artifact@v4
+        with:
+          name: app-debug
+          path: app/build/outputs/apk/debug/*.apk
