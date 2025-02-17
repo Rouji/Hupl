@@ -10,16 +10,27 @@ android {
         applicationId = "eu.imouto.hupl"
         minSdk = 24
         targetSdk = 34
-        versionCode = 19
-        versionName = "2.1.2"
+        versionCode = System.getenv("VERSION_CODE")?.toInt() ?: 1
+        versionName = System.getenv("VERSION_NAME") ?: "1.0"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
+
+    signingConfigs {
+        create("release") {
+            storeFile = file(System.getenv("KEYSTORE_PATH")?.toString() ?: "keystore.jks")
+            storePassword = System.getenv("KEYSTORE_PASSWORD")
+            keyAlias = System.getenv("KEY_ALIAS")
+            keyPassword = System.getenv("KEY_PASSWORD")
+        }
+    }
+
 
     buildTypes {
         release {
             isMinifyEnabled = false
             proguardFiles(getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro")
+            signingConfig = signingConfigs.getByName("release")
         }
     }
     compileOptions {
