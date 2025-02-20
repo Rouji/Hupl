@@ -71,4 +71,6 @@
     <string name="general_category">一般</string>
     <string name="history_size">履歴の最大サイズ</string>
     <string name="history_size_summary">アップロードしたファイルの履歴の最大保存件数</string>
+    <string name="httpuploader_extra_params_title">追加パラメーター</string>
+    <string name="httpuploader_extra_params_summary">パラメータ（フォームデータ）を追加。\n「param: hoge」という書式で一行一個。</string>
 </resources>

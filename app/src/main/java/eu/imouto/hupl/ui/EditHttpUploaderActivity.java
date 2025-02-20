@@ -32,6 +32,7 @@ public class EditHttpUploaderActivity extends PreferenceActivity
         "targetUrl",
         "fileParam",
         "responseRegex",
+        "extraParams",
         "authUser",
         "authPass",
         "disableChunkedTransfer"
@@ -99,9 +100,11 @@ public class EditHttpUploaderActivity extends PreferenceActivity
             if (isNew)
             {
                 String def = jsonDefaults.get(p);
-                if (pref instanceof EditTextPreference)
+                if (pref instanceof StringMapPreference)
+                    ((StringMapPreference)pref).setText("");
+                else if (pref instanceof EditTextPreference)
                     ((EditTextPreference)pref).setText(def == null ? "" : def);
-                if (pref instanceof CheckBoxPreference)
+                else if (pref instanceof CheckBoxPreference)
                     ((CheckBoxPreference)pref).setChecked(false);
             }
             else
@@ -110,7 +113,9 @@ public class EditHttpUploaderActivity extends PreferenceActivity
                 {
                     if (entry.json.has(p))
                     {
-                        if (pref instanceof EditTextPreference)
+                        if (pref instanceof StringMapPreference)
+                            ((StringMapPreference)pref).setObj(entry.json.getJSONObject(p));
+                        else if (pref instanceof EditTextPreference)
                             ((EditTextPreference)pref).setText(entry.json.getString(p));
                         else if (pref instanceof CheckBoxPreference)
                             ((CheckBoxPreference)pref).setChecked(entry.json.getBoolean(p));
@@ -173,7 +178,11 @@ public class EditHttpUploaderActivity extends PreferenceActivity
 
             try
             {
-                if (pref instanceof EditTextPreference)
+                if (pref instanceof StringMapPreference)
+                {
+                    entry.json.put(p, ((StringMapPreference)pref).getObj());
+                }
+                else if (pref instanceof EditTextPreference)
                 {
                     String txt = ((EditTextPreference)pref).getText();
                     if (txt != null && !txt.isEmpty())

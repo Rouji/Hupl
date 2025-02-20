@@ -71,4 +71,6 @@
     <string name="general_category">Allgemein</string>
     <string name="history_size">Verlauf Größe</string>
     <string name="history_size_summary">Maximale Anzahl an Einträgen im Upload-Verlauf</string>
+    <string name="httpuploader_extra_params_title">Zusätzliche Parameter</string>
+    <string name="httpuploader_extra_params_summary">Sende zusätzliche Parameter (Formular Felder). \nEiner pro Zeile, in "param: value" Format.</string>
 </resources>

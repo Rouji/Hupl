@@ -17,6 +17,10 @@
         <EditTextPreference
             android:title="@string/httpuploader_regex_title"
             android:key="responseRegex"/>
+        <eu.imouto.hupl.ui.StringMapPreference
+            android:title="@string/httpuploader_extra_params_title"
+            android:dialogMessage="@string/httpuploader_extra_params_summary"
+            android:key="extraParams"/>
     </PreferenceCategory>
 
     <PreferenceCategory android:title="@string/httpuploader_category_auth" >

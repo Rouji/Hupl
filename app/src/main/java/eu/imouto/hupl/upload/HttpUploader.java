@@ -11,6 +11,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -32,6 +33,7 @@ public class HttpUploader extends Uploader
     public String fileParam;
     public String responseRegex;
     public boolean disableChunkedTransfer;
+    public Map<String, String> extraParams;
 
     public HttpUploader(FileToUpload file)
     {
@@ -48,6 +50,13 @@ public class HttpUploader extends Uploader
         int bytesRead = -1;
         byte[] buffer = new byte[BUFFER_SIZE];
         InputStream fileStream = file.stream;
+
+        StringBuilder additionalParamsBuilder = new StringBuilder();
+        for (Map.Entry<String, String> entry : extraParams.entrySet())
+        {
+            additionalParamsBuilder.append(makeFormData(entry.getKey(), entry.getValue()));
+        }
+        String additionalParamsStr = additionalParamsBuilder.toString();
 
         String multipartHeader = HYPHENS
                 + BOUNDARY
@@ -96,7 +105,7 @@ public class HttpUploader extends Uploader
             if (disableChunkedTransfer)
             {
                 connection.setUseCaches(false);
-                connection.setFixedLengthStreamingMode(fileSize + multipartHeader.length() + multipartFooter.length());
+                connection.setFixedLengthStreamingMode(fileSize + additionalParamsStr.length() + multipartHeader.length() + multipartFooter.length());
             }
             else
             {
@@ -114,6 +123,7 @@ public class HttpUploader extends Uploader
 
             //write multipart header
             outputStream = new DataOutputStream( connection.getOutputStream() );
+            outputStream.writeBytes(additionalParamsStr);
             outputStream.writeBytes(multipartHeader);
 
             //write file contents
@@ -173,6 +183,13 @@ public class HttpUploader extends Uploader
                 connection.disconnect();
             connection = null;
         }
+    }
+
+    private String makeFormData(String name, String value)
+    {
+        return HYPHENS + BOUNDARY + EOL +
+                "Content-Disposition: form-data; name=\"" + name + "\"" + EOL + EOL +
+                value + EOL;
     }
 
     private String parseResponse(String resp)

@@ -85,6 +85,8 @@
     <string name="httuploader_category_etc">Etc.</string>
     <string name="httpuploader_disablechunkedtransfer_title">Disable Chunked Transfer</string>
     <string name="httpuploader_disablechunkedtransfer_summary">Only check this, if you\'re getting status code 411 from the server or have other troubles uploading.</string>
+    <string name="httpuploader_extra_params_title">Extra Parameters</string>
+    <string name="httpuploader_extra_params_summary">Extra parameters (i.e. form fields) to send. \nOne per line, in "param: value" format.</string>
 
     <!-- TODO: Remove or change this placeholder text -->
 
