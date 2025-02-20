@@ -9,6 +9,7 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
 import java.util.regex.Pattern;
+import java.util.Iterator;
 
 import eu.imouto.hupl.data.FileToUpload;
 import eu.imouto.hupl.data.UploaderDB;
@@ -36,6 +37,7 @@ class UploaderFactory
             up.disableChunkedTransfer = getBool(entry.json, "disableChunkedTransfer", false);
             up.extraParams = getMap(entry.json, "extraParams");
             up.headers = getHeaders(entry.json, "headers");
+            up.extraParams = getMap(entry.json, "extraParams");
             return up;
         }
         return null;
