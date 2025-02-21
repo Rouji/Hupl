@@ -126,7 +126,6 @@ public class HttpUploader extends Uploader
                 String value = entry.getValue()
                                 .replace("$NAME", file.fileName);
 
-                System.out.println("val " + entry.getKey() + " " + value);
                 connection.setRequestProperty(entry.getKey(), value);
             }
 
