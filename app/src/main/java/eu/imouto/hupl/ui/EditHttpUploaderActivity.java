@@ -97,34 +97,37 @@ public class EditHttpUploaderActivity extends PreferenceActivity
             if (pref == null)
                 continue;
 
-            if (isNew)
+            String def = jsonDefaults.get(p);
+            if (pref instanceof StringMapPreference)
+                ((StringMapPreference)pref).setText("");
+            else if (pref instanceof EditTextPreference)
+                ((EditTextPreference)pref).setText(def == null ? "" : def);
+            else if (pref instanceof CheckBoxPreference)
+                ((CheckBoxPreference)pref).setChecked(false);
+        }
+
+        for (String p : jsonPrefs)
+        {
+            pref = findPreference(p);
+            if (pref == null)
+                continue;
+
+            try
             {
-                String def = jsonDefaults.get(p);
-                if (pref instanceof StringMapPreference)
-                    ((StringMapPreference)pref).setText("");
-                else if (pref instanceof EditTextPreference)
-                    ((EditTextPreference)pref).setText(def == null ? "" : def);
-                else if (pref instanceof CheckBoxPreference)
-                    ((CheckBoxPreference)pref).setChecked(false);
+                if (entry.json.has(p))
+                {
+                    if (pref instanceof StringMapPreference)
+                        ((StringMapPreference)pref).setObj(entry.json.getJSONObject(p));
+                    else if (pref instanceof EditTextPreference)
+                        ((EditTextPreference)pref).setText(entry.json.getString(p));
+                    else if (pref instanceof CheckBoxPreference)
+                        ((CheckBoxPreference)pref).setChecked(entry.json.getBoolean(p));
+                }
             }
-            else
+            catch (JSONException e)
             {
-                try
-                {
-                    if (entry.json.has(p))
-                    {
-                        if (pref instanceof StringMapPreference)
-                            ((StringMapPreference)pref).setObj(entry.json.getJSONObject(p));
-                        else if (pref instanceof EditTextPreference)
-                            ((EditTextPreference)pref).setText(entry.json.getString(p));
-                        else if (pref instanceof CheckBoxPreference)
-                            ((CheckBoxPreference)pref).setChecked(entry.json.getBoolean(p));
-                    }
-                }
-                catch (JSONException e)
-                {
-                }
             }
+
             if (pref instanceof EditTextPreference)
                 pref.setSummary(((EditTextPreference)pref).getText());
             pref.setOnPreferenceChangeListener(this);
