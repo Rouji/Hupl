@@ -13,14 +13,14 @@
             android:title="@string/httpuploader_param_title"
             android:dialogMessage="@string/httpuploader_param_summary"
             android:key="fileParam"/>
-        <EditTextPreference
-            android:title="@string/httpuploader_headers_title"
-            android:dialogMessage="@string/httpuploader_headers_summary"
-            android:key="headers"/>
 
         <EditTextPreference
             android:title="@string/httpuploader_regex_title"
             android:key="responseRegex"/>
+        <eu.imouto.hupl.ui.StringMapPreference
+            android:title="@string/httpuploader_headers_title"
+            android:dialogMessage="@string/httpuploader_headers_summary"
+            android:key="headers"/>
         <eu.imouto.hupl.ui.StringMapPreference
             android:title="@string/httpuploader_extra_params_title"
             android:dialogMessage="@string/httpuploader_extra_params_summary"
