@@ -37,7 +37,7 @@
     <string name="httpuploader_pass_title">Password</string>
     <string name="httpuploader_pass_summary">Note: Passwords are stored in plaintext</string>
     <string name="httpuploader_headers_title">Headers</string>
-    <string name="httpuploader_headers_summary">Each header in its own line, format KEY: VALUE.\n\nVariables: \n  $NAME - filename</string>
+    <string name="httpuploader_headers_summary">HTTP headers to add. \nOne per line, in \"key: value\" format.\n\nUsable variables: \n$NAME - filename</string>
 
     <string name="actionbar_title_uploaders">Edit Hosts</string>
     <string name="choose_uploader">Choose Uploader</string>
@@ -88,7 +88,7 @@
     <string name="httpuploader_disablechunkedtransfer_title">Disable Chunked Transfer</string>
     <string name="httpuploader_disablechunkedtransfer_summary">Only check this, if you\'re getting status code 411 from the server or have other troubles uploading.</string>
     <string name="httpuploader_extra_params_title">Extra Parameters</string>
-    <string name="httpuploader_extra_params_summary">Extra parameters (i.e. form fields) to send. \nOne per line, in "param: value" format.</string>
+    <string name="httpuploader_extra_params_summary">Extra parameters (i.e. form fields) to send. \nOne per line, in \"param: value\" format.</string>
 
     <!-- TODO: Remove or change this placeholder text -->
 
