@@ -73,4 +73,6 @@
     <string name="history_size_summary">アップロードしたファイルの履歴の最大保存件数</string>
     <string name="httpuploader_extra_params_title">追加パラメーター</string>
     <string name="httpuploader_extra_params_summary">パラメータ（フォームデータ）を追加。\n「param: hoge」という書式で一行一個。</string>
+    <string name="httpuploader_headers_title">ヘッダー</string>
+    <string name="httpuploader_headers_summary">HTTPのヘッダーを追加。\n「key: value」の書式で一行一個。\n\n利用可能な変数:\n$NAME - ファイル名</string>
 </resources>

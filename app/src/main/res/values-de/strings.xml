@@ -72,5 +72,7 @@
     <string name="history_size">Verlauf Größe</string>
     <string name="history_size_summary">Maximale Anzahl an Einträgen im Upload-Verlauf</string>
     <string name="httpuploader_extra_params_title">Zusätzliche Parameter</string>
-    <string name="httpuploader_extra_params_summary">Sende zusätzliche Parameter (Formular Felder). \nEiner pro Zeile, in "param: value" Format.</string>
+    <string name="httpuploader_extra_params_summary">Sende zusätzliche Parameter (Formular Felder). \nEiner pro Zeile, in \"parameter: wert\" Format.</string>
+    <string name="httpuploader_headers_title">Header</string>
+    <string name="httpuploader_headers_summary">Zusätzliche HTTP Header. \nEiner pro Zeile, in \"key: value\" Format.\n\nVerfügbare Variablen: \n$NAME - Dateiname</string>
 </resources>
