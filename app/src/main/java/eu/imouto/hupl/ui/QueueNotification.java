@@ -39,7 +39,8 @@ public class QueueNotification
             .setColor(0xFF0095FF)
             .setSmallIcon(R.drawable.ic_cloud_queue)
             .addAction(0, str(R.string.cancel_all), createCancelAllPendingIntent())
-            .setOngoing(true);
+            .setOngoing(true)
+            .setOnlyAlertOnce(true);
         setThumbnail(BitmapFactory.decodeResource(context.getResources(), R.mipmap.ic_launcher));
     }
 

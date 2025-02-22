@@ -60,6 +60,7 @@ public class UploadNotification
             .setProgress(0, 0, false)
             .addAction(0, str(R.string.cancel), createCancelPendingIntent())
             .setOngoing(false)
+            .setOnlyAlertOnce(true)
             .setLargeIcon(BitmapFactory.decodeResource(context.getResources(), R.mipmap.ic_launcher));
     }
 
