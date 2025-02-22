@@ -158,6 +158,13 @@ public class ChooseUploaderActivity extends DrawerActivity
         String strEdit = getResources().getString(R.string.uploaders);
         String strChoose = getResources().getString(R.string.choose_uploader);
 
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+            if (ContextCompat.checkSelfPermission(this, android.Manifest.permission.POST_NOTIFICATIONS)
+                    != PackageManager.PERMISSION_GRANTED) {
+                ActivityCompat.requestPermissions(this, new String[]{android.Manifest.permission.POST_NOTIFICATIONS}, 1);
+            }
+        }
+
         //request permission(s)
         if (!havePermissions())
         {
