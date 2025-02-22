@@ -16,7 +16,6 @@ Other features:
 * Can optionally resize/compress image files before uploading
 
 Binaries are available as releases on Github: https://github.com/Rouji/Hupl/releases  
-and on the Play Store: https://play.google.com/store/apps/details?id=eu.imouto.hupl 
 
 # Uploaders
 Uploader configs are stored, and can be imported, as JSON.
