@@ -7,7 +7,6 @@ import org.json.JSONObject;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.regex.Pattern;
 import java.util.Iterator;
 
 import eu.imouto.hupl.data.FileToUpload;
@@ -36,6 +35,7 @@ class UploaderFactory
             up.disableChunkedTransfer = getBool(entry.json, "disableChunkedTransfer", false);
             up.headers = getMap(entry.json, "headers");
             up.extraParams = getMap(entry.json, "extraParams");
+            up.ignoreCertificate = getBool(entry.json, "ignoreCertificate", false);
             return up;
         }
         return null;

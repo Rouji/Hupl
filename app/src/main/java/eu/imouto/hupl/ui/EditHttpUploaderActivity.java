@@ -37,7 +37,8 @@ public class EditHttpUploaderActivity extends PreferenceActivity
         "authUser",
         "authPass",
         "disableChunkedTransfer",
-        "headers"
+        "headers",
+        "ignoreCertificate"
     };
     private final static Map<String, String> jsonDefaults = initDefaults();
     private static Map<String, String> initDefaults()

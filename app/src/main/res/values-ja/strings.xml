@@ -75,4 +75,6 @@
     <string name="httpuploader_extra_params_summary">パラメータ（フォームデータ）を追加。\n「param: hoge」という書式で一行一個。</string>
     <string name="httpuploader_headers_title">ヘッダー</string>
     <string name="httpuploader_headers_summary">HTTPのヘッダーを追加。\n「key: value」の書式で一行一個。\n\n利用可能な変数:\n$NAME - ファイル名</string>
+    <string name="httpuploader_ignorecertificate_title">証明書を無視</string>
+    <string name="httpuploader_ignorecertificate_summary">SSL証明書の認証エラーを無視</string>
 </resources>
