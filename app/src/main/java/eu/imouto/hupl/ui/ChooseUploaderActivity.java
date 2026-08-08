@@ -17,11 +17,11 @@ import android.provider.Settings;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.CheckBox;
-import android.widget.ListView;
 import android.widget.TextView;
+
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
@@ -44,15 +44,19 @@ import eu.imouto.hupl.data.UploaderDB;
 import eu.imouto.hupl.R;
 import eu.imouto.hupl.upload.UploadService;
 
+interface OnItemClickListener {
+    void onItemClick(UploaderEntry entry);
+}
+
 public class ChooseUploaderActivity extends DrawerActivity
-    implements AdapterView.OnItemClickListener
+    implements OnItemClickListener
 {
     private UploaderDB uploaderDB;
     private List<FileUriOrText> fileList = new ArrayList<>();
 
     private static final int READ_EXTERNAL_STORAGE_REQUEST = 1;
 
-    private ListView listView;
+    private RecyclerView recyclerView;
     private ChooseUploaderAdapter upAdapter;
     private CheckBox enableResize;
     private TextView errorText;
@@ -97,11 +101,11 @@ public class ChooseUploaderActivity extends DrawerActivity
             }
         }
 
-        upAdapter = new ChooseUploaderAdapter(this, new ArrayList<UploaderEntry>());
+        upAdapter = new ChooseUploaderAdapter(this, this);
 
-        listView = (ListView) findViewById(R.id.uploaderList);
-        listView.setAdapter(upAdapter);
-        listView.setOnItemClickListener(this);
+        recyclerView = findViewById(R.id.uploaderList);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        recyclerView.setAdapter(upAdapter);
 
         enableResize = (CheckBox)findViewById(R.id.enableResize);
         errorText = (TextView)findViewById(R.id.errorText);
@@ -141,10 +145,10 @@ public class ChooseUploaderActivity extends DrawerActivity
             if (grant.length > 0 && Arrays.stream(grant).allMatch(g -> g == PackageManager.PERMISSION_GRANTED)) {
                 //got permission
                 errorText.setVisibility(View.GONE);
-                listView.setEnabled(true);
+                recyclerView.setEnabled(true);
             } else {
                 errorText.setVisibility(View.VISIBLE);
-                listView.setEnabled(false);
+                recyclerView.setEnabled(false);
             }
         }
     }
@@ -177,12 +181,12 @@ public class ChooseUploaderActivity extends DrawerActivity
         if (!havePermissions())
         {
             errorText.setVisibility(View.VISIBLE);
-            listView.setEnabled(false);
+            recyclerView.setEnabled(false);
         }
         else
         {
             errorText.setVisibility(View.GONE);
-            listView.setEnabled(true);
+            recyclerView.setEnabled(true);
         }
 
         if (!fileList.isEmpty())
@@ -254,14 +258,11 @@ public class ChooseUploaderActivity extends DrawerActivity
     }
 
     @Override
-    public void onItemClick(AdapterView<?> parent, View view, int position, long id)
+    public void onItemClick(UploaderEntry entry)
     {
-        TextView nameView = (TextView)view.findViewById(R.id.name);
-        String name = nameView.getText().toString();
-
         if (fileList.isEmpty())
         {
-            startEditActivity(name);
+            startEditActivity(entry.name);
         }
         else
         {
@@ -276,12 +277,12 @@ public class ChooseUploaderActivity extends DrawerActivity
                 in.setAction("eu.imouto.hupl.ACTION_QUEUE_UPLOAD");
                 in.putExtra("uri", fileUri.uri);
                 in.putExtra("text", fileUri.text);
-                in.putExtra("uploader", name);
+                in.putExtra("uploader", entry.name);
                 in.putExtra("compress", resize);
                 startService(in);
             }
 
-            uploaderDB.updateLastUsed(name);
+            uploaderDB.updateLastUsed(entry.name);
             fileList.clear();
             finish();
         }
@@ -313,34 +314,88 @@ public class ChooseUploaderActivity extends DrawerActivity
         //startActivity(in);
     }
 
-    private class ChooseUploaderAdapter extends ArrayAdapter<UploaderEntry>
+    private class ChooseUploaderAdapter extends RecyclerView.Adapter<ChooseUploaderAdapter.ChooseUploaderViewHolder>
     {
         private final DateFormat df = DateFormat.getDateTimeInstance(DateFormat.SHORT, DateFormat.SHORT);
-        public ChooseUploaderAdapter(Context context, ArrayList<UploaderEntry> entries)
+        private final Context context;
+        private final ArrayList<UploaderEntry> entries;
+        private final OnItemClickListener listener;
+
+        public ChooseUploaderAdapter(Context context, OnItemClickListener listener)
         {
-            super(context, 0, entries);
+            this.context = context;
+            this.listener = listener;
+            this.entries = new ArrayList<>();
         }
 
         @Override
-        public View getView(int position, View convertView, ViewGroup parent)
+        public ChooseUploaderViewHolder onCreateViewHolder(ViewGroup parent, int viewType)
         {
-            UploaderEntry entry = getItem(position);
-            if (convertView == null)
-                convertView = LayoutInflater.from(getContext()).inflate(R.layout.uploader_row, parent, false);
+            View view = LayoutInflater.from(context).inflate(R.layout.uploader_row, parent, false);
+            return new ChooseUploaderViewHolder(view);
+        }
 
-            ((TextView)convertView.findViewById(R.id.name)).setText(entry.name);
-            String lastUsed = String.format(getResources().getString(R.string.last_used), df.format(entry.lastUsed));
-            ((TextView)convertView.findViewById(R.id.lastUsed)).setText(lastUsed);
+        @Override
+        public void onBindViewHolder(ChooseUploaderViewHolder holder, int position)
+        {
+            UploaderEntry entry = entries.get(position);
+            holder.nameView.setText(entry.name);
+            String lastUsed = String.format(context.getResources().getString(R.string.last_used), df.format(entry.lastUsed));
+            holder.lastUsedView.setText(lastUsed);
 
             try
             {
                 if (entry.json.has("type"))
-                    ((TextView)convertView.findViewById(R.id.type)).setText(entry.json.getString("type"));
+                    holder.typeView.setText(entry.json.getString("type"));
             }
             catch (JSONException e)
             {}
 
-            return convertView;
+            holder.itemView.setOnClickListener(new View.OnClickListener()
+            {
+                @Override
+                public void onClick(View v)
+                {
+                    int pos = holder.getAdapterPosition();
+                    if (pos != RecyclerView.NO_POSITION)
+                    {
+                        listener.onItemClick(entries.get(pos));
+                    }
+                }
+            });
+        }
+
+        @Override
+        public int getItemCount()
+        {
+            return entries.size();
+        }
+
+        public void clear()
+        {
+            entries.clear();
+            notifyDataSetChanged();
+        }
+
+        public void addAll(ArrayList<UploaderEntry> newEntries)
+        {
+            entries.addAll(newEntries);
+            notifyDataSetChanged();
+        }
+
+        public static class ChooseUploaderViewHolder extends RecyclerView.ViewHolder
+        {
+            public final TextView nameView;
+            public final TextView lastUsedView;
+            public final TextView typeView;
+
+            public ChooseUploaderViewHolder(View itemView)
+            {
+                super(itemView);
+                nameView = itemView.findViewById(R.id.name);
+                lastUsedView = itemView.findViewById(R.id.lastUsed);
+                typeView = itemView.findViewById(R.id.type);
+            }
         }
     }
 

@@ -15,12 +15,12 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.ImageView;
-import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import java.text.DateFormat;
 import java.util.ArrayList;
@@ -30,11 +30,10 @@ import eu.imouto.hupl.data.HistoryDB;
 import eu.imouto.hupl.data.HistoryEntry;
 
 public class HistoryActivity extends DrawerActivity
-    implements AdapterView.OnItemClickListener
 {
-    private ListView listView;
+    private RecyclerView recyclerView;
     private HistoryDB histDb;
-    private HistoryAdapter histAdapter;
+    private HistoryListAdapter histAdapter;
     private Bitmap defaultThumb;
 
     @Override
@@ -49,11 +48,11 @@ public class HistoryActivity extends DrawerActivity
 
         setTitle(getResources().getString(R.string.history));
 
-        histAdapter = new HistoryAdapter(this, new ArrayList<HistoryEntry>());
+        histAdapter = new HistoryListAdapter(this);
 
-        listView = (ListView) findViewById(R.id.historyList);
-        listView.setAdapter(histAdapter);
-        listView.setOnItemClickListener(this);
+        recyclerView = findViewById(R.id.historyList);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        recyclerView.setAdapter(histAdapter);
 
         histDb = new HistoryDB(getApplicationContext());
 
@@ -77,23 +76,44 @@ public class HistoryActivity extends DrawerActivity
             histAdapter.addAll(entries);
     }
 
-    private class HistoryAdapter extends ArrayAdapter<HistoryEntry>
+    private void showHistoryDialog(HistoryEntry entry)
+    {
+        CharSequence buttons[] = new CharSequence[]
+        {
+                getResources().getString(R.string.share),
+                getResources().getString(R.string.copy),
+                getResources().getString(R.string.open),
+                getResources().getString(R.string.notification),
+                getResources().getString(R.string.delete)
+        };
+
+        new AlertDialog.Builder(this).
+        setTitle(entry.link).
+        setItems(buttons, new DialogOnClickListener(entry)).
+        create().show();
+    }
+
+    private class HistoryListAdapter extends RecyclerView.Adapter<HistoryListAdapter.HistoryViewHolder>
     {
         private final DateFormat df = DateFormat.getDateTimeInstance(DateFormat.LONG, DateFormat.SHORT);
+        private final ArrayList<HistoryEntry> entries;
 
-        public HistoryAdapter(Context context, ArrayList<HistoryEntry> entries)
+        public HistoryListAdapter(Context context)
         {
-            super(context, 0, entries);
+            this.entries = new ArrayList<>();
         }
 
         @Override
-        public View getView(int position, View convertView, ViewGroup parent)
+        public HistoryViewHolder onCreateViewHolder(ViewGroup parent, int viewType)
         {
-            HistoryEntry entry = getItem(position);
-            if (convertView == null)
-            {
-                convertView = LayoutInflater.from(getContext()).inflate(R.layout.history_row, parent,false);
-            }
+            View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.history_row, parent, false);
+            return new HistoryViewHolder(view);
+        }
+
+        @Override
+        public void onBindViewHolder(HistoryViewHolder holder, int position)
+        {
+            HistoryEntry entry = entries.get(position);
 
             //strip protocol
             String link = entry.link == null ? "Null" : entry.link;
@@ -109,13 +129,61 @@ public class HistoryActivity extends DrawerActivity
             if (thumb == null)
                 thumb = defaultThumb;
 
-            ((TextView)convertView.findViewById(R.id.historyRowId)).setText(String.valueOf(entry.id));
-            ((TextView)convertView.findViewById(R.id.historyRowLink)).setText(link);
-            ((TextView)convertView.findViewById(R.id.historyRowFilename)).setText(entry.originalName);
-            ((TextView)convertView.findViewById(R.id.historyRowDate)).setText(df.format(entry.uploadDate));
-            ((ImageView)convertView.findViewById(R.id.historyRowThumbnail)).setImageBitmap(thumb);
+            holder.idText.setText(String.valueOf(entry.id));
+            holder.linkText.setText(link);
+            holder.filenameText.setText(entry.originalName);
+            holder.dateText.setText(df.format(entry.uploadDate));
+            holder.thumbnail.setImageBitmap(thumb);
 
-            return convertView;
+            holder.itemView.setOnClickListener(new View.OnClickListener()
+            {
+                @Override
+                public void onClick(View v)
+                {
+                    int pos = holder.getAdapterPosition();
+                    if (pos != RecyclerView.NO_POSITION)
+                    {
+                        showHistoryDialog(entries.get(pos));
+                    }
+                }
+            });
+        }
+
+        @Override
+        public int getItemCount()
+        {
+            return entries.size();
+        }
+
+        public void clear()
+        {
+            entries.clear();
+            notifyDataSetChanged();
+        }
+
+        public void addAll(ArrayList<HistoryEntry> newEntries)
+        {
+            entries.addAll(newEntries);
+            notifyDataSetChanged();
+        }
+
+        class HistoryViewHolder extends RecyclerView.ViewHolder
+        {
+            TextView idText;
+            TextView linkText;
+            TextView filenameText;
+            TextView dateText;
+            ImageView thumbnail;
+
+            HistoryViewHolder(View itemView)
+            {
+                super(itemView);
+                idText = itemView.findViewById(R.id.historyRowId);
+                linkText = itemView.findViewById(R.id.historyRowLink);
+                filenameText = itemView.findViewById(R.id.historyRowFilename);
+                dateText = itemView.findViewById(R.id.historyRowDate);
+                thumbnail = itemView.findViewById(R.id.historyRowThumbnail);
+            }
         }
     }
 
@@ -123,26 +191,6 @@ public class HistoryActivity extends DrawerActivity
     {
         histDb.deleteEntry(id);
         updateListView();
-    }
-
-    @Override
-    public void onItemClick(AdapterView<?> parent, View view, int position, long id)
-    {
-        HistoryEntry entry = histAdapter.getItem(position);
-
-        CharSequence buttons[] = new CharSequence[]
-        {
-                getResources().getString(R.string.share),
-                getResources().getString(R.string.copy),
-                getResources().getString(R.string.open),
-                getResources().getString(R.string.notification),
-                getResources().getString(R.string.delete)
-        };
-
-        new AlertDialog.Builder(this).
-        setTitle(entry.link).
-        setItems(buttons, new DialogOnClickListener(entry)).
-        create().show();
     }
 
     private class DialogOnClickListener implements DialogInterface.OnClickListener
