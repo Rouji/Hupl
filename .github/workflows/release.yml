@@ -20,14 +20,15 @@ jobs:
           java-version: '21'
           cache: gradle
 
-      - name: get version from tag
+      - name: verify tag matches gradle.properties
         run: |
           TAG_NAME=${GITHUB_REF#refs/tags/}
-          VERSION_NAME=${TAG_NAME#v}
-          IFS='.' read -r MAJOR MINOR PATCH <<< "${VERSION_NAME}"
-          VERSION_CODE=$((MAJOR * 100000 + MINOR * 100 + PATCH))
-          echo "VERSION_NAME=$VERSION_NAME" >> $GITHUB_ENV
-          echo "VERSION_CODE=$VERSION_CODE" >> $GITHUB_ENV
+          TAG_VERSION=${TAG_NAME#v}
+          FILE_VERSION=$(sed -n 's/^VERSION_NAME=//p' gradle.properties)
+          if [ "$TAG_VERSION" != "$FILE_VERSION" ]; then
+            echo "::error::Tag $TAG_NAME does not match VERSION_NAME in gradle.properties ($FILE_VERSION)"
+            exit 1
+          fi
           echo "TAG_NAME=$TAG_NAME" >> $GITHUB_ENV
 
       - name: make gradlew executable

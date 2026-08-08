@@ -10,8 +10,8 @@ android {
         applicationId = "eu.imouto.hupl"
         minSdk = 24
         targetSdk = 34
-        versionCode = System.getenv("VERSION_CODE")?.toInt() ?: 1
-        versionName = System.getenv("VERSION_NAME") ?: "1.0"
+        versionCode = (project.property("VERSION_CODE") as String).toInt()
+        versionName = project.property("VERSION_NAME") as String
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
