@@ -1,0 +1,13 @@
+Hupl is a simple file uploader for Android. Share files from any app directly to your configured HTTP upload servers.
+
+Features:
+* Upload files via the Android share menu
+* Configure multiple upload servers with custom parameters
+* Import/export server configurations as JSON
+* Keep a history of uploads and generated links
+* Optional image resize/compression before upload
+* Works with most simple filehosts (POST-based uploads)
+* Preconfigured uploaders for popular services
+* No tracking, no ads, no accounts
+
+All your upload history and host configurations are stored locally on your device. Nothing is sent to third parties except the files you explicitly choose to upload.

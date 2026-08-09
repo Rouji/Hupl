@@ -1,0 +1,2 @@
+- Fix for Android 14 notification permissions
+- Updated dependencies
