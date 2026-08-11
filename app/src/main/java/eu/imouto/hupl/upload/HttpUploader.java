@@ -10,6 +10,7 @@ import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.nio.charset.StandardCharsets;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.security.SecureRandom;
@@ -145,8 +146,8 @@ public class HttpUploader extends Uploader
 
             //write multipart header
             outputStream = new DataOutputStream( connection.getOutputStream() );
-            outputStream.writeBytes(additionalParamsStr);
-            outputStream.writeBytes(multipartHeader);
+            outputStream.write(additionalParamsStr.getBytes(StandardCharsets.UTF_8));
+            outputStream.write(multipartHeader.getBytes(StandardCharsets.UTF_8));
 
             //write file contents
             int written = 0;
@@ -160,7 +161,7 @@ public class HttpUploader extends Uploader
             }
 
             //write multipart footer
-            outputStream.writeBytes(multipartFooter);
+            outputStream.write(multipartFooter.getBytes(StandardCharsets.UTF_8));
 
             outputStream.flush();
             outputStream.close();
