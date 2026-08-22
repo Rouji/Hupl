@@ -4,8 +4,12 @@ Short for Http UPLoad (imaginative, I know)
 Simple Android app, that lets you upload files to servers through the share menu. 
 You can configure any servers you want, but also feel free to use any of the preconfigured ones. 
 
+Available on [F-Droid](https://f-droid.org/packages/eu.imouto.hupl/)  
+and as [Github releases](https://github.com/Rouji/Hupl/releases)  
+
 Should work with most simple filehosts, that take files via POST. At the very least, it works with ones based on these:
 * https://github.com/Rouji/single_php_filehost
+* https://github.com/Rouji/filehost2
 * https://git.0x0.st/mia/0x0
 * https://github.com/ptpb/pb
 
@@ -15,7 +19,6 @@ Other features:
 * Keeps a history of files you upload and resulting links
 * Can optionally resize/compress image files before uploading
 
-Binaries are available as releases on Github: https://github.com/Rouji/Hupl/releases  
 
 # Uploaders
 Uploader configs are stored, and can be imported, as JSON.
