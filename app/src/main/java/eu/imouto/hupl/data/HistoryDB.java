@@ -67,32 +67,29 @@ public class HistoryDB extends SQLiteOpenHelper
         db.close();
     }
 
-    public ArrayList<HistoryEntry> getAllEntries()
+    public ArrayList<HistoryEntry> getEntries(int offset, int limit)
     {
         SQLiteDatabase db = getReadableDatabase();
-        Cursor c = db.rawQuery("SELECT * FROM history ORDER BY id DESC;", null);
-        if (!c.moveToFirst())
-            return null;
+        Cursor c = db.rawQuery(
+            "SELECT * FROM history ORDER BY id DESC LIMIT ? OFFSET ?;",
+            new String[] { String.valueOf(limit), String.valueOf(offset) }
+        );
 
         ArrayList<HistoryEntry> entries = new ArrayList<>(c.getCount());
-        do
+        if (c.moveToFirst())
         {
-            HistoryEntry he = rowToEntry(c);
-            if (he != null)
-                entries.add(he);
-        } while(c.moveToNext());
+            do
+            {
+                HistoryEntry he = rowToEntry(c);
+                if (he != null)
+                    entries.add(he);
+            } while(c.moveToNext());
+        }
 
+        c.close();
         db.close();
         return entries;
     }
-
-    public void prune(int limit)
-    {
-        SQLiteDatabase db = getWritableDatabase();
-        db.execSQL("DELETE FROM history WHERE id NOT IN (SELECT id FROM history order by id DESC LIMIT "+limit+");");
-        db.close();
-    }
-
 
     private static HistoryEntry rowToEntry(Cursor c)
     {

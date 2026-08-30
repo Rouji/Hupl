@@ -211,7 +211,6 @@ public class UploadService extends Service implements UploadProgressReceiver
     {
         historyEntry.link = fileLink;
         histDb.addEntry(historyEntry);
-        histDb.prune(Integer.parseInt(pref.getString("history_size", "1000")));
 
         notification.success(fileLink);
         uploading = false;

@@ -24,6 +24,8 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import java.text.DateFormat;
 import java.util.ArrayList;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 import eu.imouto.hupl.R;
 import eu.imouto.hupl.data.HistoryDB;
@@ -31,10 +33,17 @@ import eu.imouto.hupl.data.HistoryEntry;
 
 public class HistoryActivity extends DrawerActivity
 {
+    private static final int PAGE_SIZE = 30;
+
     private RecyclerView recyclerView;
     private HistoryDB histDb;
     private HistoryListAdapter histAdapter;
     private Bitmap defaultThumb;
+    private final ExecutorService dbExecutor = Executors.newSingleThreadExecutor();
+
+    private int loadedCount = 0;
+    private boolean isLoading = false;
+    private boolean reachedEnd = false;
 
     @Override
     int onInflateContent() {
@@ -53,6 +62,20 @@ public class HistoryActivity extends DrawerActivity
         recyclerView = findViewById(R.id.historyList);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.setAdapter(histAdapter);
+        recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener()
+        {
+            @Override
+            public void onScrolled(RecyclerView rv, int dx, int dy)
+            {
+                if (dy <= 0 || isLoading || reachedEnd)
+                    return;
+
+                LinearLayoutManager lm = (LinearLayoutManager) rv.getLayoutManager();
+                int lastVisible = lm.findLastVisibleItemPosition();
+                if (lastVisible >= histAdapter.getItemCount() - 5)
+                    loadNextPage();
+            }
+        });
 
         histDb = new HistoryDB(getApplicationContext());
 
@@ -64,16 +87,47 @@ public class HistoryActivity extends DrawerActivity
     {
         super.onResume();
 
-        //fill the listview with data from sql
-        updateListView();
+        resetAndLoad();
     }
 
-    private void updateListView()
+    @Override
+    protected void onDestroy()
+    {
+        super.onDestroy();
+        dbExecutor.shutdownNow();
+    }
+
+    private void resetAndLoad()
     {
         histAdapter.clear();
-        ArrayList<HistoryEntry> entries =  histDb.getAllEntries();
-        if (entries != null)
-            histAdapter.addAll(entries);
+        loadedCount = 0;
+        reachedEnd = false;
+        loadNextPage();
+    }
+
+    private void loadNextPage()
+    {
+        if (isLoading || reachedEnd)
+            return;
+
+        isLoading = true;
+        int offset = loadedCount;
+
+        dbExecutor.submit(() ->
+        {
+            ArrayList<HistoryEntry> page = histDb.getEntries(offset, PAGE_SIZE);
+
+            runOnUiThread(() ->
+            {
+                if (isFinishing() || isDestroyed())
+                    return;
+
+                histAdapter.addAll(page);
+                loadedCount += page.size();
+                reachedEnd = page.size() < PAGE_SIZE;
+                isLoading = false;
+            });
+        });
     }
 
     private void showHistoryDialog(HistoryEntry entry)
@@ -189,8 +243,17 @@ public class HistoryActivity extends DrawerActivity
 
     private void deleteEntry(int id)
     {
-        histDb.deleteEntry(id);
-        updateListView();
+        dbExecutor.submit(() ->
+        {
+            histDb.deleteEntry(id);
+            runOnUiThread(() ->
+            {
+                if (isFinishing() || isDestroyed())
+                    return;
+
+                resetAndLoad();
+            });
+        });
     }
 
     private class DialogOnClickListener implements DialogInterface.OnClickListener

@@ -12,10 +12,6 @@
 
     <string name="list_add_host">Add Uploader</string>
 
-    <string name="general_category">General</string>
-    <string name="history_size">History Size</string>
-    <string name="history_size_summary">Max. number of entries to keep in the upload history</string>
-
     <string name="resize_category">Image Resize</string>
     <string name="resize_width_title">Max. Width</string>
     <string name="resize_width_summary">Max. Width</string>
